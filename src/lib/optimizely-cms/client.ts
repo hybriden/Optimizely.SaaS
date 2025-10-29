@@ -1,5 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
-import { createHmac } from 'crypto';
+import { createHmac, createHash } from 'crypto';
 
 export enum AuthMode {
   Public = 'public',
@@ -27,24 +27,40 @@ export class OptimizelyGraphClient extends GraphQLClient {
     // Determine auth mode and construct URL
     let authMode = AuthMode.Public;
     let url = `${gateway}/content/v2`;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    // Check if token is a JWT (starts with "eyJ")
+    const isJWT = token && token.startsWith('eyJ');
 
     if (token) {
       authMode = AuthMode.Token;
-      url += `?auth=${token}`;
+      if (isJWT) {
+        // JWT preview tokens go in Authorization header
+        headers['Authorization'] = `Bearer ${token}`;
+        // Disable caching for preview requests
+        headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+        console.log('Client - Using JWT preview token in Authorization header');
+      } else {
+        // Regular tokens go in URL
+        url += `?auth=${token}`;
+        console.log('Client - Using regular token in URL');
+      }
     } else if (mergedConfig.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY) {
+      // Use Single Key for published content by default
       authMode = AuthMode.Public;
       const key = mergedConfig.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
       url += `?auth=${key}`;
     } else if (mergedConfig.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY) {
+      // Fall back to App Key
       authMode = AuthMode.Token;
       const key = mergedConfig.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY;
       url += `?auth=${key}`;
     }
 
     super(url, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       // Use Next.js fetch if requested
       fetch: mergedConfig.nextJsFetchDirectives ? fetch : undefined,
     });
@@ -61,6 +77,12 @@ export class OptimizelyGraphClient extends GraphQLClient {
 
     const gateway = this.config.gateway || process.env.OPTIMIZELY_GRAPH_GATEWAY || 'https://cg.optimizely.com';
     let url = `${gateway}/content/v2`;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    // Check if token is a JWT (starts with "eyJ")
+    const isJWT = token && token.startsWith('eyJ');
 
     switch (mode) {
       case AuthMode.HMAC:
@@ -71,7 +93,12 @@ export class OptimizelyGraphClient extends GraphQLClient {
         break;
       case AuthMode.Token:
         if (token) {
-          url += `?auth=${token}`;
+          if (isJWT) {
+            // JWT preview tokens go in Authorization header
+            headers['Authorization'] = `Bearer ${token}`;
+          } else {
+            url += `?auth=${token}`;
+          }
         } else if (this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY) {
           url += `?auth=${this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY}`;
         }
@@ -85,6 +112,10 @@ export class OptimizelyGraphClient extends GraphQLClient {
     }
 
     this.setEndpoint(url);
+    // Update headers if JWT token is present
+    if (isJWT) {
+      this.setHeader('Authorization', `Bearer ${token}`);
+    }
   }
 
   /**
@@ -109,13 +140,41 @@ export class OptimizelyGraphClient extends GraphQLClient {
   }
 
   /**
-   * Create HMAC signature for request
+   * Create HMAC signature for request per Optimizely Graph spec:
+   * Signature = HMAC-SHA256(appKey + method + uri + timestamp + nonce + bodyBase64, secret)
    */
-  private createHmacSignature(body: string): string {
+  private createHmacSignature(method: string, uri: string, timestamp: string, nonce: string, body: string): string {
     const secret = this.config.secret || process.env.OPTIMIZELY_GRAPH_SECRET || '';
+    const appKey = this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY || '';
+
+    // Calculate MD5 hash of body and convert to base64
+    const bodyHash = createHash('md5').update(body).digest('base64');
+
+    // Create signature string: appKey + method + uri + timestamp + nonce + bodyBase64
+    const signatureData = `${appKey}${method}${uri}${timestamp}${nonce}${bodyHash}`;
+
+    console.log('HMAC Signature Data:', {
+      appKey: appKey.substring(0, 10) + '...',
+      method,
+      uri,
+      timestamp,
+      nonce,
+      bodyHash: bodyHash.substring(0, 20) + '...'
+    });
+
     return createHmac('sha256', secret)
-      .update(body)
+      .update(signatureData)
       .digest('base64');
+  }
+
+  /**
+   * Override request method to add HMAC headers when in HMAC auth mode
+   */
+  async request<T = any, V = any>(query: string, variables?: V): Promise<T> {
+    // HMAC authentication disabled for now - needs further investigation
+    // TODO: Implement proper HMAC authentication for draft content access
+
+    return super.request<T, V>(query, variables);
   }
 }
 

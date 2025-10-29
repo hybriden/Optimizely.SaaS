@@ -1,3 +1,4 @@
+'use client';
 import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
 import { LandingPageDataFragmentDoc, type LandingPageDataFragment } from "@/gql/graphql";
 
@@ -9,7 +10,11 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
     const title = data.Title || '';
     const mainBody = data.MainBody?.html || '';
     const metaDescription = data.MetaDescription || '';
-    
+
+    // Use content metadata dates or a fixed date to avoid hydration mismatch
+    const publishDate = data._metadata?.published || '2025-01-01';
+    const modifiedDate = data._metadata?.modified || data._metadata?.published || '2025-01-01';
+
     // Create structured data for Article
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -24,8 +29,8 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
             '@type': 'Organization',
             name: 'Epinova',
         },
-        datePublished: new Date().toISOString(),
-        dateModified: new Date().toISOString(),
+        datePublished: publishDate,
+        dateModified: modifiedDate,
     };
     
     return (

@@ -1,8 +1,8 @@
-import Script from 'next/script';
 import { ComponentFactory } from './factory';
 import { OptimizelyGraphClient } from './client';
 import { setEditMode } from './context';
 import { ContentData, OptimizelyNextPage } from './types';
+import { OpeScript } from './OpeScript';
 
 /**
  * Configuration for edit page component
@@ -47,11 +47,22 @@ export function createEditPageComponent<TContent = ContentData>(
       );
     }
 
-    // Create client with token
+    // Use preview token if provided by Optimizely CMS, otherwise use default auth
+    // Preview tokens are now enabled in CMS and should be included in the URL
     const client = config.clientFactory(token);
 
+    const requestTime = new Date().toISOString();
+    console.log('=== PREVIEW REQUEST START ===', requestTime);
+    console.log('Preview - Content key:', key);
+    console.log('Preview - Version:', version);
+    console.log('Preview - Locale:', locale);
+    console.log('Preview - Context:', ctx);
+    console.log('Preview - Preview token:', token ? 'YES' : 'NO');
+    console.log('Preview - Token is JWT:', token && token.startsWith('eyJ') ? 'YES' : 'NO');
+    console.log('Preview - Client auth mode:', client.currentAuthMode);
+
     try {
-      // Load content - Note: when using preview_token, it handles access to draft content
+      // Load content with version parameter to get specific draft version
       const result = await config.loader(
         client,
         {
@@ -76,6 +87,11 @@ export function createEditPageComponent<TContent = ContentData>(
 
       // Resolve component - handle generic types like _Content, _Page
       let typename = content.__typename || content._type;
+      console.log('Preview - Initial typename:', typename);
+      console.log('Preview - Metadata types:', content._metadata?.types);
+      console.log('Preview - Content data keys:', Object.keys(content));
+      console.log('Preview - Content Title/Heading:', content.Title || content.Heading || 'N/A');
+      console.log('Preview - Full content data:', JSON.stringify(content, null, 2));
 
       // If typename is generic (_Content, _Page, _IPage, etc.), use types array
       if (typename === '_Content' || typename === '_Page' || typename?.startsWith('_I')) {
@@ -83,10 +99,45 @@ export function createEditPageComponent<TContent = ContentData>(
           // Use the FIRST type in the array which is the most specific content type
           // Array is ordered as: [StartPage, _Page, _Content] where StartPage is most specific
           typename = content._metadata.types[0];
+          console.log('Preview - Resolved typename from types array:', typename);
+        } else {
+          console.log('Preview - WARNING: No types array available, trying to infer from data');
+
+          // Fallback: Try to infer type from specific properties that only exist on certain types
+          // Check for StartPage-specific fields
+          if ('Heading' in content || 'MainIntro' in content || 'MainContentArea' in content) {
+            typename = 'StartPage';
+            console.log('Preview - Inferred typename: StartPage');
+          }
+          // Check for LandingPage-specific fields
+          else if ('Title' in content && 'MainBody' in content && 'MetaDescription' in content) {
+            typename = 'LandingPage';
+            console.log('Preview - Inferred typename: LandingPage');
+          }
+          // Check for ArticlePage-specific fields
+          else if ('ArticleTitle' in content || 'ArticleBody' in content) {
+            typename = 'ArticlePage';
+            console.log('Preview - Inferred typename: ArticlePage');
+          }
+          // Check for MyTest-specific fields
+          else if ('TestField' in content) {
+            typename = 'MyTest';
+            console.log('Preview - Inferred typename: MyTest');
+          }
+          // Last resort: use URL pattern to guess
+          else {
+            const url = content._metadata?.url?.default || '';
+            if (url === '/' || url === '') {
+              typename = 'StartPage';
+              console.log('Preview - Inferred typename from URL (root): StartPage');
+            }
+          }
         }
       }
 
+      console.log('Preview - Final typename for component resolution:', typename);
       const Component = factory.resolve(typename) as OptimizelyNextPage | null;
+      console.log('Preview - Component resolved:', !!Component);
 
       if (!Component) {
         return (
@@ -100,12 +151,7 @@ export function createEditPageComponent<TContent = ContentData>(
       // Render with editing attributes
       return (
         <>
-          {ctx === 'edit' && (
-            <Script
-              src="https://cg.optimizely.com/app/editor/clientresources/latest/communicationinjector.js"
-              strategy="afterInteractive"
-            />
-          )}
+          {ctx === 'edit' && <OpeScript />}
           <div data-epi-edit="true">
             <Component data={content} inEditMode={true} />
           </div>

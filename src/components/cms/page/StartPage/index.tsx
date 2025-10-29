@@ -1,3 +1,4 @@
+'use client';
 import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
 import { StartPageDataFragmentDoc, type StartPageDataFragment } from "@/gql/graphql";
 import { ContentAreaRenderer } from "@/components/cms/utils/contentAreaRenderer";

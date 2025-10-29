@@ -52,9 +52,9 @@ export function createPage<TContent = ContentData>(
       notFound();
     }
 
-    // Resolve component - use types array if __typename is generic _Content
+    // Resolve component - use types array if __typename is generic (_Content, _Page, _IPage, etc.)
     let typename = content.__typename || content._type;
-    if (typename === '_Content') {
+    if (typename === '_Content' || typename === '_Page' || typename?.startsWith('_I')) {
       if (content._metadata?.types && content._metadata.types.length > 0) {
         // Use the last type in the array which is usually the most specific content type
         typename = content._metadata.types[content._metadata.types.length - 1];
@@ -115,9 +115,9 @@ export function createPage<TContent = ContentData>(
         return {};
       }
 
-      // Get component - use types array if __typename is generic _Content
+      // Get component - use types array if __typename is generic (_Content, _Page, _IPage, etc.)
       let typename = content.__typename || content._type;
-      if (typename === '_Content') {
+      if (typename === '_Content' || typename === '_Page' || typename?.startsWith('_I')) {
         if (content._metadata?.types && content._metadata.types.length > 0) {
           typename = content._metadata.types[content._metadata.types.length - 1];
         } else if (content.Title || content.MetaDescription || content.MainBody) {

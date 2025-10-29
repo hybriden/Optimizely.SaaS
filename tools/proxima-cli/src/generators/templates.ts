@@ -184,4 +184,53 @@ export const CmsFactory : ComponentTypeDictionary = {
 export default CmsFactory;
 `;
   }
+
+  /**
+   * Generate GraphQL content query with all fragments
+   */
+  static generateContentQuery(
+    pageTypes: ContentTypeDefinition[],
+    experienceTypes: ContentTypeDefinition[],
+    componentTypes: ContentTypeDefinition[]
+  ): string {
+    // Generate fragment spreads for each page type
+    const pageFragments = pageTypes
+      .map(ct => `      ... on ${ct.key} {
+        ...${ct.key}Data
+      }`)
+      .join('\n');
+
+    // Generate fragment spreads for each experience type
+    const experienceFragments = experienceTypes
+      .map(ct => `      ... on ${ct.key} {
+        ...${ct.key}Data
+      }`)
+      .join('\n');
+
+    return `query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: String = null) {
+  content: _Content(
+    where: {_metadata: {url: {default: {in: $path}}, changeset: {eq: $changeset}}}
+    locale: $locale
+  ) {
+    total
+    items: item {
+      __typename
+      _metadata {
+        key
+        displayName
+        types
+        url {
+          default
+          base
+        }
+      }
+      ...IContentData
+      ...PageData
+${pageFragments}
+${experienceFragments}
+    }
+  }
+}
+`;
+  }
 }

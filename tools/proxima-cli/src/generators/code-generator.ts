@@ -174,6 +174,49 @@ export class CodeGenerator {
   }
 
   /**
+   * Generate GraphQL queries with all content type fragments
+   */
+  async generateQueries(): Promise<boolean> {
+    try {
+      Logger.info('Generating GraphQL queries...');
+
+      // Scan all content types
+      const contentTypes = await this.scanExistingContentTypes();
+
+      // Group by base type
+      const pageTypes = contentTypes.filter(ct => ct.baseType === 'page');
+      const experienceTypes = contentTypes.filter(ct => ct.baseType === 'experience');
+      const componentTypes = contentTypes.filter(ct => ct.baseType === 'component' || ct.baseType === 'block');
+
+      // Generate query content
+      const queryContent = Templates.generateContentQuery(pageTypes, experienceTypes, componentTypes);
+
+      // Write to queries directory (src/gql/queries)
+      // Go up from componentsDir (src/components/cms) to src, then to gql/queries
+      const srcDir = path.dirname(path.dirname(this.config.componentsDir));
+      const queriesDir = path.join(srcDir, 'gql', 'queries');
+      await FileManager.ensureDir(queriesDir);
+
+      const queryFilePath = path.join(queriesDir, 'content.graphql');
+
+      // Always overwrite the generated query
+      const success = await FileManager.writeFile(queryFilePath, queryContent, {
+        force: true,
+        preserveModified: false
+      });
+
+      if (success) {
+        Logger.success(`Generated query: ${queryFilePath}`);
+      }
+
+      return success;
+    } catch (error) {
+      Logger.error(`Failed to generate queries: ${error}`);
+      return false;
+    }
+  }
+
+  /**
    * Get subdirectory based on base type
    */
   private getSubdirectoryForBaseType(baseType: string): string {

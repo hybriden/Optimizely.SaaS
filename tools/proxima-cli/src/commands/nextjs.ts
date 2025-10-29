@@ -55,6 +55,9 @@ export function registerNextjsCommands(program: Command) {
         // Generate factories
         await generator.generateFactories();
 
+        // Generate GraphQL queries
+        await generator.generateQueries();
+
         Logger.success(`\nGenerated ${successCount}/${contentTypes.length} content types`);
         Logger.info('Run "yarn compile" to generate TypeScript types from GraphQL');
       } catch (error) {

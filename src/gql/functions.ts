@@ -1,21 +1,338 @@
 import { gql, type GraphQLClient } from 'graphql-request'
 import type * as Types from './graphql'
 
+export async function getContentByPath(client: GraphQLClient, variables: Types.getContentByPathQueryVariables): Promise<Types.getContentByPathQuery> {
+  const query = gql`
+    query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: String = null) {
+      content: _Content(
+        where: {_metadata: {url: {default: {in: $path}}, changeset: {eq: $changeset}}}
+        locale: $locale
+      ) {
+        total
+        items: item {
+          __typename
+          _metadata {
+            key
+            displayName
+            types
+            url {
+              default
+              base
+            }
+          }
+          ...IContentData
+          ...PageData
+          ... on StartPage {
+            ...StartPageData
+          }
+          ... on LandingPage {
+            ...LandingPageData
+          }
+          ... on MyTest {
+            ...MyTestData
+          }
+          ... on ArticlePage {
+            ...ArticlePageData
+          }
+          ... on BlankExperience {
+            ...BlankExperienceData
+          }
+        }
+      }
+    }
 
-export function getContentType(client: GraphQLClient, variables: Types.getContentTypeQueryVariables) : Promise<Types.getContentTypeQuery>
-{
-  const query = gql`query getContentType($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String) { content: _Content( variation: {include: ALL} where: {_or: [{_metadata: {key: {eq: $key}, version: {eq: $version}}}, {_metadata: {url: {hierarchical: {eq: $path}, base: {eq: $domain}}, version: {eq: $version}}}]} locale: $locale ) { total items: item { _metadata { types } } } }`
-  return client.request<Types.getContentTypeQuery, Types.getContentTypeQueryVariables>(query, variables)
-}
-export async function getContentByPath(client: GraphQLClient, variables: Types.getContentByPathQueryVariables) : Promise<Types.getContentByPathQuery>
-{
-  const query = gql`query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: String = null) { content: _Content( where: {_metadata: {url: {default: {in: $path}}, changeset: {eq: $changeset}}} locale: $locale ) { total items: item { ...IContentData ...PageData ...BlankExperienceData ...LandingPageData ...StartPageData } } } fragment BlankExperienceData on BlankExperience { _metadata { key } } fragment LandingPageData on LandingPage { Title MetaDescription UrlSegment MainBody { html } } fragment StartPageData on StartPage { Heading MainIntro { json html } MainContentArea { ...IContentListItem ...HeroBlockData ...TextBlockData ...SliderBlockData ...ContentAreaData } } fragment IContentData on _IContent { _metadata { ...IContentInfo } _type: __typename } fragment PageData on _IContent { ...IContentData } fragment ContentAreaData on ContentArea { _metadata { key } } fragment HeroBlockData on HeroBlock { Heading Image { ...ReferenceData } MainIntro { json html } ContentLink { ...ReferenceData } Width } fragment SliderBlockData on SliderBlock { SliderContent { ...IContentListItem } } fragment TextBlockData on TextBlock { Text { json html } } fragment IContentListItem on _IContent { ...IContentData } fragment ReferenceData on ContentReference { key url { ...LinkData } } fragment LinkData on ContentUrl { base default } fragment IContentInfo on IContentMetadata { key locale types displayName version url { ...LinkData } }`
+    fragment IContentData on _IContent {
+      _metadata {
+        ...IContentInfo
+      }
+      _type: __typename
+    }
 
-  return client.request<Types.getContentByPathQuery, Types.getContentByPathQueryVariables>(query, variables);
+    fragment IContentInfo on IContentMetadata {
+      key
+      locale
+      types
+      displayName
+      version
+      url {
+        ...LinkData
+      }
+    }
+
+    fragment LinkData on ContentUrl {
+      base
+      default
+    }
+
+    fragment PageData on _IContent {
+      ...IContentData
+    }
+
+    fragment StartPageData on StartPage {
+      Heading
+      MainIntro {
+        json
+        html
+      }
+      MainContentArea {
+        __typename
+        _metadata {
+          key
+          displayName
+          types
+        }
+        ...HeroBlockData
+        ...TextBlockData
+        ...SliderBlockData
+        ...ContentAreaData
+      }
+    }
+
+    fragment LandingPageData on LandingPage {
+      Title
+      MetaDescription
+      UrlSegment
+      MainBody {
+        html
+      }
+    }
+
+    fragment MyTestData on MyTest {
+      _metadata {
+        key
+      }
+    }
+
+    fragment ArticlePageData on ArticlePage {
+      _metadata {
+        key
+      }
+    }
+
+    fragment BlankExperienceData on BlankExperience {
+      _metadata {
+        key
+      }
+      composition {
+        key
+        displayName
+        nodeType
+        type
+        displayTemplateKey
+      }
+    }
+
+    fragment HeroBlockData on HeroBlock {
+      Heading
+      Image {
+        url {
+          default
+        }
+      }
+      MainIntro {
+        json
+        html
+      }
+      ContentLink {
+        url {
+          default
+        }
+      }
+      Width
+    }
+
+    fragment TextBlockData on TextBlock {
+      Text {
+        json
+        html
+      }
+    }
+
+    fragment SliderBlockData on SliderBlock {
+      SliderContent {
+        __typename
+        _metadata {
+          key
+          displayName
+        }
+      }
+    }
+
+    fragment ContentAreaData on ContentArea {
+      _metadata {
+        key
+      }
+    }
+  `
+
+  return client.request<Types.getContentByPathQuery, Types.getContentByPathQueryVariables>(query, variables)
 }
-export function getContentById(client: GraphQLClient, variables: Types.getContentByIdQueryVariables) : Promise<Types.getContentByIdQuery>
-{
-  const query = gql`query getContentById($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String, $changeset: String) { content: _Content( variation: {include: ALL} where: {_or: [{_metadata: {key: {eq: $key}, version: {eq: $version}}}, {_metadata: {url: {default: {eq: $path}, base: {eq: $domain}}, version: {eq: $version}}}], _metadata: {changeset: {eq: $changeset}}} locale: $locale ) { total items: item { ...IContentData ...BlockData ...PageData ...ContentAreaData ...HeroBlockData ...SliderBlockData ...TextBlockData ...BlankExperienceData ...LandingPageData ...StartPageData } } } fragment ContentAreaData on ContentArea { _metadata { key } } fragment HeroBlockData on HeroBlock { Heading Image { ...ReferenceData } MainIntro { json html } ContentLink { ...ReferenceData } Width } fragment SliderBlockData on SliderBlock { SliderContent { ...IContentListItem } } fragment TextBlockData on TextBlock { Text { json html } } fragment BlankExperienceData on BlankExperience { _metadata { key } } fragment LandingPageData on LandingPage { Title MetaDescription UrlSegment MainBody { html } } fragment StartPageData on StartPage { Heading MainIntro { json html } MainContentArea { ...IContentListItem ...HeroBlockData ...TextBlockData ...SliderBlockData ...ContentAreaData } } fragment IContentData on _IContent { _metadata { ...IContentInfo } _type: __typename } fragment BlockData on _IComponent { ...IContentData } fragment PageData on _IContent { ...IContentData } fragment ReferenceData on ContentReference { key url { ...LinkData } } fragment LinkData on ContentUrl { base default } fragment IContentListItem on _IContent { ...IContentData } fragment IContentInfo on IContentMetadata { key locale types displayName version url { ...LinkData } }`
+
+export async function getContentById(client: GraphQLClient, variables: Types.getContentByIdQueryVariables): Promise<Types.getContentByIdQuery> {
+  const query = gql`
+    query getContentById($key: String!, $version: String, $locale: [Locales!], $changeset: String) {
+      content: _Content(
+        where: {
+          _metadata: { key: { eq: $key }, version: { eq: $version }, changeset: { eq: $changeset } }
+        }
+        locale: $locale
+      ) {
+        total
+        items: item {
+          __typename
+          _metadata {
+            key
+            displayName
+            types
+            url {
+              default
+              base
+            }
+          }
+          ...IContentData
+          ...PageData
+          ... on StartPage {
+            ...StartPageData
+          }
+          ... on LandingPage {
+            ...LandingPageData
+          }
+          ... on MyTest {
+            ...MyTestData
+          }
+          ... on ArticlePage {
+            ...ArticlePageData
+          }
+          ... on BlankExperience {
+            ...BlankExperienceData
+          }
+        }
+      }
+    }
+
+    fragment IContentData on _IContent {
+      _metadata {
+        ...IContentInfo
+      }
+      _type: __typename
+    }
+
+    fragment IContentInfo on IContentMetadata {
+      key
+      locale
+      types
+      displayName
+      version
+      url {
+        ...LinkData
+      }
+    }
+
+    fragment LinkData on ContentUrl {
+      base
+      default
+    }
+
+    fragment PageData on _IContent {
+      ...IContentData
+    }
+
+    fragment StartPageData on StartPage {
+      Heading
+      MainIntro {
+        json
+        html
+      }
+      MainContentArea {
+        __typename
+        _metadata {
+          key
+          displayName
+          types
+        }
+        ...HeroBlockData
+        ...TextBlockData
+        ...SliderBlockData
+        ...ContentAreaData
+      }
+    }
+
+    fragment LandingPageData on LandingPage {
+      Title
+      MetaDescription
+      UrlSegment
+      MainBody {
+        html
+      }
+    }
+
+    fragment MyTestData on MyTest {
+      _metadata {
+        key
+      }
+    }
+
+    fragment ArticlePageData on ArticlePage {
+      _metadata {
+        key
+      }
+    }
+
+    fragment BlankExperienceData on BlankExperience {
+      _metadata {
+        key
+      }
+      composition {
+        key
+        displayName
+        nodeType
+        type
+        displayTemplateKey
+      }
+    }
+
+    fragment HeroBlockData on HeroBlock {
+      Heading
+      Image {
+        url {
+          default
+        }
+      }
+      MainIntro {
+        json
+        html
+      }
+      ContentLink {
+        url {
+          default
+        }
+      }
+      Width
+    }
+
+    fragment TextBlockData on TextBlock {
+      Text {
+        json
+        html
+      }
+    }
+
+    fragment SliderBlockData on SliderBlock {
+      SliderContent {
+        __typename
+        _metadata {
+          key
+          displayName
+        }
+      }
+    }
+
+    fragment ContentAreaData on ContentArea {
+      _metadata {
+        key
+      }
+    }
+  `
+
   return client.request<Types.getContentByIdQuery, Types.getContentByIdQueryVariables>(query, variables)
 }
-

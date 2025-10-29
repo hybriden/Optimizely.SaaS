@@ -58,7 +58,9 @@ export function createEditPageComponent<TContent = ContentData>(
         }
       );
 
-      const content = (result as any)?.content?.items?.[0];
+      // Note: items can be either an array or a single object depending on the query
+      const items = (result as any)?.content?.items;
+      const content = Array.isArray(items) ? items[0] : items;
 
       if (!content) {
         return (

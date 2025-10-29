@@ -1,6 +1,6 @@
 import { createEditPageComponent as createEditPage } from "@/lib/optimizely-cms/preview";
-import factory from '@/components/factory'
-import { createClient } from '@/lib/optimizely-cms'
+import factory from '@/components/factory';
+import { createClient } from '@/lib/optimizely-cms';
 import { getContentById } from "@/gql/functions";
 
 const Page = createEditPage(factory, {

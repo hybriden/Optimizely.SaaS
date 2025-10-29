@@ -1,6 +1,6 @@
 /**
  * Optimizely CMS Library
- * Custom replacement for @remkoj packages
+ * Custom CMS integration for Optimizely SaaS CMS
  */
 
 // Client

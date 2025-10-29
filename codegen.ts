@@ -22,7 +22,6 @@ envFiles.map(s => path.join(process.cwd(), s)).filter(s => fs.existsSync(s)).rev
 
 // Actual code generation setup
 import type { CodegenConfig  } from '@graphql-codegen/cli'
-// Removed @remkoj dependencies - using standard GraphQL codegen now
 
 // Get schema URL from environment
 const GRAPHQL_ENDPOINT = `${process.env.OPTIMIZELY_GRAPH_GATEWAY || 'https://cg.optimizely.com'}/content/v2`;

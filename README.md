@@ -31,7 +31,7 @@ A modern [Next.js](https://nextjs.org/) frontend for [Optimizely SaaS CMS](https
 
 ## Overview
 
-Proxima is a custom implementation for Optimizely SaaS CMS that replaces the standard `@remkoj/optimizely-cms-react-components` packages with a streamlined, automated solution. The centerpiece is the **Proxima CLI** - a custom tool that automatically syncs content types from Optimizely Graph and generates the necessary components, GraphQL fragments, and type definitions.
+Proxima is a custom implementation for Optimizely SaaS CMS with a streamlined, automated solution. The centerpiece is the **Proxima CLI** - a custom tool that automatically syncs content types from Optimizely Graph and generates the necessary components, GraphQL fragments, and type definitions.
 
 ## Key Features
 
@@ -370,17 +370,15 @@ The custom GraphQL client:
 - Supports multiple path formats for content routing
 - Handles both server-side and client-side rendering
 
-## Migration Notes
+## Architecture
 
-This project uses a custom CMS integration instead of the standard `@remkoj/optimizely-cms-react-components` packages. Key differences:
+This project uses a custom CMS integration built specifically for Optimizely SaaS CMS. Key features:
 
-- **No @remkoj dependencies**: Complete custom implementation
+- **Complete custom implementation**: All CMS integration code is included in the project
 - **Proxima CLI**: Custom tool for content type management
 - **No component prefixes**: Components registered by exact typename
 - **Interface-based detection**: Uses GraphQL interfaces to determine content type categories
 - **Automated workflow**: Pull, create, compile workflow
-
-See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed migration information.
 
 ## Debugging
 

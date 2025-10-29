@@ -154,6 +154,9 @@ export async function getContentByPath(client: GraphQLClient, variables: Types.g
         _metadata {
           key
           displayName
+          url {
+            default
+          }
         }
       }
     }
@@ -324,6 +327,9 @@ export async function getContentById(client: GraphQLClient, variables: Types.get
         _metadata {
           key
           displayName
+          url {
+            default
+          }
         }
       }
     }

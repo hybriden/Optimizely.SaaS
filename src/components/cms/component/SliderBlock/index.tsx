@@ -13,13 +13,13 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
     const [currentSlide, setCurrentSlide] = useState(0);
     const [direction, setDirection] = useState<'next' | 'prev'>('next');
     const sliderContent = data.SliderContent || [];
-    
+
     // Extract image URLs from slider content
     const slides = sliderContent.map((item: any) => ({
         url: item._metadata?.url?.default || '',
         displayName: item._metadata?.displayName || 'Slide'
     })).filter(slide => slide.url);
-    
+
     const totalSlides = slides.length;
     
     // Auto-play functionality

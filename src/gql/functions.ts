@@ -172,6 +172,7 @@ export async function getContentById(client: GraphQLClient, variables: Types.get
   const query = gql`
     query getContentById($key: String!, $version: String, $locale: [Locales!], $changeset: String) {
       content: _Content(
+        variation: { include: ALL }
         where: {
           _metadata: { key: { eq: $key }, version: { eq: $version }, changeset: { eq: $changeset } }
         }

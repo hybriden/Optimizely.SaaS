@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import { ComponentFactory } from './factory';
 import { OptimizelyGraphClient } from './client';
 import { setEditMode } from './context';
@@ -90,9 +91,9 @@ export function createEditPageComponent<TContent = ContentData>(
       return (
         <>
           {ctx === 'edit' && (
-            <script
+            <Script
               src="https://cg.optimizely.com/app/editor/clientresources/latest/communicationinjector.js"
-              async
+              strategy="afterInteractive"
             />
           )}
           <div data-epi-edit="true">

@@ -113,23 +113,28 @@ yarn proxima:pull
 ```
 
 This command:
-- Connects to Optimizely Graph
+- Connects to Optimizely Graph using your environment variables
 - Fetches all content types using GraphQL introspection
 - Detects the base type (page/experience/component) from GraphQL interfaces
 - Saves `.opti-type.json` files in the appropriate folders under `src/components/cms/`
 
-### 4. Generate Components
+### 4. Generate Components, Fragments, and Factories
 
 ```bash
 yarn proxima:create
 ```
 
 This command:
-- Reads all `.opti-type.json` files
+- Reads all `.opti-type.json` files from your components directory
 - Generates React component files (`index.tsx`)
 - Generates GraphQL fragment files (`.graphql`)
 - Creates factory index files for component registration
 - Skips files marked as modified (unless using `--force` flag)
+
+Alternatively, you can run individual generation commands:
+- `yarn proxima:components` - Generate only React components
+- `yarn proxima:fragments` - Generate only GraphQL fragments
+- `yarn proxima:factory` - Generate only factory files
 
 ### 5. Compile GraphQL Types
 
@@ -152,6 +157,32 @@ The application will be available at `http://localhost:3000`
 
 ## Proxima CLI Commands
 
+### Next.js Code Generation
+
+**Generate Everything (Recommended)**
+```bash
+yarn proxima:create
+```
+Generates all components, fragments, and factory files in one command. This is the main command you'll use after pulling content types.
+
+**Generate Components Only**
+```bash
+yarn proxima:components
+```
+Generates only the React component files (`index.tsx`) from `.opti-type.json` definitions.
+
+**Generate GraphQL Fragments Only**
+```bash
+yarn proxima:fragments
+```
+Generates only the GraphQL fragment files (`.graphql`) from content type definitions.
+
+**Generate Factories Only**
+```bash
+yarn proxima:factory
+```
+Generates only the factory index files for component registration.
+
 ### Content Type Management
 
 **List Content Types**
@@ -164,31 +195,30 @@ Shows all content types from both Optimizely Graph and your local project.
 ```bash
 yarn proxima:pull
 ```
-Fetches content type definitions from Optimizely Graph and saves them locally.
+Fetches content type definitions from Optimizely Graph and saves them as `.opti-type.json` files.
 
 Options:
 - `-o, --output <path>`: Output directory (default: `src/components/cms`)
 - `-f, --force`: Overwrite existing files even if modified
 
+### CMS Utilities
+
+**Display CMS Configuration**
+```bash
+yarn proxima:info
+```
+Shows the current Optimizely CMS configuration from environment variables.
+
 **View Help**
 ```bash
 yarn proxima:help
 ```
-Shows all available Proxima CLI commands with descriptions.
+Displays all available Proxima CLI commands with descriptions.
 
-### Component Generation
+### Common Options
 
-**Create Components**
-```bash
-yarn proxima:create
-```
-Generates React components and GraphQL fragments from content type definitions.
-
-The command generates:
-- `index.tsx` - React component file
-- `[ContentType].page.graphql` or `.component.graphql` - GraphQL fragment
-- Factory index files (`page/index.ts`, `component/index.ts`, etc.)
-- Main CMS factory (`src/components/cms/index.ts`)
+- `-f, --force`: Force overwrite modified files (works with most commands)
+- `-d, --dir <path>`: Specify components directory relative to project root
 
 ## Workflow
 
@@ -356,8 +386,9 @@ See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed migration information.
 
 **Content not updating after publishing:**
 - Locally: Navigate to `http://localhost:3000/api/content/publish?token=YOUR_PUBLISH_TOKEN`
-- Hosted: Verify webhook registration with `yarn webhook:list`
+- Hosted: Verify webhook registration with `opti-graph webhook:list`
 - Check `SITE_DOMAIN` environment variable (defaults to `$VERCEL_BRANCH_URL`)
+- Note: Webhook commands use the `opti-graph` CLI tool (installed via npm)
 
 **GraphQL compilation errors:**
 ```bash

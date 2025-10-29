@@ -74,8 +74,18 @@ export function createEditPageComponent<TContent = ContentData>(
         );
       }
 
-      // Resolve component
-      const typename = content.__typename || content._type;
+      // Resolve component - handle generic types like _Content, _Page
+      let typename = content.__typename || content._type;
+
+      // If typename is generic (_Content, _Page, _IPage, etc.), use types array
+      if (typename === '_Content' || typename === '_Page' || typename?.startsWith('_I')) {
+        if (content._metadata?.types && content._metadata.types.length > 0) {
+          // Use the FIRST type in the array which is the most specific content type
+          // Array is ordered as: [StartPage, _Page, _Content] where StartPage is most specific
+          typename = content._metadata.types[0];
+        }
+      }
+
       const Component = factory.resolve(typename) as OptimizelyNextPage | null;
 
       if (!Component) {

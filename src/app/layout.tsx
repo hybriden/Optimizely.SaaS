@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { getServerContext } from "@remkoj/optimizely-cms-react/rsc";
+import { getServerContext } from "@/lib/optimizely-cms/rsc";
 
 import Header from "@/components/header";
 
@@ -19,10 +19,18 @@ export default function RootLayout({
 }>) {
   const { locale } = getServerContext();
   return (
-    <html lang={locale ?? "en"}>
-      <body className={inter.className}>
-        <Header />
-        <main>{children}</main>
+    <html lang={locale ?? "en"} className="dark scroll-smooth">
+      <body className={`${inter.className} bg-slate-950 antialiased`}>
+        <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 border-t border-white/5 py-12">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent"></div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+              <p className="text-slate-400 text-sm">&copy; {new Date().getFullYear()} Epinova</p>
+            </div>
+          </footer>
+        </div>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import { draftMode } from "next/headers";
-import { createPage } from "@remkoj/optimizely-cms-nextjs/page";
-import { createClient, AuthMode } from "@remkoj/optimizely-graph-client";
+import { createPage } from "@/lib/optimizely-cms/page";
+import { createClient, AuthMode } from "@/lib/optimizely-cms";
 
 // Import parts from the build
 import { getContentByPath } from "@/gql/functions";

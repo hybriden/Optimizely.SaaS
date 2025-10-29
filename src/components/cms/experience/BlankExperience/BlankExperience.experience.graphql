@@ -1,0 +1,10 @@
+fragment BlankExperienceData on BlankExperience {
+  _metadata { key }
+  composition {
+    key
+    displayName
+    nodeType
+    type
+    displayTemplateKey
+  }
+}

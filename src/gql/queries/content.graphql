@@ -1,0 +1,29 @@
+query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: String = null) {
+  content: _Content(
+    where: {_metadata: {url: {default: {in: $path}}, changeset: {eq: $changeset}}}
+    locale: $locale
+  ) {
+    total
+    items: item {
+      __typename
+      _metadata {
+        key
+        displayName
+        types
+        url {
+          default
+          base
+        }
+      }
+      ...IContentData
+      ...PageData
+      ...BlankExperienceData
+      ... on LandingPage {
+        ...LandingPageData
+      }
+      ... on StartPage {
+        ...StartPageData
+      }
+    }
+  }
+}

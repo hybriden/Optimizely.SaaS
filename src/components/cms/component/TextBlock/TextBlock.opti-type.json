@@ -1,0 +1,23 @@
+{
+  "key": "TextBlock",
+  "displayName": "Text block",
+  "description": "",
+  "baseType": "component",
+  "sortOrder": 0,
+  "mayContainTypes": [],
+  "mediaFileExtensions": [],
+  "compositionBehaviors": [],
+  "properties": {
+    "Text": {
+      "type": "string",
+      "format": "html",
+      "displayName": "Text",
+      "description": "",
+      "localized": false,
+      "required": false,
+      "group": "Information",
+      "sortOrder": 0,
+      "editorSettings": {}
+    }
+  }
+}

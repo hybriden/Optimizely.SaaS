@@ -1,15 +1,14 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Link from 'next/link';
 
 export const SiteHeader = ({}) => {
-    return <header className='p-5 flex flex-row'>
-        <Link className='block relative min-w-[225px]' title='Moseybank - An Optimizely Demo Company' href="https://www.optimizely.com/get-started">
-            <Image src="/moseybank.svg" width={ 200 } height={ 36 } alt="Mosey Bank" className='mr-[25px]'/>
-            <div className='absolute top-[28px] left-[65px] nowrap'>An Optimizely demo</div>
-        </Link>
-        <Link className='block ml-auto' href='https://nextjs.org'>
-            <Image src="/next.svg" width={ 150 } height={ 30 } alt="Powered by Next.js" title="Powered by Next.js" />
-        </Link>
+    return <header className='bg-slate-950/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-50'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
+            <div className="flex items-center justify-between">
+                <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent transition-opacity hover:opacity-80">
+                    Epinova
+                </Link>
+            </div>
+        </div>
     </header>
 }
 

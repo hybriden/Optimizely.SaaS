@@ -1,0 +1,3 @@
+fragment ArticlePageData on ArticlePage {
+  _metadata { key }
+}

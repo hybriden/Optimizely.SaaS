@@ -1,0 +1,15 @@
+fragment HeroBlockData on HeroBlock {
+  Heading
+  Image {
+    url {
+      default
+    }
+  }
+  MainIntro { json, html }
+  ContentLink {
+    url {
+      default
+    }
+  }
+  Width
+}

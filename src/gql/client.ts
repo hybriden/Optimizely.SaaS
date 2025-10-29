@@ -2,6 +2,23 @@ import type * as Schema from "./graphql";
 import type { GraphQLClient, RequestOptions } from 'graphql-request';
 import gql from 'graphql-tag';
 type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
+export const BlankExperienceDataFragmentDoc = gql`
+    fragment BlankExperienceData on BlankExperience {
+  _metadata {
+    key
+  }
+}
+    `;
+export const LandingPageDataFragmentDoc = gql`
+    fragment LandingPageData on LandingPage {
+  Title
+  MetaDescription
+  UrlSegment
+  MainBody {
+    html
+  }
+}
+    `;
 export const LinkDataFragmentDoc = gql`
     fragment LinkData on ContentUrl {
   base
@@ -28,8 +45,8 @@ export const IContentDataFragmentDoc = gql`
   _type: __typename
 }
     `;
-export const PageDataFragmentDoc = gql`
-    fragment PageData on _IContent {
+export const IContentListItemFragmentDoc = gql`
+    fragment IContentListItem on _IContent {
   ...IContentData
 }
     `;
@@ -41,8 +58,62 @@ export const ReferenceDataFragmentDoc = gql`
   }
 }
     `;
-export const IContentListItemFragmentDoc = gql`
-    fragment IContentListItem on _IContent {
+export const HeroBlockDataFragmentDoc = gql`
+    fragment HeroBlockData on HeroBlock {
+  Heading
+  Image {
+    ...ReferenceData
+  }
+  MainIntro {
+    json
+    html
+  }
+  ContentLink {
+    ...ReferenceData
+  }
+  Width
+}
+    `;
+export const TextBlockDataFragmentDoc = gql`
+    fragment TextBlockData on TextBlock {
+  Text {
+    json
+    html
+  }
+}
+    `;
+export const SliderBlockDataFragmentDoc = gql`
+    fragment SliderBlockData on SliderBlock {
+  SliderContent {
+    ...IContentListItem
+  }
+}
+    `;
+export const ContentAreaDataFragmentDoc = gql`
+    fragment ContentAreaData on ContentArea {
+  _metadata {
+    key
+  }
+}
+    `;
+export const StartPageDataFragmentDoc = gql`
+    fragment StartPageData on StartPage {
+  Heading
+  MainIntro {
+    json
+    html
+  }
+  MainContentArea {
+    ...IContentListItem
+    ...HeroBlockData
+    ...TextBlockData
+    ...SliderBlockData
+    ...ContentAreaData
+  }
+}
+    `;
+export const PageDataFragmentDoc = gql`
+    fragment PageData on _IContent {
   ...IContentData
 }
     `;
@@ -82,6 +153,10 @@ export const CompositionComponentNodeDataFragmentDoc = gql`
   component {
     ...BlockData
     ...ElementData
+    ...ContentAreaData
+    ...HeroBlockData
+    ...SliderBlockData
+    ...TextBlockData
   }
 }
     `;
@@ -112,16 +187,6 @@ export const ExperienceDataFragmentDoc = gql`
   }
 }
     `;
-export const LinkItemDataFragmentDoc = gql`
-    fragment LinkItemData on Link {
-  title
-  text
-  target
-  url {
-    ...LinkData
-  }
-}
-    `;
 export const getContentByIdDocument = gql`
     query getContentById($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String, $changeset: String) {
   content: _Content(
@@ -134,6 +199,13 @@ export const getContentByIdDocument = gql`
       ...IContentData
       ...BlockData
       ...PageData
+      ...ContentAreaData
+      ...HeroBlockData
+      ...SliderBlockData
+      ...TextBlockData
+      ...BlankExperienceData
+      ...LandingPageData
+      ...StartPageData
     }
   }
 }
@@ -141,24 +213,45 @@ export const getContentByIdDocument = gql`
 ${IContentInfoFragmentDoc}
 ${LinkDataFragmentDoc}
 ${BlockDataFragmentDoc}
-${PageDataFragmentDoc}`;
+${PageDataFragmentDoc}
+${ContentAreaDataFragmentDoc}
+${HeroBlockDataFragmentDoc}
+${ReferenceDataFragmentDoc}
+${SliderBlockDataFragmentDoc}
+${IContentListItemFragmentDoc}
+${TextBlockDataFragmentDoc}
+${BlankExperienceDataFragmentDoc}
+${LandingPageDataFragmentDoc}
+${StartPageDataFragmentDoc}`;
 export const getContentByPathDocument = gql`
-    query getContentByPath($path: [String!]!, $locale: [Locales!], $siteId: String, $changeset: String = null) {
+    query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: String = null) {
   content: _Content(
-    where: {_metadata: {url: {default: {in: $path}, base: {eq: $siteId}}, changeset: {eq: $changeset}}}
+    where: {_metadata: {url: {default: {in: $path}}, changeset: {eq: $changeset}}}
     locale: $locale
   ) {
     total
     items: item {
       ...IContentData
       ...PageData
+      ...BlankExperienceData
+      ...LandingPageData
+      ...StartPageData
     }
   }
 }
     ${IContentDataFragmentDoc}
 ${IContentInfoFragmentDoc}
 ${LinkDataFragmentDoc}
-${PageDataFragmentDoc}`;
+${PageDataFragmentDoc}
+${BlankExperienceDataFragmentDoc}
+${LandingPageDataFragmentDoc}
+${StartPageDataFragmentDoc}
+${IContentListItemFragmentDoc}
+${HeroBlockDataFragmentDoc}
+${ReferenceDataFragmentDoc}
+${TextBlockDataFragmentDoc}
+${SliderBlockDataFragmentDoc}
+${ContentAreaDataFragmentDoc}`;
 export const getContentTypeDocument = gql`
     query getContentType($key: String!, $version: String, $locale: [Locales!], $path: String = "-", $domain: String) {
   content: _Content(

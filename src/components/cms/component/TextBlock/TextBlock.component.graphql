@@ -1,0 +1,3 @@
+fragment TextBlockData on TextBlock {
+  Text { json, html }
+}

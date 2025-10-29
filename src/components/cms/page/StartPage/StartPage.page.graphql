@@ -1,0 +1,16 @@
+fragment StartPageData on StartPage {
+  Heading
+  MainIntro { json, html }
+  MainContentArea {
+    __typename
+    _metadata {
+      key
+      displayName
+      types
+    }
+    ...HeroBlockData
+    ...TextBlockData
+    ...SliderBlockData
+    ...ContentAreaData
+  }
+}

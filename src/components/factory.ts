@@ -1,7 +1,7 @@
 import 'server-only'
-import { getFactory as getBaseFactory, RichTextComponentDictionary } from "@remkoj/optimizely-cms-react/rsc";
+import { getFactory as getBaseFactory, RichTextComponentDictionary } from "@/lib/optimizely-cms/rsc";
 
-// Import all server components that should be loaded dynamically when the 
+// Import all server components that should be loaded dynamically when the
 // content requires them
 import components from './cms';
 

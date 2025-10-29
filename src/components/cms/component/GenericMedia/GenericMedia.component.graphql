@@ -1,0 +1,3 @@
+fragment GenericMediaData on GenericMedia {
+  _metadata { key }
+}

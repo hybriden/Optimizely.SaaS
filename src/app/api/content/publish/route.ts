@@ -1,4 +1,4 @@
-import createPublishApi from '@remkoj/optimizely-cms-nextjs/publish'
+import createPublishApi from '@/lib/optimizely-cms/publish'
 
 const publishApi = createPublishApi({ 
     optimizePublish: true, //Only publish the actual content item

@@ -1,0 +1,3 @@
+fragment MyTestData on MyTest {
+  _metadata { key }
+}

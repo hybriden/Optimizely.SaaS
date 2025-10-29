@@ -1,0 +1,3 @@
+fragment SysContentFolderData on SysContentFolder {
+  _metadata { key }
+}

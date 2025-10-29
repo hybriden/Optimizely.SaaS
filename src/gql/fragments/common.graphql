@@ -1,0 +1,37 @@
+# Common reusable GraphQL fragments
+
+# Fragment for content reference data
+fragment ReferenceData on ContentReference {
+  id
+  workId
+  guidValue
+  url {
+    default
+    base
+  }
+  expanded {
+    __typename
+    _metadata {
+      key
+      displayName
+      url {
+        default
+        base
+      }
+    }
+  }
+}
+
+# Fragment for content list items
+fragment IContentListItem on _IContent {
+  __typename
+  _metadata {
+    key
+    displayName
+    types
+    url {
+      default
+      base
+    }
+  }
+}

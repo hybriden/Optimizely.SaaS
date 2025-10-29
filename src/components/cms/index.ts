@@ -1,5 +1,20 @@
-// Empty dictionary to prevent build errors
+// Auto generated dictionary
 // @not-modified => When this line is removed, the "force" parameter of the CLI tool is required to overwrite this file
-import { type ComponentTypeDictionary } from "@remkoj/optimizely-cms-react/rsc";
-export const cmsComponentDictionary : ComponentTypeDictionary = []
-export default cmsComponentDictionary
+import { type ComponentTypeDictionary } from "@/lib/optimizely-cms";
+import NodeComponent from "./node";
+import UtilsContentAreaRendererComponent from "./utils/contentAreaRenderer";
+import PageFactory from "./page";
+import ExperienceFactory from "./experience";
+import ComponentFactory from "./component";
+
+// Build dictionary
+export const CmsFactory : ComponentTypeDictionary = {
+    "Node": NodeComponent,
+    "utils/contentAreaRenderer": UtilsContentAreaRendererComponent,
+    ...PageFactory,
+    ...ExperienceFactory,
+    ...ComponentFactory
+};
+
+// Export dictionary
+export default CmsFactory;

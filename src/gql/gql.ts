@@ -18,8 +18,8 @@ type Documents = {
     "fragment ContentAreaData on ContentArea {\n  _metadata {\n    key\n  }\n}": typeof types.ContentAreaDataFragmentDoc,
     "fragment GenericMediaData on GenericMedia {\n  _metadata {\n    key\n  }\n}": typeof types.GenericMediaDataFragmentDoc,
     "fragment HeroBlockData on HeroBlock {\n  Heading\n  Image {\n    url {\n      default\n    }\n  }\n  MainIntro {\n    json\n    html\n  }\n  ContentLink {\n    url {\n      default\n    }\n  }\n  Width\n}": typeof types.HeroBlockDataFragmentDoc,
-    "fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n    displayName\n    url {\n      default\n    }\n  }\n}": typeof types.ImageMediaDataFragmentDoc,
-    "fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      url {\n        default\n      }\n    }\n    ...ImageMediaData\n  }\n}": typeof types.SliderBlockDataFragmentDoc,
+    "fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n  }\n}": typeof types.ImageMediaDataFragmentDoc,
+    "fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n      url {\n        default\n        base\n      }\n    }\n  }\n}": typeof types.SliderBlockDataFragmentDoc,
     "fragment SysContentFolderData on SysContentFolder {\n  _metadata {\n    key\n  }\n}": typeof types.SysContentFolderDataFragmentDoc,
     "fragment TextBlockData on TextBlock {\n  Text {\n    json\n    html\n  }\n}": typeof types.TextBlockDataFragmentDoc,
     "fragment VideoMediaData on VideoMedia {\n  _metadata {\n    key\n  }\n}": typeof types.VideoMediaDataFragmentDoc,
@@ -34,8 +34,8 @@ const documents: Documents = {
     "fragment ContentAreaData on ContentArea {\n  _metadata {\n    key\n  }\n}": types.ContentAreaDataFragmentDoc,
     "fragment GenericMediaData on GenericMedia {\n  _metadata {\n    key\n  }\n}": types.GenericMediaDataFragmentDoc,
     "fragment HeroBlockData on HeroBlock {\n  Heading\n  Image {\n    url {\n      default\n    }\n  }\n  MainIntro {\n    json\n    html\n  }\n  ContentLink {\n    url {\n      default\n    }\n  }\n  Width\n}": types.HeroBlockDataFragmentDoc,
-    "fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n    displayName\n    url {\n      default\n    }\n  }\n}": types.ImageMediaDataFragmentDoc,
-    "fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      url {\n        default\n      }\n    }\n    ...ImageMediaData\n  }\n}": types.SliderBlockDataFragmentDoc,
+    "fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n  }\n}": types.ImageMediaDataFragmentDoc,
+    "fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n      url {\n        default\n        base\n      }\n    }\n  }\n}": types.SliderBlockDataFragmentDoc,
     "fragment SysContentFolderData on SysContentFolder {\n  _metadata {\n    key\n  }\n}": types.SysContentFolderDataFragmentDoc,
     "fragment TextBlockData on TextBlock {\n  Text {\n    json\n    html\n  }\n}": types.TextBlockDataFragmentDoc,
     "fragment VideoMediaData on VideoMedia {\n  _metadata {\n    key\n  }\n}": types.VideoMediaDataFragmentDoc,
@@ -79,11 +79,11 @@ export function gql(source: "fragment HeroBlockData on HeroBlock {\n  Heading\n 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n    displayName\n    url {\n      default\n    }\n  }\n}"): (typeof documents)["fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n    displayName\n    url {\n      default\n    }\n  }\n}"];
+export function gql(source: "fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n  }\n}"): (typeof documents)["fragment ImageMediaData on ImageMedia {\n  _metadata {\n    key\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      url {\n        default\n      }\n    }\n    ...ImageMediaData\n  }\n}"): (typeof documents)["fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      url {\n        default\n      }\n    }\n    ...ImageMediaData\n  }\n}"];
+export function gql(source: "fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n      url {\n        default\n        base\n      }\n    }\n  }\n}"): (typeof documents)["fragment SliderBlockData on SliderBlock {\n  SliderContent {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n      url {\n        default\n        base\n      }\n    }\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -64,6 +64,19 @@ export async function getContentByPath(client: GraphQLClient, variables: Types.g
       default
     }
 
+    fragment IContentListItem on _IContent {
+      __typename
+      _metadata {
+        key
+        displayName
+        types
+        url {
+          default
+          base
+        }
+      }
+    }
+
     fragment PageData on _IContent {
       ...IContentData
     }
@@ -154,8 +167,10 @@ export async function getContentByPath(client: GraphQLClient, variables: Types.g
         _metadata {
           key
           displayName
+          types
           url {
             default
+            base
           }
         }
       }
@@ -237,6 +252,19 @@ export async function getContentById(client: GraphQLClient, variables: Types.get
       default
     }
 
+    fragment IContentListItem on _IContent {
+      __typename
+      _metadata {
+        key
+        displayName
+        types
+        url {
+          default
+          base
+        }
+      }
+    }
+
     fragment PageData on _IContent {
       ...IContentData
     }
@@ -327,8 +355,10 @@ export async function getContentById(client: GraphQLClient, variables: Types.get
         _metadata {
           key
           displayName
+          types
           url {
             default
+            base
           }
         }
       }

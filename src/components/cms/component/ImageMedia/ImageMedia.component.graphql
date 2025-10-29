@@ -1,9 +1,3 @@
 fragment ImageMediaData on ImageMedia {
-  _metadata {
-    key
-    displayName
-    url {
-      default
-    }
-  }
+  _metadata { key }
 }

@@ -88,7 +88,18 @@ export default ${componentName}
     }
 
     if (type === 'array' && items?.type === 'content') {
-      return `${key} { ...IContentListItem }`;
+      return `${key} {
+    __typename
+    _metadata {
+      key
+      displayName
+      types
+      url {
+        default
+        base
+      }
+    }
+  }`;
     }
 
     if (type === 'content') {

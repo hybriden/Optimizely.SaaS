@@ -4,10 +4,11 @@ fragment SliderBlockData on SliderBlock {
     _metadata {
       key
       displayName
+      types
       url {
         default
+        base
       }
     }
-    ...ImageMediaData
   }
 }

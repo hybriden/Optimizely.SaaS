@@ -31,9 +31,11 @@ export function createEditPageComponent<TContent = ContentData>(
 
     // Get content key from search params
     const key = searchParams.key as string;
-    const version = searchParams.version as string;
-    const locale = (searchParams.locale as string) || 'en';
-    const token = searchParams.token as string;
+    const version = searchParams.version as string || searchParams.ver as string;
+    const locale = (searchParams.locale as string) || (searchParams.loc as string) || 'en';
+    const previewToken = searchParams.preview_token as string; // Token from Optimizely CMS
+    const token = previewToken || (searchParams.token as string); // Fallback to token
+    const ctx = searchParams.ctx as string; // Context mode: 'edit' or 'preview'
 
     if (!key) {
       return (
@@ -48,7 +50,7 @@ export function createEditPageComponent<TContent = ContentData>(
     const client = config.clientFactory(token);
 
     try {
-      // Load content
+      // Load content - Note: when using preview_token, it handles access to draft content
       const result = await config.loader(
         client,
         {
@@ -84,10 +86,19 @@ export function createEditPageComponent<TContent = ContentData>(
         );
       }
 
+      // Render with editing attributes
       return (
-        <div data-epi-edit="true">
-          <Component data={content} inEditMode={true} />
-        </div>
+        <>
+          {ctx === 'edit' && (
+            <script
+              src="https://cg.optimizely.com/app/editor/clientresources/latest/communicationinjector.js"
+              async
+            />
+          )}
+          <div data-epi-edit="true">
+            <Component data={content} inEditMode={true} />
+          </div>
+        </>
       );
     } catch (error) {
       console.error('Error loading preview:', error);

@@ -21,17 +21,3 @@ fragment ReferenceData on ContentReference {
     }
   }
 }
-
-# Fragment for content list items
-fragment IContentListItem on _IContent {
-  __typename
-  _metadata {
-    key
-    displayName
-    types
-    url {
-      default
-      base
-    }
-  }
-}

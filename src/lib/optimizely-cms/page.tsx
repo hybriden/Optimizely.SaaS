@@ -56,8 +56,9 @@ export function createPage<TContent = ContentData>(
     let typename = content.__typename || content._type;
     if (typename === '_Content' || typename === '_Page' || typename?.startsWith('_I')) {
       if (content._metadata?.types && content._metadata.types.length > 0) {
-        // Use the last type in the array which is usually the most specific content type
-        typename = content._metadata.types[content._metadata.types.length - 1];
+        // Use the FIRST type in the array which is the most specific content type
+        // Array is ordered as: [MyTest, _Page, _Content] where MyTest is most specific
+        typename = content._metadata.types[0];
       }
     }
 
@@ -119,7 +120,8 @@ export function createPage<TContent = ContentData>(
       let typename = content.__typename || content._type;
       if (typename === '_Content' || typename === '_Page' || typename?.startsWith('_I')) {
         if (content._metadata?.types && content._metadata.types.length > 0) {
-          typename = content._metadata.types[content._metadata.types.length - 1];
+          // Use the FIRST type in the array which is the most specific content type
+          typename = content._metadata.types[0];
         } else if (content.Title || content.MetaDescription || content.MainBody) {
           typename = 'LandingPage';
         }

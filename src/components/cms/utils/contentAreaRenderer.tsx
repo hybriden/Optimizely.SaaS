@@ -66,7 +66,17 @@ interface ContentAreaRendererProps {
 export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentAreaRendererProps) {
   // Support both direct items prop and data.items for CMS component compatibility
   const contentItems = items || data?.items || [];
+
+  // Debug logging
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+    console.log('[ContentAreaRenderer] items:', items);
+    console.log('[ContentAreaRenderer] data:', data);
+    console.log('[ContentAreaRenderer] contentItems:', contentItems);
+    console.log('[ContentAreaRenderer] contentItems.length:', contentItems?.length);
+  }
+
   if (!contentItems || contentItems.length === 0) {
+    console.log('[ContentAreaRenderer] No items to render - returning null');
     return null;
   }
 
@@ -78,6 +88,10 @@ export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentA
         // We want the most specific type (not _Component or _Content)
         const types = item._metadata?.types || [];
         const itemType = types.find((t: string) => !t.startsWith('_')) || item._type;
+
+        if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+          console.log(`[ContentAreaRenderer] Item ${index}:`, { types, itemType, item });
+        }
 
         const key = item._metadata?.key || `item-${index}`;
         const contentLink = {

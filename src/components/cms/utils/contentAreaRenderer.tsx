@@ -3,9 +3,6 @@ import HeroBlockComponent from '@/components/cms/component/HeroBlock';
 import TextBlockComponent from '@/components/cms/component/TextBlock';
 import SliderBlockComponent from '@/components/cms/component/SliderBlock';
 import ContentAreaComponent from '@/components/cms/component/ContentArea';
-import NewsPageTeaser from '@/components/cms/page/NewsPage/Teaser';
-import LandingPageTeaser from '@/components/cms/page/LandingPage/Teaser';
-import ArticlePageTeaser from '@/components/cms/page/ArticlePage/Teaser';
 
 // Central registry for all block components
 type BlockComponent = ComponentType<any>;
@@ -22,11 +19,8 @@ const BLOCK_REGISTRY: BlockRegistry = {
 };
 
 // Teaser registry for page types when shown in content areas
-const TEASER_REGISTRY: BlockRegistry = {
-  'NewsPage': NewsPageTeaser,
-  'LandingPage': LandingPageTeaser,
-  'ArticlePage': ArticlePageTeaser,
-};
+// Use registerTeaser() to add page teasers
+const TEASER_REGISTRY: BlockRegistry = {};
 
 /**
  * Register a new block component type
@@ -36,10 +30,25 @@ export function registerBlock(typeName: string, component: BlockComponent) {
 }
 
 /**
+ * Register a teaser component for a page type
+ * This allows pages to render as cards when added to content areas
+ */
+export function registerTeaser(typeName: string, component: BlockComponent) {
+  TEASER_REGISTRY[typeName] = component;
+}
+
+/**
  * Get component for a specific block type
  */
 export function getBlockComponent(typeName: string): BlockComponent | null {
   return BLOCK_REGISTRY[typeName] || null;
+}
+
+/**
+ * Get teaser component for a page type
+ */
+export function getTeaserComponent(typeName: string): BlockComponent | null {
+  return TEASER_REGISTRY[typeName] || null;
 }
 
 /**
@@ -77,7 +86,7 @@ export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentA
         };
 
         // Check if this is a page type that should render as a teaser
-        const TeaserComponent = TEASER_REGISTRY[itemType];
+        const TeaserComponent = getTeaserComponent(itemType);
         if (TeaserComponent) {
           return <TeaserComponent key={key} contentLink={contentLink} data={item} />;
         }

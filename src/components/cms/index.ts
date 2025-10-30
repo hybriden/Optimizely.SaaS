@@ -7,6 +7,9 @@ import PageFactory from "./page";
 import ExperienceFactory from "./experience";
 import ComponentFactory from "./component";
 
+// Register page teasers for content area rendering
+import "./page/teaserRegistry";
+
 // Build dictionary
 export const CmsFactory : ComponentTypeDictionary = {
     "Node": NodeComponent,

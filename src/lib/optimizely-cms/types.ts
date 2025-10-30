@@ -38,12 +38,18 @@ export interface ContentData {
 }
 
 /**
+ * Component rendering mode
+ */
+export type ComponentRenderMode = 'full' | 'teaser';
+
+/**
  * Component props for CMS components
  */
 export interface CmsComponentProps<T = ContentData> {
   data: T;
   children?: ReactNode;
   inEditMode?: boolean;
+  renderMode?: ComponentRenderMode;
 }
 
 /**
@@ -53,6 +59,7 @@ export interface CmsComponent<T = ContentData> {
   (props: CmsComponentProps<T>): ReactNode;
   displayName?: string;
   getDataFragment?: () => [string, TypedDocumentNode<any, any>];
+  renderTeaser?: (props: CmsComponentProps<T>) => ReactNode;
 }
 
 /**

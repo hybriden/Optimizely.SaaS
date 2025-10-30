@@ -95,32 +95,7 @@ export function createEditPageComponent<TContent = ContentData>(
           // Array is ordered as: [StartPage, _Page, _Content] where StartPage is most specific
           typename = content._metadata.types[0];
         } else {
-          console.warn('Preview - No types array, inferring from content data');
-
-          // Fallback: Try to infer type from specific properties that only exist on certain types
-          // Check for StartPage-specific fields
-          if ('Heading' in content || 'MainIntro' in content || 'MainContentArea' in content) {
-            typename = 'StartPage';
-          }
-          // Check for LandingPage-specific fields
-          else if ('Title' in content && 'MainBody' in content && 'MetaDescription' in content) {
-            typename = 'LandingPage';
-          }
-          // Check for ArticlePage-specific fields
-          else if ('ArticleTitle' in content || 'ArticleBody' in content) {
-            typename = 'ArticlePage';
-          }
-          // Check for MyTest-specific fields
-          else if ('TestField' in content) {
-            typename = 'MyTest';
-          }
-          // Last resort: use URL pattern to guess
-          else {
-            const url = content._metadata?.url?.default || '';
-            if (url === '/' || url === '') {
-              typename = 'StartPage';
-            }
-          }
+          console.error('Preview - No types array available in metadata. Cannot resolve component type.');
         }
       }
 

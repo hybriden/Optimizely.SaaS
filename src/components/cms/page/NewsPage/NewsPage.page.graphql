@@ -4,4 +4,30 @@ fragment NewsPageData on NewsPage {
     published
     lastModified
   }
+  MainContentArea {
+    _metadata {
+      key
+      types
+      locale
+      url {
+        base
+        default
+      }
+      published
+    }
+    ... on LandingPage {
+      Title
+      MetaDescription
+    }
+    ... on ArticlePage {
+      _metadata {
+        displayName
+      }
+    }
+    ... on NewsPage {
+      _metadata {
+        displayName
+      }
+    }
+  }
 }

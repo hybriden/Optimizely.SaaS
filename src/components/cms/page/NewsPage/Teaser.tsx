@@ -5,12 +5,13 @@ import { TeaserCard } from "@/components/cms/shared/TeaserCard";
 
 export const NewsPageTeaser: CmsComponent<NewsPageDataFragment> = ({ data }) => {
     const metadata = (data as any)._metadata;
+    const title = metadata?.displayName || 'Latest News';
     const publishDate = metadata?.published || new Date().toISOString();
     const url = metadata?.url?.default || metadata?.url?.base || '#';
 
     return (
         <TeaserCard
-            title="Latest News"
+            title={title}
             description="Stay updated with the latest news and breaking stories."
             url={url}
             category="News"

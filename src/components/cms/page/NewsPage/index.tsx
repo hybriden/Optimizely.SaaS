@@ -11,6 +11,14 @@ export const NewsPageComponent : CmsComponent<NewsPageDataFragment> = ({ data, c
     const publishDate = metadata?.published || '2025-01-01';
     const mainContentArea = (data as any).MainContentArea || [];
 
+    // Debug logging to see what we're getting
+    if (typeof window !== 'undefined') {
+        console.log('NewsPage data:', data);
+        console.log('MainContentArea:', mainContentArea);
+        console.log('MainContentArea is array?', Array.isArray(mainContentArea));
+        console.log('MainContentArea length:', Array.isArray(mainContentArea) ? mainContentArea.length : 'not array');
+    }
+
     const formatDate = (dateString: string) => {
         try {
             return new Date(dateString).toLocaleDateString('en-US', {

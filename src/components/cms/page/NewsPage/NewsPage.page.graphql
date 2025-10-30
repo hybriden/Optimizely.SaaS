@@ -5,10 +5,12 @@ fragment NewsPageData on NewsPage {
     lastModified
   }
   MainContentArea {
+    __typename
     _metadata {
       key
       types
       locale
+      displayName
       url {
         base
         default
@@ -18,16 +20,6 @@ fragment NewsPageData on NewsPage {
     ... on LandingPage {
       Title
       MetaDescription
-    }
-    ... on ArticlePage {
-      _metadata {
-        displayName
-      }
-    }
-    ... on NewsPage {
-      _metadata {
-        displayName
-      }
     }
   }
 }

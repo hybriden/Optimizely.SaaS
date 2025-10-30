@@ -21,12 +21,9 @@ import VideoMediaComponent from './component/VideoMedia';
 import GenericMediaComponent from './component/GenericMedia';
 import SysContentFolderComponent from './component/SysContentFolder';
 
-// Import pages
-import StartPageComponent from './page/StartPage';
-import LandingPageComponent from './page/LandingPage';
-import ArticlePageComponent from './page/ArticlePage';
-import NewsPageComponent from './page/NewsPage';
-import MyTestComponent from './page/MyTest';
+// Note: Pages are NOT imported here to avoid circular dependencies
+// Pages use ContentAreaRenderer, which imports this registry
+// Only components (blocks) and teasers need to be registered here
 
 // Import teasers
 import LandingPageTeaser from './page/LandingPage/Teaser';
@@ -43,7 +40,8 @@ interface ComponentRegistry {
 }
 
 /**
- * Component registry for blocks and pages
+ * Component registry for blocks only
+ * Pages are NOT included here to avoid circular dependencies
  */
 const COMPONENT_REGISTRY: ComponentRegistry = {
   // Components/Blocks
@@ -56,13 +54,6 @@ const COMPONENT_REGISTRY: ComponentRegistry = {
   'VideoMedia': VideoMediaComponent,
   'GenericMedia': GenericMediaComponent,
   'SysContentFolder': SysContentFolderComponent,
-
-  // Pages
-  'StartPage': StartPageComponent,
-  'LandingPage': LandingPageComponent,
-  'ArticlePage': ArticlePageComponent,
-  'NewsPage': NewsPageComponent,
-  'MyTest': MyTestComponent,
 };
 
 /**

@@ -107,7 +107,7 @@ export interface PageConfig<T = any> {
   client?: (
     token?: string,
     scope?: 'page' | 'request'
-  ) => OptimizelyGraphClient;
+  ) => OptimizelyGraphClient | Promise<OptimizelyGraphClient>;
 }
 
 /**

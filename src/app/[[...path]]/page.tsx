@@ -41,13 +41,25 @@ const { CmsPage, generateMetadata, generateStaticParams } = createPage(
      * @param   scope     The scope for the client, when `request`, Next.JS methods like 'draftMode' can be used
      * @returns The GraphQL Client instance
      */
-    client(token, scope) {
+    async client(token, scope) {
       // Create the client
       const client = createClient(undefined, token, {
         nextJsFetchDirectives: true,
       });
-      // Note: draftMode() is now async in Next.js 16, but client factory must be sync
-      // Draft mode check has been removed - consider using cookies() instead if needed
+
+      // Check if we're in request mode and draftMode is enabled (async in Next.js 16)
+      if (scope === "request") {
+        const draft = await draftMode();
+        if (draft.isEnabled) {
+          console.log('🔱 Next.JS DraftMode enabled')
+          // If we're not authenticated, switch to HMAC authentication
+          if (client.currentAuthMode === AuthMode.Public)
+            client.updateAuthentication(AuthMode.HMAC);
+          // Set the preview flag on the client
+          client.enablePreview();
+        }
+      }
+
       return client;
     },
   }

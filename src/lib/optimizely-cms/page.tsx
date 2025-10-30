@@ -17,9 +17,9 @@ export function createPage<TContent = ContentData>(
   async function CmsPage({ params }: { params: { path?: string[] } }) {
     const path = params.path ? `/${params.path.join('/')}` : '/';
 
-    // Create GraphQL client
-    const client = config.client
-      ? config.client(undefined, 'request')
+    // Create GraphQL client (await in case it's async)
+    const client: OptimizelyGraphClient = config.client
+      ? await config.client(undefined, 'request')
       : createClient(undefined, undefined, { nextJsFetchDirectives: true });
 
     // Fetch content by path
@@ -82,9 +82,9 @@ export function createPage<TContent = ContentData>(
   }): Promise<Metadata> {
     const path = params.path ? `/${params.path.join('/')}` : '/';
 
-    // Create GraphQL client
-    const client = config.client
-      ? config.client(undefined, 'page')
+    // Create GraphQL client (await in case it's async)
+    const client: OptimizelyGraphClient = config.client
+      ? await config.client(undefined, 'page')
       : createClient(undefined, undefined, { nextJsFetchDirectives: true });
 
     // Fetch content by path

@@ -3,18 +3,26 @@
 import { type ComponentTypeDictionary } from "@/lib/optimizely-cms";
 import NodeComponent from "./node";
 import UtilsContentAreaRendererComponent from "./utils/contentAreaRenderer";
-import PageFactory from "./page";
-import ExperienceFactory from "./experience";
-import ComponentFactory from "./component";
+import { CmsComponentRegistry } from "./registry";
 
-// Build dictionary
+// Build dictionary using the central registry
 export const CmsFactory : ComponentTypeDictionary = {
     "Node": NodeComponent,
     "utils/contentAreaRenderer": UtilsContentAreaRendererComponent,
-    ...PageFactory,
-    ...ExperienceFactory,
-    ...ComponentFactory
+    ...CmsComponentRegistry
 };
 
 // Export dictionary
 export default CmsFactory;
+
+// Also export the registry functions for convenience
+export {
+    registerComponent,
+    registerTeaser,
+    getComponent,
+    getTeaser,
+    hasComponent,
+    hasTeaser,
+    getRegisteredTypes,
+    getRegisteredTeasers
+} from "./registry";

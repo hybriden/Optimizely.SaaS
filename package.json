@@ -14,6 +14,7 @@
     "start": "next start",
     "lint": "next lint",
     "compile": "graphql-codegen",
+    "install:quiet": "npm install --loglevel=error",
     "watch": "graphql-codegen -w",
     "webhook:create": "opti-graph webhook:create",
     "webhook:list": "opti-graph webhook:list",

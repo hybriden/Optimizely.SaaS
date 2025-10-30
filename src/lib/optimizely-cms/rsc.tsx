@@ -8,9 +8,10 @@ export { getServerContext, ComponentFactory, RichTextComponentDictionary };
 export type { CmsLayoutComponent };
 
 /**
- * CmsEditable wrapper for edit mode
+ * CmsEditable wrapper for edit mode (async server component)
+ * In Next.js 16, server context APIs are async, so this must be an async component
  */
-export function CmsEditable({
+export async function CmsEditable({
   children,
   className,
   ...props
@@ -19,7 +20,7 @@ export function CmsEditable({
   className?: string;
   [key: string]: any;
 }) {
-  const { inEditMode } = getServerContext();
+  const { inEditMode } = await getServerContext();
 
   if (inEditMode) {
     return (

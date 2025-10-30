@@ -168,13 +168,14 @@ export class OptimizelyGraphClient extends GraphQLClient {
   }
 
   /**
-   * Override request method to add HMAC headers when in HMAC auth mode
+   * Override request method to match GraphQLClient interface
+   * Supports both old and new API signatures for backward compatibility
    */
-  async request<T = any, V = any>(query: string, variables?: V): Promise<T> {
+  async request<T = any, V = any>(documentOrOptions: any, variables?: V): Promise<T> {
     // HMAC authentication disabled for now - needs further investigation
     // TODO: Implement proper HMAC authentication for draft content access
 
-    return super.request<T, V>(query, variables);
+    return super.request(documentOrOptions, variables as any) as Promise<T>;
   }
 }
 

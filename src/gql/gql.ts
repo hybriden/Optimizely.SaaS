@@ -27,6 +27,7 @@ type Documents = {
     "fragment ArticlePageData on ArticlePage {\n  _metadata {\n    key\n  }\n}": typeof types.ArticlePageDataFragmentDoc,
     "fragment LandingPageData on LandingPage {\n  Title\n  MetaDescription\n  UrlSegment\n  MainBody {\n    html\n  }\n}": typeof types.LandingPageDataFragmentDoc,
     "fragment MyTestData on MyTest {\n  _metadata {\n    key\n  }\n}": typeof types.MyTestDataFragmentDoc,
+    "fragment NewsPageData on NewsPage {\n  _metadata {\n    key\n    published\n    lastModified\n  }\n}": typeof types.NewsPageDataFragmentDoc,
     "fragment StartPageData on StartPage {\n  Heading\n  MainIntro {\n    json\n    html\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n    }\n    ...HeroBlockData\n    ...TextBlockData\n    ...SliderBlockData\n    ...ContentAreaData\n  }\n}": typeof types.StartPageDataFragmentDoc,
 };
 const documents: Documents = {
@@ -43,6 +44,7 @@ const documents: Documents = {
     "fragment ArticlePageData on ArticlePage {\n  _metadata {\n    key\n  }\n}": types.ArticlePageDataFragmentDoc,
     "fragment LandingPageData on LandingPage {\n  Title\n  MetaDescription\n  UrlSegment\n  MainBody {\n    html\n  }\n}": types.LandingPageDataFragmentDoc,
     "fragment MyTestData on MyTest {\n  _metadata {\n    key\n  }\n}": types.MyTestDataFragmentDoc,
+    "fragment NewsPageData on NewsPage {\n  _metadata {\n    key\n    published\n    lastModified\n  }\n}": types.NewsPageDataFragmentDoc,
     "fragment StartPageData on StartPage {\n  Heading\n  MainIntro {\n    json\n    html\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n    }\n    ...HeroBlockData\n    ...TextBlockData\n    ...SliderBlockData\n    ...ContentAreaData\n  }\n}": types.StartPageDataFragmentDoc,
 };
 
@@ -112,6 +114,10 @@ export function gql(source: "fragment LandingPageData on LandingPage {\n  Title\
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "fragment MyTestData on MyTest {\n  _metadata {\n    key\n  }\n}"): (typeof documents)["fragment MyTestData on MyTest {\n  _metadata {\n    key\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "fragment NewsPageData on NewsPage {\n  _metadata {\n    key\n    published\n    lastModified\n  }\n}"): (typeof documents)["fragment NewsPageData on NewsPage {\n  _metadata {\n    key\n    published\n    lastModified\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

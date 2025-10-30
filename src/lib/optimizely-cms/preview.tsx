@@ -25,18 +25,21 @@ export function createEditPageComponent<TContent = ContentData>(
   return async function EditPage({
     searchParams,
   }: {
-    searchParams: { [key: string]: string | string[] | undefined };
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
   }) {
     // Enable edit mode
     setEditMode(true);
 
+    // Await searchParams (async in Next.js 16)
+    const params = await searchParams;
+
     // Get content key from search params
-    const key = searchParams.key as string;
-    const version = searchParams.version as string || searchParams.ver as string;
-    const locale = (searchParams.locale as string) || (searchParams.loc as string) || 'en';
-    const previewToken = searchParams.preview_token as string; // Token from Optimizely CMS
-    const token = previewToken || (searchParams.token as string); // Fallback to token
-    const ctx = searchParams.ctx as string; // Context mode: 'edit' or 'preview'
+    const key = params.key as string;
+    const version = params.version as string || params.ver as string;
+    const locale = (params.locale as string) || (params.loc as string) || 'en';
+    const previewToken = params.preview_token as string; // Token from Optimizely CMS
+    const token = previewToken || (params.token as string); // Fallback to token
+    const ctx = params.ctx as string; // Context mode: 'edit' or 'preview'
 
     if (!key) {
       return (

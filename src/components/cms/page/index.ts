@@ -5,13 +5,15 @@ import StartPageComponent from "./StartPage";
 import MyTestComponent from "./MyTest";
 import LandingPageComponent from "./LandingPage";
 import ArticlePageComponent from "./ArticlePage";
+import NewsPageComponent from "./NewsPage";
 
 // Build dictionary
 export const PageFactory : ComponentTypeDictionary = {
     "StartPage": StartPageComponent,
     "MyTest": MyTestComponent,
     "LandingPage": LandingPageComponent,
-    "ArticlePage": ArticlePageComponent
+    "ArticlePage": ArticlePageComponent,
+    "NewsPage": NewsPageComponent
 };
 
 // Export dictionary

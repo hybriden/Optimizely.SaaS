@@ -1,0 +1,7 @@
+fragment NewsPageData on NewsPage {
+  _metadata {
+    key
+    published
+    lastModified
+  }
+}

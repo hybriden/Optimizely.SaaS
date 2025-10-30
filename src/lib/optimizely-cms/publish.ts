@@ -88,7 +88,7 @@ async function handleContentUpdate(data: any, config: PublishConfig) {
   // Revalidate by path if URL is available
   if (url) {
     try {
-      revalidatePath(url);
+      revalidatePath(url, 'page');
       if (config.debug) {
         console.log(`[Publish API] Revalidated path: ${url}`);
       }
@@ -100,7 +100,7 @@ async function handleContentUpdate(data: any, config: PublishConfig) {
   // Revalidate by tag if key is available
   if (key) {
     try {
-      revalidateTag(`content-${key}`);
+      revalidateTag(`content-${key}`, 'fetch');
       if (config.debug) {
         console.log(`[Publish API] Revalidated tag: content-${key}`);
       }
@@ -111,7 +111,7 @@ async function handleContentUpdate(data: any, config: PublishConfig) {
 
   // Always revalidate home page
   try {
-    revalidatePath('/');
+    revalidatePath('/', 'page');
     if (config.debug) {
       console.log('[Publish API] Revalidated home page');
     }
@@ -123,7 +123,7 @@ async function handleContentUpdate(data: any, config: PublishConfig) {
   if (config.additionalPaths && config.additionalPaths.length > 0) {
     for (const path of config.additionalPaths) {
       try {
-        revalidatePath(path);
+        revalidatePath(path, 'page');
         if (config.debug) {
           console.log(`[Publish API] Revalidated additional path: ${path}`);
         }
@@ -148,7 +148,7 @@ async function handleContentDelete(data: any, config: PublishConfig) {
   // Revalidate paths that might reference this content
   if (url) {
     try {
-      revalidatePath(url);
+      revalidatePath(url, 'page');
     } catch (error) {
       console.error(`[Publish API] Error revalidating deleted path ${url}:`, error);
     }
@@ -157,7 +157,7 @@ async function handleContentDelete(data: any, config: PublishConfig) {
   // Revalidate by tag
   if (key) {
     try {
-      revalidateTag(`content-${key}`);
+      revalidateTag(`content-${key}`, 'fetch');
     } catch (error) {
       console.error(`[Publish API] Error revalidating deleted content tag ${key}:`, error);
     }

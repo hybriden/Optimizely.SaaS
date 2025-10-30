@@ -12,8 +12,9 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
     const metaDescription = data.MetaDescription || '';
 
     // Use content metadata dates or a fixed date to avoid hydration mismatch
-    const publishDate = data._metadata?.published || '2025-01-01';
-    const modifiedDate = data._metadata?.modified || data._metadata?.published || '2025-01-01';
+    const metadata = (data as any)._metadata;
+    const publishDate = metadata?.published || '2025-01-01';
+    const modifiedDate = metadata?.modified || metadata?.published || '2025-01-01';
 
     // Create structured data for Article
     const jsonLd = {

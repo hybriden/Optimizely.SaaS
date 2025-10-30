@@ -1,8 +1,14 @@
+'use client';
 import { ComponentType } from 'react';
 import HeroBlockComponent from '@/components/cms/component/HeroBlock';
 import TextBlockComponent from '@/components/cms/component/TextBlock';
 import SliderBlockComponent from '@/components/cms/component/SliderBlock';
 import ContentAreaComponent from '@/components/cms/component/ContentArea';
+
+// Import page teasers
+import LandingPageTeaser from '@/components/cms/page/LandingPage/Teaser';
+import ArticlePageTeaser from '@/components/cms/page/ArticlePage/Teaser';
+import NewsPageTeaser from '@/components/cms/page/NewsPage/Teaser';
 
 // Central registry for all block components
 type BlockComponent = ComponentType<any>;
@@ -19,8 +25,11 @@ const BLOCK_REGISTRY: BlockRegistry = {
 };
 
 // Teaser registry for page types when shown in content areas
-// Use registerTeaser() to add page teasers
-const TEASER_REGISTRY: BlockRegistry = {};
+const TEASER_REGISTRY: BlockRegistry = {
+  'LandingPage': LandingPageTeaser,
+  'ArticlePage': ArticlePageTeaser,
+  'NewsPage': NewsPageTeaser,
+};
 
 /**
  * Register a new block component type

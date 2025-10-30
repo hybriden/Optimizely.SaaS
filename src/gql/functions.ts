@@ -39,6 +39,9 @@ export async function getContentByPath(client: GraphQLClient, variables: GetCont
           ... on StartPage {
             ...StartPageData
           }
+          ... on NewsPage {
+            ...NewsPageData
+          }
           ... on LandingPage {
             ...LandingPageData
           }
@@ -99,6 +102,32 @@ export async function getContentByPath(client: GraphQLClient, variables: GetCont
         ...TextBlockData
         ...SliderBlockData
         ...ContentAreaData
+      }
+    }
+
+    fragment NewsPageData on NewsPage {
+      _metadata {
+        key
+        published
+        lastModified
+      }
+      MainContentArea {
+        __typename
+        _metadata {
+          key
+          types
+          locale
+          displayName
+          url {
+            base
+            default
+          }
+          published
+        }
+        ... on LandingPage {
+          Title
+          MetaDescription
+        }
       }
     }
 
@@ -216,6 +245,9 @@ export async function getContentById(client: GraphQLClient, variables: GetConten
           ... on StartPage {
             ...StartPageData
           }
+          ... on NewsPage {
+            ...NewsPageData
+          }
           ... on LandingPage {
             ...LandingPageData
           }
@@ -276,6 +308,32 @@ export async function getContentById(client: GraphQLClient, variables: GetConten
         ...TextBlockData
         ...SliderBlockData
         ...ContentAreaData
+      }
+    }
+
+    fragment NewsPageData on NewsPage {
+      _metadata {
+        key
+        published
+        lastModified
+      }
+      MainContentArea {
+        __typename
+        _metadata {
+          key
+          types
+          locale
+          displayName
+          url {
+            base
+            default
+          }
+          published
+        }
+        ... on LandingPage {
+          Title
+          MetaDescription
+        }
       }
     }
 

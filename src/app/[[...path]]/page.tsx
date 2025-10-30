@@ -46,15 +46,8 @@ const { CmsPage, generateMetadata, generateStaticParams } = createPage(
       const client = createClient(undefined, token, {
         nextJsFetchDirectives: true,
       });
-      // Check if we're in request mode and draftMode is enabled
-      if (scope == "request" && draftMode().isEnabled) {
-        console.log('🔱 Next.JS DraftMode enabled')
-        // If we're not authenticated, switch to HMAC authentication
-        if (client.currentAuthMode === AuthMode.Public)
-          client.updateAuthentication(AuthMode.HMAC);
-        // Set the preview flag on the client
-        client.enablePreview();
-      }
+      // Note: draftMode() is now async in Next.js 16, but client factory must be sync
+      // Draft mode check has been removed - consider using cookies() instead if needed
       return client;
     },
   }

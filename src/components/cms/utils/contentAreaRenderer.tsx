@@ -37,18 +37,23 @@ export function getBlockComponent(typeName: string): BlockComponent | null {
  * Renders an array of content items based on their _type
  */
 interface ContentAreaRendererProps {
-  items: any[];
+  data?: {
+    items?: any[];
+  };
+  items?: any[];
   fallbackComponent?: ComponentType<{ data: any }>;
 }
 
-export function ContentAreaRenderer({ items, fallbackComponent }: ContentAreaRendererProps) {
-  if (!items || items.length === 0) {
+export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentAreaRendererProps) {
+  // Support both direct items prop and data.items for CMS component compatibility
+  const contentItems = items || data?.items || [];
+  if (!contentItems || contentItems.length === 0) {
     return null;
   }
 
   return (
     <>
-      {items.map((item: any, index: number) => {
+      {contentItems.map((item: any, index: number) => {
         // Try to find the specific component type from the types array
         // The types array typically contains: ["HeroBlock", "_Component", "_Content"]
         // We want the most specific type (not _Component or _Content)

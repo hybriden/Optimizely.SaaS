@@ -20,11 +20,11 @@ query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: Strin
       ... on StartPage {
         ...StartPageData
       }
-      ... on MyTest {
-        ...MyTestData
-      }
       ... on NewsPage {
         ...NewsPageData
+      }
+      ... on MyTest {
+        ...MyTestData
       }
       ... on LandingPage {
         ...LandingPageData

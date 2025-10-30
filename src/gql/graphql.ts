@@ -1958,6 +1958,83 @@ export type MyTestWhereInput = {
   _or?: InputMaybe<Array<InputMaybe<MyTestWhereInput>>>;
 };
 
+export type NewsPage = IData & _IContent & _IPage & {
+  __typename?: 'NewsPage';
+  MainBody?: Maybe<RichText>;
+  MainContentArea?: Maybe<Array<Maybe<_IContent>>>;
+  /** @deprecated Use `_link` field instead */
+  _children?: Maybe<QueryRef>;
+  _deleted?: Maybe<Scalars['Bool']['output']>;
+  _fulltext?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  _id?: Maybe<Scalars['String']['output']>;
+  _link?: Maybe<QueryRef>;
+  _metadata?: Maybe<IContentMetadata>;
+  _modified?: Maybe<Scalars['Date']['output']>;
+  _score?: Maybe<Scalars['Float']['output']>;
+  _track?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type NewsPage_FulltextArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type NewsPage_LinkArgs = {
+  type?: InputMaybe<LinkTypes>;
+};
+
+export type NewsPageAutocomplete = {
+  __typename?: 'NewsPageAutocomplete';
+  MainBody?: Maybe<RichTextAutocomplete>;
+  MainContentArea?: Maybe<_IContentAutocomplete>;
+  _metadata?: Maybe<IContentMetadataAutocomplete>;
+};
+
+export type NewsPageFacet = {
+  __typename?: 'NewsPageFacet';
+  MainBody?: Maybe<RichTextFacet>;
+  MainContentArea?: Maybe<_IContentFacet>;
+  _metadata?: Maybe<IContentMetadataFacet>;
+};
+
+export type NewsPageOrderByInput = {
+  MainBody?: InputMaybe<RichTextOrderByInput>;
+  MainContentArea?: InputMaybe<_IContentOrderByInput>;
+  _metadata?: InputMaybe<IContentMetadataOrderByInput>;
+  _minimumScore?: InputMaybe<Scalars['Float']['input']>;
+  _modified?: InputMaybe<OrderBy>;
+  _ranking?: InputMaybe<Ranking>;
+  /** The value needs to be a positive value, but cannot exceed the maximum value of an integer. In case it is exceeded, the maximum of an integer is used. In case of a negative value, semantic search will be disabled. */
+  _semanticWeight?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type NewsPageOutput = {
+  __typename?: 'NewsPageOutput';
+  autocomplete?: Maybe<NewsPageAutocomplete>;
+  cursor?: Maybe<Scalars['String']['output']>;
+  facets?: Maybe<NewsPageFacet>;
+  item?: Maybe<NewsPage>;
+  items?: Maybe<Array<Maybe<NewsPage>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type NewsPageOutputTotalArgs = {
+  all?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type NewsPageWhereInput = {
+  MainBody?: InputMaybe<RichTextWhereInput>;
+  MainContentArea?: InputMaybe<_IContentWhereInput>;
+  _and?: InputMaybe<Array<InputMaybe<NewsPageWhereInput>>>;
+  _fulltext?: InputMaybe<SearchableStringFilterInput>;
+  _metadata?: InputMaybe<IContentMetadataWhereInput>;
+  _modified?: InputMaybe<DateFilterInput>;
+  _not?: InputMaybe<Array<InputMaybe<NewsPageWhereInput>>>;
+  _or?: InputMaybe<Array<InputMaybe<NewsPageWhereInput>>>;
+};
+
 export type NumberFacet = {
   __typename?: 'NumberFacet';
   count?: Maybe<Scalars['Int']['output']>;
@@ -1990,6 +2067,7 @@ export type Query = {
   ImageMedia?: Maybe<ImageMediaOutput>;
   LandingPage?: Maybe<LandingPageOutput>;
   MyTest?: Maybe<MyTestOutput>;
+  NewsPage?: Maybe<NewsPageOutput>;
   SliderBlock?: Maybe<SliderBlockOutput>;
   StartPage?: Maybe<StartPageOutput>;
   SysContentFolder?: Maybe<SysContentFolderOutput>;
@@ -2144,6 +2222,20 @@ export type QueryMyTestArgs = {
   usePinned?: InputMaybe<UsePinnedInput>;
   variation?: InputMaybe<VariationInput>;
   where?: InputMaybe<MyTestWhereInput>;
+};
+
+
+export type QueryNewsPageArgs = {
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  limit?: Scalars['Int']['input'];
+  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
+  orderBy?: InputMaybe<NewsPageOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  track?: InputMaybe<Scalars['String']['input']>;
+  usePinned?: InputMaybe<UsePinnedInput>;
+  variation?: InputMaybe<VariationInput>;
+  where?: InputMaybe<NewsPageWhereInput>;
 };
 
 
@@ -2354,6 +2446,7 @@ export type QueryRef = {
   ImageMedia?: Maybe<ImageMediaOutput>;
   LandingPage?: Maybe<LandingPageOutput>;
   MyTest?: Maybe<MyTestOutput>;
+  NewsPage?: Maybe<NewsPageOutput>;
   SliderBlock?: Maybe<SliderBlockOutput>;
   StartPage?: Maybe<StartPageOutput>;
   SysContentFolder?: Maybe<SysContentFolderOutput>;
@@ -2508,6 +2601,20 @@ export type QueryRefMyTestArgs = {
   usePinned?: InputMaybe<UsePinnedInput>;
   variation?: InputMaybe<VariationInput>;
   where?: InputMaybe<MyTestWhereInput>;
+};
+
+
+export type QueryRefNewsPageArgs = {
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  limit?: Scalars['Int']['input'];
+  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
+  orderBy?: InputMaybe<NewsPageOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  track?: InputMaybe<Scalars['String']['input']>;
+  usePinned?: InputMaybe<UsePinnedInput>;
+  variation?: InputMaybe<VariationInput>;
+  where?: InputMaybe<NewsPageWhereInput>;
 };
 
 
@@ -4158,6 +4265,12 @@ export type SliderBlockDataFragment = { __typename?: 'SliderBlock', SliderConten
         | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
         | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
        | null }
+    | { __typename: 'NewsPage', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+       | null }
     | { __typename: 'SliderBlock', _metadata?:
         | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
         | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
@@ -4283,6 +4396,13 @@ export type MyTestDataFragment = { __typename?: 'MyTest', _metadata?:
     | { __typename?: 'MediaMetadata', key?: string | null }
    | null } & { ' $fragmentName'?: 'MyTestDataFragment' };
 
+export type NewsPageDataFragment = { __typename?: 'NewsPage', _metadata?:
+    | { __typename?: 'ContentMetadata', key?: string | null, published?: string | null, lastModified?: string | null }
+    | { __typename?: 'InstanceMetadata', key?: string | null, published?: string | null, lastModified?: string | null }
+    | { __typename?: 'ItemMetadata', key?: string | null, published?: string | null, lastModified?: string | null }
+    | { __typename?: 'MediaMetadata', key?: string | null, published?: string | null, lastModified?: string | null }
+   | null } & { ' $fragmentName'?: 'NewsPageDataFragment' };
+
 export type StartPageDataFragment = { __typename?: 'StartPage', Heading?: string | null, MainIntro?: { __typename?: 'RichText', json?: any | null, html?: string | null } | null, MainContentArea?: Array<
     | { __typename: 'ArticlePage', _metadata?:
         | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
@@ -4339,6 +4459,12 @@ export type StartPageDataFragment = { __typename?: 'StartPage', Heading?: string
         | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
        | null }
     | { __typename: 'MyTest', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+       | null }
+    | { __typename: 'NewsPage', _metadata?:
         | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
         | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
         | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
@@ -4445,6 +4571,7 @@ export const BlankExperienceDataFragmentDoc = {"kind":"Document","definitions":[
 export const ArticlePageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ArticlePageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ArticlePage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<ArticlePageDataFragment, unknown>;
 export const LandingPageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"LandingPageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"LandingPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Title"}},{"kind":"Field","name":{"kind":"Name","value":"MetaDescription"}},{"kind":"Field","name":{"kind":"Name","value":"UrlSegment"}},{"kind":"Field","name":{"kind":"Name","value":"MainBody"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}}]} as unknown as DocumentNode<LandingPageDataFragment, unknown>;
 export const MyTestDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MyTestData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MyTest"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<MyTestDataFragment, unknown>;
+export const NewsPageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NewsPageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewsPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}}]}}]}}]} as unknown as DocumentNode<NewsPageDataFragment, unknown>;
 export const HeroBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"HeroBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"HeroBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"Image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"MainIntro"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"json"}},{"kind":"Field","name":{"kind":"Name","value":"html"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ContentLink"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Width"}}]}}]} as unknown as DocumentNode<HeroBlockDataFragment, unknown>;
 export const TextBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TextBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TextBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Text"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"json"}},{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}}]} as unknown as DocumentNode<TextBlockDataFragment, unknown>;
 export const SliderBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SliderBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SliderBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SliderContent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"types"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}},{"kind":"Field","name":{"kind":"Name","value":"base"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SliderBlockDataFragment, unknown>;

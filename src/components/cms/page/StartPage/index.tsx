@@ -17,20 +17,6 @@ export const StartPagePage : CmsComponent<StartPageDataFragment> = ({ data, chil
             {/* Hero Section with Heading and MainIntro */}
             {(heading || mainIntro) && (
                 <section className="relative w-full bg-gradient-to-br from-blue-950 via-purple-950 to-slate-950 py-24 md:py-32 lg:py-40 overflow-hidden">
-                    {/* Video background */}
-                    <video 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover opacity-20"
-                    >
-                        <source src="/hero-video.mp4" type="video/mp4" />
-                    </video>
-                    
-                    {/* Dark overlay to ensure text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-900/70 to-slate-950/80"></div>
-                    
                     {/* Animated background effects */}
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-purple-600/20 via-transparent to-transparent"></div>

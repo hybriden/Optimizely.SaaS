@@ -176,6 +176,6 @@ export function ContentRenderer({
  * Get base factory with common components pre-registered
  */
 export function getFactory(): ComponentFactory {
-  const factory = new ComponentFactory({ debug: process.env.NODE_ENV === 'development' });
+  const factory = new ComponentFactory({ debug: false });
   return factory;
 }

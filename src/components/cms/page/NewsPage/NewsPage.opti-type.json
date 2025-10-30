@@ -5,9 +5,7 @@
   "baseType": "page",
   "properties": {
     "MainContentArea": {
-      "type": "ContentArea",
-      "displayName": "Main Content Area",
-      "description": "Add pages here to display as teaser cards"
+      "type": "ContentArea"
     }
   }
 }

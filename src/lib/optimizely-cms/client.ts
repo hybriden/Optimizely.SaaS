@@ -175,7 +175,7 @@ export class OptimizelyGraphClient extends GraphQLClient {
     // HMAC authentication disabled for now - needs further investigation
     // TODO: Implement proper HMAC authentication for draft content access
 
-    return super.request<T, V>(documentOrOptions, variables);
+    return super.request(documentOrOptions, variables as any) as Promise<T>;
   }
 }
 

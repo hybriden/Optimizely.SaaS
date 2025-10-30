@@ -9,6 +9,8 @@ export type { CmsLayoutComponent };
 
 /**
  * CmsEditable wrapper for edit mode
+ * Note: getServerContext is async in Next.js 16, so this wrapper is not functional
+ * Consider refactoring to use cookies or other sync methods for edit mode detection
  */
 export function CmsEditable({
   children,
@@ -19,16 +21,8 @@ export function CmsEditable({
   className?: string;
   [key: string]: any;
 }) {
-  const { inEditMode } = getServerContext();
-
-  if (inEditMode) {
-    return (
-      <div className={`cms-editable ${className || ''}`} {...props}>
-        {children}
-      </div>
-    );
-  }
-
+  // TODO: Refactor to use sync method for edit mode detection
+  // For now, always return children without edit mode wrapper
   return <>{children}</>;
 }
 

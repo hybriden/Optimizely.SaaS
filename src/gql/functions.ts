@@ -1,7 +1,21 @@
 import { gql, type GraphQLClient } from 'graphql-request'
 import type * as Types from './graphql'
 
-export async function getContentByPath(client: GraphQLClient, variables: Types.getContentByPathQueryVariables): Promise<Types.getContentByPathQuery> {
+// Define variable types inline since client preset doesn't export them
+type GetContentByPathVariables = {
+  path: string[];
+  locale: string[];
+  changeset?: string | null;
+}
+
+type GetContentByIdVariables = {
+  key: string;
+  version?: string | null;
+  locale: string[];
+  changeset?: string | null;
+}
+
+export async function getContentByPath(client: GraphQLClient, variables: GetContentByPathVariables): Promise<any> {
   const query = gql`
     query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: String = null) {
       content: _Content(
@@ -170,10 +184,10 @@ export async function getContentByPath(client: GraphQLClient, variables: Types.g
     }
   `
 
-  return client.request<Types.getContentByPathQuery, Types.getContentByPathQueryVariables>(query, variables)
+  return client.request(query, variables)
 }
 
-export async function getContentById(client: GraphQLClient, variables: Types.getContentByIdQueryVariables): Promise<Types.getContentByIdQuery> {
+export async function getContentById(client: GraphQLClient, variables: GetContentByIdVariables): Promise<any> {
   const query = gql`
     query getContentById($key: String!, $version: String, $locale: [Locales!], $changeset: String) {
       content: _Content(
@@ -347,5 +361,5 @@ export async function getContentById(client: GraphQLClient, variables: Types.get
     }
   `
 
-  return client.request<Types.getContentByIdQuery, Types.getContentByIdQueryVariables>(query, variables)
+  return client.request(query, variables)
 }

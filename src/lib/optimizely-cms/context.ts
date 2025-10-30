@@ -10,10 +10,10 @@ let serverContext: ServerContext = {};
 /**
  * Get the current server context
  */
-export function getServerContext(): ServerContext {
+export async function getServerContext(): Promise<ServerContext> {
   try {
-    // Try to get locale from Next.js headers
-    const headersList = headers();
+    // Try to get locale from Next.js headers (now async in Next.js 16)
+    const headersList = await headers();
     const locale = headersList.get('accept-language')?.split(',')[0]?.split('-')[0] || 'en';
     const requestId = headersList.get('x-request-id') || '';
 

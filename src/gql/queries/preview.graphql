@@ -13,6 +13,8 @@ query getContentById($key: String!, $version: String, $locale: [Locales!], $chan
         key
         displayName
         types
+        version
+        published
         url {
           default
           base

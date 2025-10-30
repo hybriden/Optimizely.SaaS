@@ -190,6 +190,8 @@ export async function getContentById(client: GraphQLClient, variables: Types.get
             key
             displayName
             types
+            version
+            published
             url {
               default
               base

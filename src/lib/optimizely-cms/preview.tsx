@@ -54,7 +54,7 @@ export function createEditPageComponent<TContent = ContentData>(
     const requestTime = new Date().toISOString();
     console.log('=== PREVIEW REQUEST START ===', requestTime);
     console.log('Preview - Content key:', key);
-    console.log('Preview - Version:', version);
+    console.log('Preview - Version:', version || 'LATEST (no version specified)');
     console.log('Preview - Locale:', locale);
     console.log('Preview - Context:', ctx);
     console.log('Preview - Preview token:', token ? 'YES' : 'NO');
@@ -63,11 +63,12 @@ export function createEditPageComponent<TContent = ContentData>(
 
     try {
       // Load content with version parameter to get specific draft version
+      // If version is undefined/null, the query will fetch the latest draft
       const result = await config.loader(
         client,
         {
           key,
-          version,
+          version: version || undefined, // Explicitly pass undefined if no version
           locale: [locale],
         }
       );
@@ -81,9 +82,18 @@ export function createEditPageComponent<TContent = ContentData>(
           <div style={{ padding: '2rem', textAlign: 'center' }}>
             <h1>Content Not Found</h1>
             <p>Key: {key}</p>
+            <p>Version requested: {version || 'latest'}</p>
           </div>
         );
       }
+
+      // Log the version that was actually fetched
+      const fetchedVersion = content._metadata?.version;
+      const fetchedPublished = content._metadata?.published;
+      console.log('Preview - Requested version:', version || 'LATEST');
+      console.log('Preview - Fetched version:', fetchedVersion);
+      console.log('Preview - Fetched published date:', fetchedPublished);
+      console.log('Preview - Version match:', version ? (version === fetchedVersion ? 'YES' : 'NO - MISMATCH!') : 'N/A (fetched latest)');
 
       // Resolve component - handle generic types like _Content, _Page
       let typename = content.__typename || content._type;

@@ -19,6 +19,33 @@ interface GraphQLResponse {
   }>;
 }
 
+interface GraphQLTypeResponse {
+  data?: {
+    __type?: {
+      name: string;
+      fields?: Array<{
+        name: string;
+        description?: string;
+        type: {
+          name?: string;
+          kind: string;
+          ofType?: {
+            name?: string;
+            kind: string;
+            ofType?: {
+              name?: string;
+              kind: string;
+            };
+          };
+        };
+      }>;
+    };
+  };
+  errors?: Array<{
+    message: string;
+  }>;
+}
+
 /**
  * CMS Client for interacting with Optimizely CMS API
  * This is a simplified implementation - extend as needed
@@ -117,23 +144,178 @@ export class CMSClient {
         return [];
       }
 
-      // Filter out internal types and map to our format
-      const contentTypes: ContentTypeDefinition[] = result.data.__type.possibleTypes
+      // Filter out internal types
+      const typeNames = result.data.__type.possibleTypes
         .filter(type => !type.name.startsWith('_'))
         .map(type => ({
-          key: type.name,
-          displayName: type.name,
+          name: type.name,
           description: type.description || '',
-          baseType: this.inferBaseType(type.name, type.interfaces),
-          properties: {}
+          interfaces: type.interfaces
         }));
 
-      Logger.success(`Found ${contentTypes.length} content types from Optimizely`);
+      Logger.info(`Found ${typeNames.length} content types, fetching properties...`);
+
+      // Fetch properties for each content type
+      const contentTypes: ContentTypeDefinition[] = [];
+      for (const typeInfo of typeNames) {
+        const properties = await this.fetchTypeProperties(typeInfo.name, authKey);
+
+        contentTypes.push({
+          key: typeInfo.name,
+          displayName: typeInfo.name,
+          description: typeInfo.description,
+          baseType: this.inferBaseType(typeInfo.name, typeInfo.interfaces),
+          properties: properties
+        });
+      }
+
+      Logger.success(`Successfully fetched ${contentTypes.length} content types with properties`);
       return contentTypes;
     } catch (error) {
       Logger.error(`Failed to fetch content types: ${error}`);
       return [];
     }
+  }
+
+  /**
+   * Fetch properties for a specific content type using GraphQL introspection
+   */
+  private async fetchTypeProperties(typeName: string, authKey: string): Promise<Record<string, any>> {
+    try {
+      const query = `
+        query GetTypeFields {
+          __type(name: "${typeName}") {
+            name
+            fields {
+              name
+              description
+              type {
+                name
+                kind
+                ofType {
+                  name
+                  kind
+                  ofType {
+                    name
+                    kind
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
+
+      const response = await fetch(`${this.config.graphGateway}/content/v2?auth=${authKey}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query })
+      });
+
+      if (!response.ok) {
+        Logger.warning(`Failed to fetch properties for ${typeName}: HTTP ${response.status}`);
+        return {};
+      }
+
+      const result = await response.json() as GraphQLTypeResponse;
+
+      if (result.errors || !result.data?.__type?.fields) {
+        return {};
+      }
+
+      const properties: Record<string, any> = {};
+      const fields = result.data.__type.fields;
+
+      // Filter out metadata and system fields
+      const contentFields = fields.filter(field =>
+        !field.name.startsWith('_') &&
+        field.name !== '__typename'
+      );
+
+      for (const field of contentFields) {
+        const fieldType = this.resolveGraphQLType(field.type);
+
+        properties[field.name] = {
+          type: fieldType.type,
+          displayName: field.name,
+          description: field.description || '',
+          ...(fieldType.isArray ? { items: { type: fieldType.itemType || 'String' } } : {})
+        };
+      }
+
+      return properties;
+    } catch (error) {
+      Logger.warning(`Error fetching properties for ${typeName}: ${error}`);
+      return {};
+    }
+  }
+
+  /**
+   * Resolve GraphQL type to our property type format
+   */
+  private resolveGraphQLType(typeInfo: any): { type: string; isArray: boolean; itemType?: string } {
+    let current = typeInfo;
+    let isArray = false;
+    let itemType: string | undefined;
+
+    // Unwrap NON_NULL and LIST wrappers
+    while (current) {
+      if (current.kind === 'NON_NULL') {
+        current = current.ofType;
+        continue;
+      }
+      if (current.kind === 'LIST') {
+        isArray = true;
+        current = current.ofType;
+        // For arrays, track the item type
+        if (current?.name) {
+          itemType = this.mapGraphQLTypeToPropertyType(current.name);
+        }
+        continue;
+      }
+      break;
+    }
+
+    const typeName = current?.name || 'String';
+    const mappedType = this.mapGraphQLTypeToPropertyType(typeName);
+
+    return {
+      type: isArray ? 'ContentArea' : mappedType,
+      isArray,
+      itemType
+    };
+  }
+
+  /**
+   * Map GraphQL scalar/object types to property types
+   */
+  private mapGraphQLTypeToPropertyType(graphQLType: string): string {
+    const typeMap: Record<string, string> = {
+      'String': 'String',
+      'Int': 'Number',
+      'Float': 'Number',
+      'Boolean': 'Boolean',
+      'DateTime': 'Date',
+      'ContentReference': 'ContentReference',
+      'ContentArea': 'ContentArea',
+      'Link': 'Url',
+      'Url': 'Url',
+      'XhtmlString': 'XhtmlString'
+    };
+
+    // If it's a known type, return the mapped value
+    if (typeMap[graphQLType]) {
+      return typeMap[graphQLType];
+    }
+
+    // If it starts with uppercase, it's likely a complex type (ContentReference)
+    if (graphQLType && graphQLType[0] === graphQLType[0].toUpperCase()) {
+      return 'ContentReference';
+    }
+
+    return 'String';
   }
 
   /**

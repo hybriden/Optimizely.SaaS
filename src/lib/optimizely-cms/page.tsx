@@ -14,8 +14,9 @@ export function createPage<TContent = ContentData>(
   /**
    * The main page component
    */
-  async function CmsPage({ params }: { params: { path?: string[] } }) {
-    const path = params.path ? `/${params.path.join('/')}` : '/';
+  async function CmsPage({ params }: { params: Promise<{ path?: string[] }> }) {
+    const resolvedParams = await params;
+    const path = resolvedParams.path ? `/${resolvedParams.path.join('/')}` : '/';
 
     // Create GraphQL client (await in case it's async)
     const client: OptimizelyGraphClient = config.client
@@ -78,9 +79,10 @@ export function createPage<TContent = ContentData>(
   async function generateMetadata({
     params,
   }: {
-    params: { path?: string[] };
+    params: Promise<{ path?: string[] }>;
   }): Promise<Metadata> {
-    const path = params.path ? `/${params.path.join('/')}` : '/';
+    const resolvedParams = await params;
+    const path = resolvedParams.path ? `/${resolvedParams.path.join('/')}` : '/';
 
     // Create GraphQL client (await in case it's async)
     const client: OptimizelyGraphClient = config.client

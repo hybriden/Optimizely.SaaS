@@ -27,9 +27,14 @@
     "proxima:list": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev types list -d ../../src/components/cms",
     "proxima:pull": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev types pull -o ../../src/components/cms",
     "proxima:help": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev help",
-    "proxima:info": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev cms info"
+    "proxima:info": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev cms info",
+    "opti:login": "npx @optimizely/cms-cli@latest login",
+    "opti:push": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs --force",
+    "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs",
+    "opti:pull": "npx @optimizely/cms-cli@latest config pull --output optimizely-types.json"
   },
   "dependencies": {
+    "@optimizely/cms-sdk": "^0.1.0-alpha.11",
     "dotenv": "^17.1.0",
     "dotenv-expand": "^12.0.2",
     "entities": "^6.0.1",
@@ -38,13 +43,15 @@
     "graphql-tag": "^2.12.6",
     "next": "^16.0.1",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/client-preset": "^5.1.1",
     "@graphql-codegen/fragment-matcher": "^5.1.0",
     "@graphql-typed-document-node/core": "^3.2.0",
+    "@optimizely/cms-cli": "^0.1.0-alpha.9",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^22.16.2",
     "@types/react": "^19.0.6",

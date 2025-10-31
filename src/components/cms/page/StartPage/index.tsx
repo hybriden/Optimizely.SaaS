@@ -1,11 +1,49 @@
 'use client';
+import { contentType } from '@optimizely/cms-sdk';
 import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
 import { StartPageDataFragmentDoc, type StartPageDataFragment } from "@/gql/graphql";
 import { ContentAreaRenderer } from "@/components/cms/utils/contentAreaRenderer";
 
 /**
- * Startpage
- * 
+ * StartPage Content Type Definition
+ */
+export const StartPageContentType = contentType({
+  key: 'StartPage',
+  displayName: 'Startpage',
+  description: '',
+  baseType: '_page',
+  mayContainTypes: ['*'],
+  properties: {
+    Heading: {
+      type: 'string',
+      displayName: 'Heading',
+      description: '',
+      required: true,
+      group: 'Information',
+      maxLength: 100,
+    },
+    MainIntro: {
+      type: 'richText',
+      displayName: 'Intro',
+      description: '',
+      group: 'Information',
+    },
+    MainContentArea: {
+      type: 'array',
+      displayName: 'Content',
+      description: '',
+      group: 'Information',
+      maxItems: 4,
+      items: {
+        type: 'content',
+        allowedTypes: ['HeroBlock', 'TextBlock', 'SliderBlock'],
+      },
+    },
+  },
+});
+
+/**
+ * Startpage Component
  */
 export const StartPagePage : CmsComponent<StartPageDataFragment> = ({ data, children }) => {
     const heading = data.Heading || '';

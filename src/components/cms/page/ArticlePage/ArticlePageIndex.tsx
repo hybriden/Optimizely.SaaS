@@ -7,11 +7,16 @@ import { ArticlePageDataFragmentDoc, type ArticlePageDataFragment } from "@/gql/
  * Full article page with hero section and rich content
  */
 export const ArticlePagePage: CmsComponent<ArticlePageDataFragment> = ({ data, children }) => {
+    // Debug: Log the data to see what we're getting
+    console.log('ArticlePage data:', JSON.stringify(data, null, 2));
+
     const heading = data.Heading || data._metadata?.displayName || 'Untitled Article';
-    const intro = data.MainIntro;
+    const intro = data.Intro;
     const mainBody = data.MainBody?.html;
     const lastModified = data._metadata?.lastModified;
     const published = data._metadata?.published;
+
+    console.log('ArticlePage values:', { heading, intro, mainBody: mainBody?.substring(0, 100) });
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">

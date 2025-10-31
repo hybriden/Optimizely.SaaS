@@ -13,9 +13,9 @@ export const ArticlePageContentType = contentType({
       "type": "string",
       "displayName": "Heading"
     },
-    "MainIntro": {
+    "Intro": {
       "type": "string",
-      "displayName": "Main Intro"
+      "displayName": "Intro"
     },
     "MainBody": {
       "type": "richText",

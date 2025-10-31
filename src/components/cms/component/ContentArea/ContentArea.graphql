@@ -1,3 +1,5 @@
 fragment ContentAreaData on ContentArea {
-  _metadata { key }
+  _metadata {
+    key
+  }
 }

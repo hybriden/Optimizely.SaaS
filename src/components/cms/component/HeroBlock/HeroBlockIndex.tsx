@@ -8,7 +8,7 @@ import Image from "next/image";
  */
 export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data, children }) => {
     const heading = data.Heading || '';
-    const mainIntro = data.MainIntro?.html || '';
+    const mainIntro = data.MainIntro || '';
     const width = data.Width || 'Full';
     const imageUrl = (data.Image as any)?.url?.default || '';
     
@@ -41,10 +41,9 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
                             </h2>
                         )}
                         {mainIntro && (
-                            <div 
-                                className="prose prose-xl prose-invert max-w-3xl text-slate-300 mx-auto text-lg md:text-xl animate-slide-in-up"
-                                dangerouslySetInnerHTML={{ __html: mainIntro }}
-                            />
+                            <p className="text-slate-300 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed animate-slide-in-up">
+                                {mainIntro}
+                            </p>
                         )}
                         {contentLink && (
                             <div className="flex justify-center mt-8 animate-slide-in-up">

@@ -1,6 +1,19 @@
 fragment LandingPageData on LandingPage {
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+  }
   Title
   MetaDescription
   UrlSegment
-  MainBody { html }
+  MainBody {
+    html
+  }
 }

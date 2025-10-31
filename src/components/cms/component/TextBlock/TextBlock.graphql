@@ -1,3 +1,16 @@
 fragment TextBlockData on TextBlock {
-  Text { json, html }
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+  }
+  Text {
+    html
+  }
 }

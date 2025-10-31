@@ -24,7 +24,7 @@ export const HeroBlockContentType = contentType({
       "sortOrder": 0
     },
     "MainIntro": {
-      "type": "richText",
+      "type": "string",
       "displayName": "MainIntro",
       "group": "Information",
       "sortOrder": 0

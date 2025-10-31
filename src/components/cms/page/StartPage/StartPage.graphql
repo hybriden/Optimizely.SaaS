@@ -1,16 +1,22 @@
 fragment StartPageData on StartPage {
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+  }
   Heading
-  MainIntro { json, html }
+  MainIntro
   MainContentArea {
     __typename
     _metadata {
       key
       displayName
-      types
     }
-    ...HeroBlockData
-    ...TextBlockData
-    ...SliderBlockData
-    ...ContentAreaData
   }
 }

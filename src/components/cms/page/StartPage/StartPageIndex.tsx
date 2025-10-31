@@ -8,7 +8,7 @@ import { ContentAreaRenderer } from "@/components/cms/utils/contentAreaRenderer"
  */
 export const StartPagePage : CmsComponent<StartPageDataFragment> = ({ data, children }) => {
     const heading = data.Heading || '';
-    const mainIntro = data.MainIntro?.html || '';
+    const mainIntro = data.MainIntro || '';
     const mainContentArea = data.MainContentArea || [];
     
     return (

@@ -18,7 +18,7 @@ export const StartPageContentType = contentType({
       "maxLength": 100
     },
     "MainIntro": {
-      "type": "richText",
+      "type": "string",
       "displayName": "Intro",
       "group": "Information",
       "sortOrder": 0

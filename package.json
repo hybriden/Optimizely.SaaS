@@ -24,8 +24,6 @@
     "proxima:components": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev nextjs components -d ../../src/components/cms",
     "proxima:fragments": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev nextjs fragments -d ../../src/components/cms",
     "proxima:factory": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev nextjs factory -d ../../src/components/cms",
-    "proxima:list": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev types list -d ../../src/components/cms",
-    "proxima:pull": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev types pull -o ../../src/components/cms",
     "proxima:help": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev help",
     "proxima:info": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev cms info",
     "opti:login": "npx @optimizely/cms-cli@latest login",

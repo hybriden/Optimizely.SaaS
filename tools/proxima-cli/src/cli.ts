@@ -7,7 +7,6 @@ if (process.env.NODE_EXTRA_CA_CERTS === 'rootCA.pem') {
 }
 
 import { Command } from 'commander';
-import { registerTypesCommands } from './commands/types';
 import { registerNextjsCommands } from './commands/nextjs';
 import { registerCmsCommands } from './commands/cms';
 import { Logger } from './utils/logger';
@@ -20,7 +19,6 @@ program
   .version('1.0.0');
 
 // Register command groups
-registerTypesCommands(program);
 registerNextjsCommands(program);
 registerCmsCommands(program);
 
@@ -37,9 +35,11 @@ program
     Logger.log('  yarn proxima:fragments  Generate GraphQL fragments only');
     Logger.log('  yarn proxima:factory    Generate component factories only');
     Logger.log('');
-    Logger.subheading('Content Type Management:');
-    Logger.log('  yarn proxima:list       List content types from Optimizely SaaS and local project');
-    Logger.log('  yarn proxima:pull       Pull content type definitions from Optimizely CMS');
+    Logger.subheading('Content Type Management (via Optimizely SDK):');
+    Logger.log('  yarn opti:login         Authenticate with Optimizely CMS');
+    Logger.log('  yarn opti:push          Push content type definitions to CMS (with --force)');
+    Logger.log('  yarn opti:push:safe     Push content types safely (checks for breaking changes)');
+    Logger.log('  yarn opti:pull          Pull content type definitions from CMS');
     Logger.log('');
     Logger.subheading('CMS Utilities:');
     Logger.log('  yarn proxima:info       Display CMS configuration');
@@ -51,6 +51,9 @@ program
     Logger.log('  -d, --dir <path>    Specify components directory (relative to project root)');
     Logger.log('');
     Logger.info('For more information, see the project documentation.');
+    Logger.log('');
+    Logger.info('Note: Content type definitions are now managed via the Optimizely SDK');
+    Logger.info('      See src/contentTypes/ for TypeScript content type definitions');
   });
 
 // Parse arguments

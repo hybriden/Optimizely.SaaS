@@ -1,0 +1,26 @@
+fragment HeroBlockData on HeroBlock {
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+  }
+  Heading
+  Image {
+    url {
+      default
+    }
+  }
+  MainIntro
+  ContentLink {
+    url {
+      default
+    }
+  }
+  Width
+}

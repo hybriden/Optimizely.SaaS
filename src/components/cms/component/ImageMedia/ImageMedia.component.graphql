@@ -1,3 +1,0 @@
-fragment ImageMediaData on ImageMedia {
-  _metadata { key }
-}

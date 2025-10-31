@@ -1,6 +1,0 @@
-fragment LandingPageData on LandingPage {
-  Title
-  MetaDescription
-  UrlSegment
-  MainBody { html }
-}

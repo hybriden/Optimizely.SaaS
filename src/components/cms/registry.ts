@@ -20,9 +20,9 @@ import ComponentFactory from './component';
 import ExperienceFactory from './experience';
 
 // Import teasers
-import LandingPageTeaser from './page/LandingPage/Teaser';
-import ArticlePageTeaser from './page/ArticlePage/Teaser';
-import NewsPageTeaser from './page/NewsPage/Teaser';
+import LandingPageTeaser from './page/LandingPage/LandingPageTeaser';
+import ArticlePageTeaser from './page/ArticlePage/ArticlePageTeaser';
+import NewsPageTeaser from './page/NewsPage/NewsPageTeaser';
 
 /**
  * Component registry types

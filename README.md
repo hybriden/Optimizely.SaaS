@@ -1,23 +1,18 @@
 # Proxima - Optimizely SaaS CMS Frontend <!-- omit in toc -->
 
-A modern [Next.js](https://nextjs.org/) frontend for [Optimizely SaaS CMS](https://www.optimizely.com/cms) with custom CMS integration and automated content type management through the Proxima CLI tool.
+A modern [Next.js](https://nextjs.org()) frontend for [Optimizely SaaS CMS](https://www.optimizely.com/cms) with code-first content type management using the official Optimizely Content JS SDK.
 
 - [Overview](#overview)
 - [Key Features](#key-features)
-  - [Proxima CLI Tool](#proxima-cli-tool)
+  - [Optimizely Content JS SDK Integration](#optimizely-content-js-sdk-integration)
   - [Custom CMS Integration](#custom-cms-integration)
-  - [Component Factory System](#component-factory-system)
+  - [Component Registry System](#component-registry-system)
 - [Preconditions](#preconditions)
 - [Getting Started](#getting-started)
   - [1. Install Dependencies](#1-install-dependencies)
   - [2. Configure Environment](#2-configure-environment)
-  - [3. Pull Content Types from CMS](#3-pull-content-types-from-cms)
-  - [4. Generate Components](#4-generate-components)
-  - [5. Compile GraphQL Types](#5-compile-graphql-types)
-  - [6. Start Development Server](#6-start-development-server)
-- [Proxima CLI Commands](#proxima-cli-commands)
-  - [Content Type Management](#content-type-management)
-  - [Component Generation](#component-generation)
+  - [3. Compile GraphQL Types](#3-compile-graphql-types)
+  - [4. Start Development Server](#4-start-development-server)
 - [Workflow](#workflow)
   - [Adding New Content Types](#adding-new-content-types)
   - [Updating Existing Content Types](#updating-existing-content-types)
@@ -31,7 +26,7 @@ A modern [Next.js](https://nextjs.org/) frontend for [Optimizely SaaS CMS](https
 
 ## Overview
 
-Proxima is a custom implementation for Optimizely SaaS CMS with a streamlined, automated solution. The centerpiece is the **Proxima CLI** - a custom tool that automatically syncs content types from Optimizely Graph and generates the necessary components, GraphQL fragments, and type definitions.
+Proxima is a modern Next.js frontend for Optimizely SaaS CMS with **code-first content type management**. Content types are defined in TypeScript using the official **Optimizely Content JS SDK** and synchronized to the CMS via REST API.
 
 ## Tech Stack
 
@@ -40,20 +35,60 @@ Proxima is a custom implementation for Optimizely SaaS CMS with a streamlined, a
 - **TypeScript 5.8** - Strict type safety
 - **Tailwind CSS v4** - Utility-first styling
 - **GraphQL** - Type-safe content queries via Optimizely Graph
+- **Optimizely Content JS SDK** - Official SDK for content type management (alpha)
 - **Yarn 4** - Modern package manager with workspaces
 
 ## Key Features
 
-### Proxima CLI Tool
+### Optimizely Content JS SDK Integration
 
-The Proxima CLI (`tools/proxima-cli`) automates the entire content type management workflow:
+This project uses the **official Optimizely Content JS SDK** (@optimizely/cms-sdk) for programmatic content type management:
 
-- **Automatic Content Type Discovery**: Uses GraphQL introspection to fetch all content types and their properties from Optimizely Graph
-- **Property Fetching**: Fetches all fields for each content type (fixed to properly sync properties)
-- **Intelligent Type Detection**: Analyzes GraphQL interfaces (`_IPage`, `_IExperience`, `_IComponent`) to correctly identify content type categories
-- **Smart Folder Placement**: Automatically places content types in the correct folders (`page/`, `experience/`, `component/`)
-- **Component Generation**: Creates React components, GraphQL fragments, and TypeScript types
-- **Non-Destructive Updates**: Uses `@not-modified` markers to protect customized files from being overwritten
+- **Code-First Content Types**: Define content types in TypeScript (`src/contentTypes/`)
+- **Bidirectional Sync**: Push local content type definitions to CMS via REST API
+- **Type Safety**: Full TypeScript support with type inference
+- **Official CLI**: Use `@optimizely/cms-cli` for authentication and deployment
+
+**Available Commands:**
+```bash
+yarn opti:login      # Authenticate with Optimizely CMS
+yarn opti:push       # Push content types (with --force)
+yarn opti:push:safe  # Push safely (checks for breaking changes)
+```
+
+**⚠️ Important: Code-First Architecture**
+
+TypeScript content type definitions (`.ts` files) are the **single source of truth**. The CMS is synced FROM your code, never the other way around:
+
+- ✅ Edit TypeScript files → Push to CMS (`yarn opti:push`)
+- ❌ Never pull from CMS (no `opti:pull` - removed intentionally)
+- ✅ GraphQL schema auto-fetched during compilation
+- ✅ Use version control for content type history
+
+**Configuration:**
+- Content types co-located with components (matches folder name)
+  - Example: `src/components/cms/page/StartPage/StartPage.ts`
+- Configuration in [optimizely.config.mjs](optimizely.config.mjs)
+- OAuth credentials in `.env` file (OPTIMIZELY_CMS_CLIENT_ID, OPTIMIZELY_CMS_CLIENT_SECRET)
+
+**Structure:**
+Each content type has its definition co-located with its component:
+```
+src/components/cms/
+├── page/
+│   └── StartPage/
+│       ├── StartPageIndex.tsx  # React component
+│       ├── StartPage.ts        # Content type definition (SDK)
+│       ├── StartPage.graphql   # GraphQL fragment
+│       └── StartPageTeaser.tsx # Teaser component
+└── component/
+    └── HeroBlock/
+        ├── HeroBlockIndex.tsx  # React component
+        ├── HeroBlock.ts        # Content type definition (SDK)
+        └── HeroBlock.graphql   # GraphQL fragment
+```
+
+**Note**: The SDK is currently in alpha (v0.1.0-alpha.11). System content types (media, folders, BlankSection) are excluded as they're read-only.
 
 ### Custom CMS Integration
 
@@ -117,37 +152,7 @@ OPTIMIZELY_CMS_CLIENT_SECRET=your_client_secret
 OPTIMIZELY_PUBLISH_TOKEN=your_random_token_here
 ```
 
-### 3. Pull Content Types from CMS
-
-```bash
-yarn proxima:pull
-```
-
-This command:
-- Connects to Optimizely Graph using your environment variables
-- Fetches all content types using GraphQL introspection
-- Detects the base type (page/experience/component) from GraphQL interfaces
-- Saves `.opti-type.json` files in the appropriate folders under `src/components/cms/`
-
-### 4. Generate Components, Fragments, and Factories
-
-```bash
-yarn proxima:create
-```
-
-This command:
-- Reads all `.opti-type.json` files from your components directory
-- Generates React component files (`index.tsx`)
-- Generates GraphQL fragment files (`.graphql`)
-- Creates factory index files for component registration
-- Skips files marked as modified (unless using `--force` flag)
-
-Alternatively, you can run individual generation commands:
-- `yarn proxima:components` - Generate only React components
-- `yarn proxima:fragments` - Generate only GraphQL fragments
-- `yarn proxima:factory` - Generate only factory files
-
-### 5. Compile GraphQL Types
+### 3. Compile GraphQL Types
 
 ```bash
 yarn compile
@@ -158,7 +163,7 @@ This runs GraphQL Code Generation to:
 - Create typed query functions
 - Generate fragment types with type safety
 
-### 6. Start Development Server
+### 4. Start Development Server
 
 ```bash
 yarn dev
@@ -166,124 +171,69 @@ yarn dev
 
 The application will be available at `http://localhost:3000`
 
-## Proxima CLI Commands
-
-### Next.js Code Generation
-
-**Generate Everything (Recommended)**
-```bash
-yarn proxima:create
-```
-Generates all components, fragments, and factory files in one command. This is the main command you'll use after pulling content types.
-
-**Generate Components Only**
-```bash
-yarn proxima:components
-```
-Generates only the React component files (`index.tsx`) from `.opti-type.json` definitions.
-
-**Generate GraphQL Fragments Only**
-```bash
-yarn proxima:fragments
-```
-Generates only the GraphQL fragment files (`.graphql`) from content type definitions.
-
-**Generate Factories Only**
-```bash
-yarn proxima:factory
-```
-Generates only the factory index files for component registration.
-
-### Content Type Management
-
-**List Content Types**
-```bash
-yarn proxima:list
-```
-Shows all content types from both Optimizely Graph and your local project.
-
-**Pull Content Types**
-```bash
-yarn proxima:pull
-```
-Fetches content type definitions from Optimizely Graph and saves them as `.opti-type.json` files.
-
-Options:
-- `-o, --output <path>`: Output directory (default: `src/components/cms`)
-- `-f, --force`: Overwrite existing files even if modified
-
-### CMS Utilities
-
-**Display CMS Configuration**
-```bash
-yarn proxima:info
-```
-Shows the current Optimizely CMS configuration from environment variables.
-
-**View Help**
-```bash
-yarn proxima:help
-```
-Displays all available Proxima CLI commands with descriptions.
-
-### Common Options
-
-- `-f, --force`: Force overwrite modified files (works with most commands)
-- `-d, --dir <path>`: Specify components directory relative to project root
-
 ## Workflow
 
-### Adding New Content Types
+### Adding New Content Types (Code-First Approach)
 
-1. **Create content type in Optimizely CMS**
-   - Define your content type in the Optimizely CMS admin interface
-   - Set properties, base type (Page/Experience/Block), etc.
+1. **Create TypeScript content type definition**
+   - Create folder: `src/components/cms/page/YourPage/`
+   - Create file: `YourPage.ts` with SDK content type definition
+   - Example:
+   ```typescript
+   import { contentType } from '@optimizely/cms-sdk';
 
-2. **Pull the content type**
-   ```bash
-   yarn proxima:pull
+   export const YourPageContentType = contentType({
+     "key": "YourPage",
+     "displayName": "Your Page",
+     "baseType": "_page",
+     "properties": {
+       "Heading": {
+         "type": "string",
+         "displayName": "Heading",
+         "required": true
+       }
+     }
+   });
    ```
-   The CLI will automatically detect the new content type and save it in the correct folder.
 
-3. **Generate components**
+2. **Push to CMS**
    ```bash
-   yarn proxima:create
+   yarn opti:push
    ```
-   Creates the React component and GraphQL fragment.
 
-4. **Compile GraphQL types**
+3. **Generate boilerplate files** (automated)
+   ```bash
+   yarn generate YourPage page
+   ```
+   This generates:
+   - `YourPageIndex.tsx` (React component)
+   - `YourPage.graphql` (GraphQL fragment with all properties)
+   - Updates factory registration
+
+4. **Customize the component**
+   - Edit `YourPageIndex.tsx` to implement your design
+   - Adjust GraphQL fragment if needed
+
+5. **Compile and test**
    ```bash
    yarn compile
-   ```
-
-5. **Customize the component**
-   Edit `src/components/cms/[page|component|experience]/[YourContentType]/index.tsx` to implement your design.
-
-6. **Test**
-   ```bash
    yarn dev
    ```
 
-### Updating Existing Content Types
+### Updating Existing Content Types (Incremental Updates)
 
-If you modify a content type in Optimizely CMS:
-
-1. **Re-pull the definition**
+1. **Update the `.ts` file** with new properties
+2. **Push changes**: `yarn opti:push`
+3. **Re-run generator** to update GraphQL fragment:
    ```bash
-   yarn proxima:pull
+   yarn generate YourPage page
    ```
-   Modified `.opti-type.json` files will be skipped unless you use `--force`.
-
-2. **Update GraphQL fragments**
-   If properties changed, update the `.graphql` file manually or regenerate with `--force`.
-
-3. **Recompile**
-   ```bash
-   yarn compile
-   ```
-
-4. **Update component code**
-   Adjust your React component to handle new/changed properties.
+   The generator will:
+   - ✅ Preserve your custom component code
+   - ✅ Add only new properties to GraphQL fragment
+   - ✅ Skip already-registered factory entries
+4. **Update component code** to use new properties
+5. **Recompile**: `yarn compile`
 
 ## Project Structure
 
@@ -321,14 +271,6 @@ If you modify a content type in Optimizely CMS:
 │       ├── queries/
 │       ├── fragments/
 │       └── graphql.ts              # Generated types
-├── tools/
-│   └── proxima-cli/                # Proxima CLI tool
-│       ├── src/
-│       │   ├── commands/           # CLI commands
-│       │   ├── cms/                # CMS integration
-│       │   ├── generators/         # Code generators
-│       │   └── utils/              # Utilities
-│       └── package.json
 ├── codegen.ts                      # GraphQL Codegen config
 └── package.json
 ```
@@ -337,7 +279,7 @@ If you modify a content type in Optimizely CMS:
 
 ### Content Type Detection
 
-The Proxima CLI uses GraphQL introspection to fetch content types from Optimizely Graph:
+Content types are managed via TypeScript definitions synced through the Optimizely SDK:
 
 ```graphql
 query GetContentTypes {
@@ -420,7 +362,7 @@ Teasers must be added to **both** registries:
 This project uses a custom CMS integration built specifically for Optimizely SaaS CMS. Key features:
 
 - **Complete custom implementation**: All CMS integration code is included in the project
-- **Proxima CLI**: Custom tool for content type management with property fetching
+- **Optimizely SDK**: Official SDK for code-first content type management
 - **Centralized Registry**: Dynamic component resolution without hardcoded dependencies
 - **No component prefixes**: Components registered by exact typename
 - **Interface-based detection**: Uses GraphQL interfaces to determine content type categories
@@ -446,8 +388,8 @@ yarn compile --verbose
 
 **Content type in wrong folder:**
 - Check the GraphQL interfaces in Optimizely CMS
-- Re-run `yarn proxima:pull` after fixing the interface
-- Manually move files and regenerate with `yarn proxima:create`
+- Update the content type `.ts` file and re-push with `yarn opti:push`
+- Update GraphQL fragments and component code manually
 
 ---
 

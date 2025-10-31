@@ -11,24 +11,19 @@
 import { ComponentType } from 'react';
 
 // Import components
-import TextBlockComponent from './component/TextBlock';
-import SliderBlockComponent from './component/SliderBlock';
-import HeroBlockComponent from './component/HeroBlock';
-import ContentAreaComponent from './component/ContentArea';
-import BlankSectionComponent from './component/BlankSection';
-import ImageMediaComponent from './component/ImageMedia';
-import VideoMediaComponent from './component/VideoMedia';
-import GenericMediaComponent from './component/GenericMedia';
-import SysContentFolderComponent from './component/SysContentFolder';
+import TextBlockComponent from './component/TextBlock/TextBlockIndex';
+import SliderBlockComponent from './component/SliderBlock/SliderBlockIndex';
+import HeroBlockComponent from './component/HeroBlock/HeroBlockIndex';
+import ContentAreaComponent from './component/ContentArea/ContentAreaIndex';
 
 // Note: Pages are NOT imported here to avoid circular dependencies
 // Pages use ContentAreaRenderer, which imports this registry
 // Only components (blocks) and teasers need to be registered here
 
 // Import teasers
-import LandingPageTeaser from './page/LandingPage/Teaser';
-import ArticlePageTeaser from './page/ArticlePage/Teaser';
-import NewsPageTeaser from './page/NewsPage/Teaser';
+import LandingPageTeaser from './page/LandingPage/LandingPageTeaser';
+import ArticlePageTeaser from './page/ArticlePage/ArticlePageTeaser';
+import NewsPageTeaser from './page/NewsPage/NewsPageTeaser';
 
 /**
  * Component registry types
@@ -49,11 +44,6 @@ const COMPONENT_REGISTRY: ComponentRegistry = {
   'SliderBlock': SliderBlockComponent,
   'HeroBlock': HeroBlockComponent,
   'ContentArea': ContentAreaComponent,
-  'BlankSection': BlankSectionComponent,
-  'ImageMedia': ImageMediaComponent,
-  'VideoMedia': VideoMediaComponent,
-  'GenericMedia': GenericMediaComponent,
-  'SysContentFolder': SysContentFolderComponent,
 };
 
 /**

@@ -28,6 +28,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
 
 # vercel
@@ -43,3 +44,6 @@ next-env.d.ts
 
 # Claude Code settings
 .claude/
+
+# Optimizely - prevent pulling content types from CMS
+optimizely-types.json

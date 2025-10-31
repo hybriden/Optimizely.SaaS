@@ -1,3 +1,0 @@
-fragment VideoMediaData on VideoMedia {
-  _metadata { key }
-}

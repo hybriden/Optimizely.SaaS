@@ -1,0 +1,23 @@
+fragment NewsPageData on NewsPage {
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+  }
+  MainBody {
+    html
+  }
+  MainContentArea {
+    __typename
+    _metadata {
+      key
+      displayName
+    }
+  }
+}

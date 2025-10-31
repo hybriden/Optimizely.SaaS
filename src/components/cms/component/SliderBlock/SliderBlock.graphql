@@ -1,0 +1,20 @@
+fragment SliderBlockData on SliderBlock {
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+  }
+  SliderContent {
+    __typename
+    _metadata {
+      key
+      displayName
+    }
+  }
+}

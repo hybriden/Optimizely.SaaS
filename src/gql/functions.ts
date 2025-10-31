@@ -45,9 +45,6 @@ export async function getContentByPath(client: GraphQLClient, variables: GetCont
           ... on LandingPage {
             ...LandingPageData
           }
-          ... on MyTest {
-            ...MyTestData
-          }
           ... on ArticlePage {
             ...ArticlePageData
           }
@@ -87,10 +84,7 @@ export async function getContentByPath(client: GraphQLClient, variables: GetCont
 
     fragment StartPageData on StartPage {
       Heading
-      MainIntro {
-        json
-        html
-      }
+      MainIntro
       MainContentArea {
         __typename
         _metadata {
@@ -140,15 +134,22 @@ export async function getContentByPath(client: GraphQLClient, variables: GetCont
       }
     }
 
-    fragment MyTestData on MyTest {
+fragment ArticlePageData on ArticlePage {
       _metadata {
         key
+        version
+        published
+        lastModified
+        displayName
+        url {
+          base
+          default
+        }
       }
-    }
-
-    fragment ArticlePageData on ArticlePage {
-      _metadata {
-        key
+      Heading
+      Intro
+      MainBody {
+        html
       }
     }
 
@@ -172,10 +173,7 @@ export async function getContentByPath(client: GraphQLClient, variables: GetCont
           default
         }
       }
-      MainIntro {
-        json
-        html
-      }
+      MainIntro
       ContentLink {
         url {
           default
@@ -251,9 +249,6 @@ export async function getContentById(client: GraphQLClient, variables: GetConten
           ... on LandingPage {
             ...LandingPageData
           }
-          ... on MyTest {
-            ...MyTestData
-          }
           ... on ArticlePage {
             ...ArticlePageData
           }
@@ -293,10 +288,7 @@ export async function getContentById(client: GraphQLClient, variables: GetConten
 
     fragment StartPageData on StartPage {
       Heading
-      MainIntro {
-        json
-        html
-      }
+      MainIntro
       MainContentArea {
         __typename
         _metadata {
@@ -346,15 +338,22 @@ export async function getContentById(client: GraphQLClient, variables: GetConten
       }
     }
 
-    fragment MyTestData on MyTest {
+fragment ArticlePageData on ArticlePage {
       _metadata {
         key
+        version
+        published
+        lastModified
+        displayName
+        url {
+          base
+          default
+        }
       }
-    }
-
-    fragment ArticlePageData on ArticlePage {
-      _metadata {
-        key
+      Heading
+      Intro
+      MainBody {
+        html
       }
     }
 
@@ -378,10 +377,7 @@ export async function getContentById(client: GraphQLClient, variables: GetConten
           default
         }
       }
-      MainIntro {
-        json
-        html
-      }
+      MainIntro
       ContentLink {
         url {
           default

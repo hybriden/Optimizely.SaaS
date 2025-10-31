@@ -17,24 +17,10 @@ query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: Strin
       }
       ...IContentData
       ...PageData
-      ... on StartPage {
-        ...StartPageData
-      }
-      ... on NewsPage {
-        ...NewsPageData
-      }
-      ... on MyTest {
-        ...MyTestData
-      }
-      ... on LandingPage {
-        ...LandingPageData
-      }
-      ... on ArticlePage {
-        ...ArticlePageData
-      }
-      ... on BlankExperience {
-        ...BlankExperienceData
-      }
+      ... on StartPage {
+      ... on NewsPage {
+      ... on LandingPage {
+      ... on ArticlePage {
     }
   }
 }

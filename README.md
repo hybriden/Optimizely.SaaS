@@ -63,9 +63,25 @@ yarn opti:pull       # Pull content type definitions from CMS
 ```
 
 **Configuration:**
-- Content types defined in [src/contentTypes/](src/contentTypes/) using `contentType()` from SDK
+- Content types co-located with components in `*.opti-type.ts` files
+  - Example: `src/components/cms/page/StartPage/StartPage.opti-type.ts`
 - Configuration in [optimizely.config.mjs](optimizely.config.mjs)
 - OAuth credentials in `.env` file (OPTIMIZELY_CMS_CLIENT_ID, OPTIMIZELY_CMS_CLIENT_SECRET)
+
+**Structure:**
+Each content type has its definition co-located with its component:
+```
+src/components/cms/
+├── page/
+│   └── StartPage/
+│       ├── index.tsx                    # React component
+│       ├── StartPage.opti-type.ts       # Content type definition
+│       └── Teaser.tsx                   # Teaser component
+└── component/
+    └── HeroBlock/
+        ├── index.tsx                    # React component
+        └── HeroBlock.opti-type.ts       # Content type definition
+```
 
 **Note**: The SDK is currently in alpha (v0.1.0-alpha.11). System content types (media, folders, BlankSection) are excluded as they're read-only.
 

@@ -11,11 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "compile": "graphql-codegen",
-    "install:quiet": "npm install --loglevel=error",
     "watch": "graphql-codegen -w",
     "generate": "node scripts/generate-component.mjs",
-    "webhook:create": "echo 'opti-graph not installed. Skipping webhook creation.'",
-    "webhook:list": "echo 'opti-graph not installed. Skipping webhook list.'",
     "opti:login": "npx @optimizely/cms-cli@latest login",
     "opti:push": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs --force",
     "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs",
@@ -55,5 +52,8 @@
   },
   "resolutions": {
     "@graphql-codegen/visitor-plugin-common": "file:./packages/graphql-codegen-visitor-plugin-common-v5.8.0-patched.tgz"
+  },
+  "comments": {
+    "resolutions": "Patched version fixes TypeScript issues with fragment generation. Remove when official @graphql-codegen/visitor-plugin-common > v5.8.0 is available."
   }
 }

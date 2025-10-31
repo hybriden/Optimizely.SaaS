@@ -1,7 +1,4 @@
 'use client';
-// Auto generated dictionary
-// @not-modified => When this line is removed, the "force" parameter of the CLI tool is required to overwrite this file
-
 import { type CmsComponent } from "@/lib/optimizely-cms";
 import { SysContentFolderDataFragmentDoc, type SysContentFolderDataFragment } from "@/gql/graphql";
 

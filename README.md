@@ -33,13 +33,23 @@ A modern [Next.js](https://nextjs.org/) frontend for [Optimizely SaaS CMS](https
 
 Proxima is a custom implementation for Optimizely SaaS CMS with a streamlined, automated solution. The centerpiece is the **Proxima CLI** - a custom tool that automatically syncs content types from Optimizely Graph and generates the necessary components, GraphQL fragments, and type definitions.
 
+## Tech Stack
+
+- **Next.js 16** - App Router with React Server Components
+- **React 19** - Latest React with concurrent rendering
+- **TypeScript 5.8** - Strict type safety
+- **Tailwind CSS v4** - Utility-first styling
+- **GraphQL** - Type-safe content queries via Optimizely Graph
+- **Yarn 4** - Modern package manager with workspaces
+
 ## Key Features
 
 ### Proxima CLI Tool
 
 The Proxima CLI (`tools/proxima-cli`) automates the entire content type management workflow:
 
-- **Automatic Content Type Discovery**: Uses GraphQL introspection to fetch all content types from Optimizely Graph
+- **Automatic Content Type Discovery**: Uses GraphQL introspection to fetch all content types and their properties from Optimizely Graph
+- **Property Fetching**: Fetches all fields for each content type (fixed to properly sync properties)
 - **Intelligent Type Detection**: Analyzes GraphQL interfaces (`_IPage`, `_IExperience`, `_IComponent`) to correctly identify content type categories
 - **Smart Folder Placement**: Automatically places content types in the correct folders (`page/`, `experience/`, `component/`)
 - **Component Generation**: Creates React components, GraphQL fragments, and TypeScript types
@@ -56,12 +66,13 @@ Located in `src/lib/optimizely-cms/`, this provides:
 - Content area rendering with nested components
 - Multi-path format support (with/without leading/trailing slashes)
 
-### Component Factory System
+### Component Registry System
 
-- Dynamic component resolution based on GraphQL `__typename`
-- No component name prefixes (matches GraphQL responses exactly)
-- Automatic component registration via factory pattern
-- Support for pages, experiences, and block components
+- **Centralized Registry**: Single source of truth for all components in `registry.ts` and `client-registry.ts`
+- **Dynamic Resolution**: Components resolved by GraphQL `__typename` without hardcoded imports
+- **No Prefixes**: Matches GraphQL responses exactly
+- **Server/Client Split**: Separate registries for server and client components to avoid circular dependencies
+- **Teaser Support**: Automatic teaser card rendering for pages in content areas
 
 ## Preconditions
 
@@ -370,12 +381,47 @@ The custom GraphQL client:
 - Supports multiple path formats for content routing
 - Handles both server-side and client-side rendering
 
+## Component Registry
+
+The project uses a centralized component registry system located in:
+- `src/components/cms/registry.ts` - Server-side registry (all components)
+- `src/components/cms/client-registry.ts` - Client-side registry (blocks & teasers only)
+
+### Adding Components to Registry
+
+**Automatic (Recommended):**
+1. Create component in appropriate folder (`component/`, `page/`, or `experience/`)
+2. Add to factory file (`component/index.ts`, `page/index.ts`, or `experience/index.ts`)
+3. Component is auto-registered via the registry
+
+**Manual Dynamic Registration:**
+```typescript
+import { registerComponent, registerTeaser } from '@/components/cms';
+
+// Register a component
+registerComponent('MyBlock', MyBlockComponent);
+
+// Register a teaser for a page
+registerTeaser('MyPage', MyPageTeaser);
+```
+
+### Adding Teasers
+
+Teasers must be added to **both** registries:
+
+1. Create teaser: `src/components/cms/page/MyPage/Teaser.tsx`
+2. Add import and register in `registry.ts`
+3. Add import and register in `client-registry.ts`
+
+**Note:** Pages are NOT added to `client-registry.ts` to avoid circular dependencies.
+
 ## Architecture
 
 This project uses a custom CMS integration built specifically for Optimizely SaaS CMS. Key features:
 
 - **Complete custom implementation**: All CMS integration code is included in the project
-- **Proxima CLI**: Custom tool for content type management
+- **Proxima CLI**: Custom tool for content type management with property fetching
+- **Centralized Registry**: Dynamic component resolution without hardcoded dependencies
 - **No component prefixes**: Components registered by exact typename
 - **Interface-based detection**: Uses GraphQL interfaces to determine content type categories
 - **Automated workflow**: Pull, create, compile workflow

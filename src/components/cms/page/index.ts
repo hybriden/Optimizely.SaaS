@@ -1,11 +1,11 @@
 // Auto generated dictionary
 // @not-modified => When this line is removed, the "force" parameter of the CLI tool is required to overwrite this file
 import { type ComponentTypeDictionary } from "@/lib/optimizely-cms";
-import StartPageComponent from "./StartPage";
-import MyTestComponent from "./MyTest";
-import LandingPageComponent from "./LandingPage";
-import ArticlePageComponent from "./ArticlePage";
-import NewsPageComponent from "./NewsPage";
+import StartPageComponent from "./StartPage/StartPageIndex";
+import MyTestComponent from "./MyTest/MyTestIndex";
+import LandingPageComponent from "./LandingPage/LandingPageIndex";
+import ArticlePageComponent from "./ArticlePage/ArticlePageIndex";
+import NewsPageComponent from "./NewsPage/NewsPageIndex";
 
 // Build dictionary
 export const PageFactory : ComponentTypeDictionary = {

@@ -74,13 +74,13 @@ Each content type has its definition co-located with its component:
 src/components/cms/
 ├── page/
 │   └── StartPage/
-│       ├── index.tsx           # React component
+│       ├── StartPageIndex.tsx  # React component
 │       ├── StartPage.ts        # Content type definition (SDK)
 │       ├── StartPage.graphql   # GraphQL fragment
 │       └── Teaser.tsx          # Teaser component
 └── component/
     └── HeroBlock/
-        ├── index.tsx           # React component
+        ├── HeroBlockIndex.tsx  # React component
         ├── HeroBlock.ts        # Content type definition (SDK)
         └── HeroBlock.graphql   # GraphQL fragment
 ```

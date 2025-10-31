@@ -1,15 +1,15 @@
 // Auto generated dictionary
 // @not-modified => When this line is removed, the "force" parameter of the CLI tool is required to overwrite this file
 import { type ComponentTypeDictionary } from "@/lib/optimizely-cms";
-import TextBlockComponent from "./TextBlock";
-import SysContentFolderComponent from "./SysContentFolder";
-import VideoMediaComponent from "./VideoMedia";
-import SliderBlockComponent from "./SliderBlock";
-import ImageMediaComponent from "./ImageMedia";
-import HeroBlockComponent from "./HeroBlock";
-import GenericMediaComponent from "./GenericMedia";
-import ContentAreaComponent from "./ContentArea";
-import BlankSectionComponent from "./BlankSection";
+import TextBlockComponent from "./TextBlock/TextBlockIndex";
+import SysContentFolderComponent from "./SysContentFolder/SysContentFolderIndex";
+import VideoMediaComponent from "./VideoMedia/VideoMediaIndex";
+import SliderBlockComponent from "./SliderBlock/SliderBlockIndex";
+import ImageMediaComponent from "./ImageMedia/ImageMediaIndex";
+import HeroBlockComponent from "./HeroBlock/HeroBlockIndex";
+import GenericMediaComponent from "./GenericMedia/GenericMediaIndex";
+import ContentAreaComponent from "./ContentArea/ContentAreaIndex";
+import BlankSectionComponent from "./BlankSection/BlankSectionIndex";
 
 // Build dictionary
 export const ComponentFactory : ComponentTypeDictionary = {

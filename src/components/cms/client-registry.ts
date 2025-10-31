@@ -11,15 +11,15 @@
 import { ComponentType } from 'react';
 
 // Import components
-import TextBlockComponent from './component/TextBlock';
-import SliderBlockComponent from './component/SliderBlock';
-import HeroBlockComponent from './component/HeroBlock';
-import ContentAreaComponent from './component/ContentArea';
-import BlankSectionComponent from './component/BlankSection';
-import ImageMediaComponent from './component/ImageMedia';
-import VideoMediaComponent from './component/VideoMedia';
-import GenericMediaComponent from './component/GenericMedia';
-import SysContentFolderComponent from './component/SysContentFolder';
+import TextBlockComponent from './component/TextBlock/TextBlockIndex';
+import SliderBlockComponent from './component/SliderBlock/SliderBlockIndex';
+import HeroBlockComponent from './component/HeroBlock/HeroBlockIndex';
+import ContentAreaComponent from './component/ContentArea/ContentAreaIndex';
+import BlankSectionComponent from './component/BlankSection/BlankSectionIndex';
+import ImageMediaComponent from './component/ImageMedia/ImageMediaIndex';
+import VideoMediaComponent from './component/VideoMedia/VideoMediaIndex';
+import GenericMediaComponent from './component/GenericMedia/GenericMediaIndex';
+import SysContentFolderComponent from './component/SysContentFolder/SysContentFolderIndex';
 
 // Note: Pages are NOT imported here to avoid circular dependencies
 // Pages use ContentAreaRenderer, which imports this registry

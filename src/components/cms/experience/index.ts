@@ -1,7 +1,7 @@
 // Auto generated dictionary
 // @not-modified => When this line is removed, the "force" parameter of the CLI tool is required to overwrite this file
 import { type ComponentTypeDictionary } from "@/lib/optimizely-cms";
-import BlankExperienceComponent from "./BlankExperience";
+import BlankExperienceComponent from "./BlankExperience/BlankExperienceIndex";
 
 // Build dictionary
 export const ExperienceFactory : ComponentTypeDictionary = {

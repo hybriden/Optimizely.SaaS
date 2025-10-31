@@ -76,11 +76,13 @@ src/components/cms/
 │   └── StartPage/
 │       ├── index.tsx           # React component
 │       ├── StartPage.ts        # Content type definition (SDK)
+│       ├── StartPage.graphql   # GraphQL fragment
 │       └── Teaser.tsx          # Teaser component
 └── component/
     └── HeroBlock/
         ├── index.tsx           # React component
-        └── HeroBlock.ts        # Content type definition (SDK)
+        ├── HeroBlock.ts        # Content type definition (SDK)
+        └── HeroBlock.graphql   # GraphQL fragment
 ```
 
 **Note**: The SDK is currently in alpha (v0.1.0-alpha.11). System content types (media, folders, BlankSection) are excluded as they're read-only.

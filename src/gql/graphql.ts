@@ -1699,21 +1699,6 @@ export type LandingPage = IData & _IContent & _IPage & {
 };
 
 
-export type LandingPageMetaDescriptionArgs = {
-  highlight?: InputMaybe<HighlightOptions>;
-};
-
-
-export type LandingPageTitleArgs = {
-  highlight?: InputMaybe<HighlightOptions>;
-};
-
-
-export type LandingPageUrlSegmentArgs = {
-  highlight?: InputMaybe<HighlightOptions>;
-};
-
-
 export type LandingPage_FulltextArgs = {
   highlight?: InputMaybe<HighlightOptions>;
 };
@@ -1732,41 +1717,11 @@ export type LandingPageAutocomplete = {
 export type LandingPageFacet = {
   __typename?: 'LandingPageFacet';
   MainBody?: Maybe<RichTextFacet>;
-  MetaDescription?: Maybe<Array<Maybe<StringFacet>>>;
-  Title?: Maybe<Array<Maybe<StringFacet>>>;
-  UrlSegment?: Maybe<Array<Maybe<StringFacet>>>;
   _metadata?: Maybe<IContentMetadataFacet>;
-};
-
-
-export type LandingPageFacetMetaDescriptionArgs = {
-  filters?: InputMaybe<Array<Scalars['String']['input']>>;
-  limit?: Scalars['Int']['input'];
-  orderBy?: InputMaybe<OrderBy>;
-  orderType?: InputMaybe<OrderByFacetType>;
-};
-
-
-export type LandingPageFacetTitleArgs = {
-  filters?: InputMaybe<Array<Scalars['String']['input']>>;
-  limit?: Scalars['Int']['input'];
-  orderBy?: InputMaybe<OrderBy>;
-  orderType?: InputMaybe<OrderByFacetType>;
-};
-
-
-export type LandingPageFacetUrlSegmentArgs = {
-  filters?: InputMaybe<Array<Scalars['String']['input']>>;
-  limit?: Scalars['Int']['input'];
-  orderBy?: InputMaybe<OrderBy>;
-  orderType?: InputMaybe<OrderByFacetType>;
 };
 
 export type LandingPageOrderByInput = {
   MainBody?: InputMaybe<RichTextOrderByInput>;
-  MetaDescription?: InputMaybe<OrderBy>;
-  Title?: InputMaybe<OrderBy>;
-  UrlSegment?: InputMaybe<OrderBy>;
   _metadata?: InputMaybe<IContentMetadataOrderByInput>;
   _minimumScore?: InputMaybe<Scalars['Float']['input']>;
   _modified?: InputMaybe<OrderBy>;
@@ -1792,9 +1747,6 @@ export type LandingPageOutputTotalArgs = {
 
 export type LandingPageWhereInput = {
   MainBody?: InputMaybe<RichTextWhereInput>;
-  MetaDescription?: InputMaybe<SearchableStringFilterInput>;
-  Title?: InputMaybe<SearchableStringFilterInput>;
-  UrlSegment?: InputMaybe<SearchableStringFilterInput>;
   _and?: InputMaybe<Array<InputMaybe<LandingPageWhereInput>>>;
   _fulltext?: InputMaybe<SearchableStringFilterInput>;
   _metadata?: InputMaybe<IContentMetadataWhereInput>;
@@ -1960,7 +1912,7 @@ export type MyTestWhereInput = {
 
 export type NewsPage = IData & _IContent & _IPage & {
   __typename?: 'NewsPage';
-  MainBody?: Maybe<RichText>;
+  MainBody?: Maybe<ContentReference>;
   MainContentArea?: Maybe<Array<Maybe<_IContent>>>;
   /** @deprecated Use `_link` field instead */
   _children?: Maybe<QueryRef>;
@@ -1986,20 +1938,20 @@ export type NewsPage_LinkArgs = {
 
 export type NewsPageAutocomplete = {
   __typename?: 'NewsPageAutocomplete';
-  MainBody?: Maybe<RichTextAutocomplete>;
+  MainBody?: Maybe<ContentReferenceAutocomplete>;
   MainContentArea?: Maybe<_IContentAutocomplete>;
   _metadata?: Maybe<IContentMetadataAutocomplete>;
 };
 
 export type NewsPageFacet = {
   __typename?: 'NewsPageFacet';
-  MainBody?: Maybe<RichTextFacet>;
+  MainBody?: Maybe<ContentReferenceFacet>;
   MainContentArea?: Maybe<_IContentFacet>;
   _metadata?: Maybe<IContentMetadataFacet>;
 };
 
 export type NewsPageOrderByInput = {
-  MainBody?: InputMaybe<RichTextOrderByInput>;
+  MainBody?: InputMaybe<ContentReferenceOrderByInput>;
   MainContentArea?: InputMaybe<_IContentOrderByInput>;
   _metadata?: InputMaybe<IContentMetadataOrderByInput>;
   _minimumScore?: InputMaybe<Scalars['Float']['input']>;
@@ -2025,7 +1977,7 @@ export type NewsPageOutputTotalArgs = {
 };
 
 export type NewsPageWhereInput = {
-  MainBody?: InputMaybe<RichTextWhereInput>;
+  MainBody?: InputMaybe<ContentReferenceWhereInput>;
   MainContentArea?: InputMaybe<_IContentWhereInput>;
   _and?: InputMaybe<Array<InputMaybe<NewsPageWhereInput>>>;
   _fulltext?: InputMaybe<SearchableStringFilterInput>;

@@ -77,7 +77,7 @@ src/components/cms/
 │       ├── StartPageIndex.tsx  # React component
 │       ├── StartPage.ts        # Content type definition (SDK)
 │       ├── StartPage.graphql   # GraphQL fragment
-│       └── Teaser.tsx          # Teaser component
+│       └── StartPageTeaser.tsx # Teaser component
 └── component/
     └── HeroBlock/
         ├── HeroBlockIndex.tsx  # React component

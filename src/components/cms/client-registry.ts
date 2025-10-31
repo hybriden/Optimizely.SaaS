@@ -26,9 +26,9 @@ import SysContentFolderComponent from './component/SysContentFolder/SysContentFo
 // Only components (blocks) and teasers need to be registered here
 
 // Import teasers
-import LandingPageTeaser from './page/LandingPage/Teaser';
-import ArticlePageTeaser from './page/ArticlePage/Teaser';
-import NewsPageTeaser from './page/NewsPage/Teaser';
+import LandingPageTeaser from './page/LandingPage/LandingPageTeaser';
+import ArticlePageTeaser from './page/ArticlePage/ArticlePageTeaser';
+import NewsPageTeaser from './page/NewsPage/NewsPageTeaser';
 
 /**
  * Component registry types

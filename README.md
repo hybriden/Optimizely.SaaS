@@ -193,28 +193,37 @@ The application will be available at `http://localhost:3000`
    yarn opti:push
    ```
 
-3. **Create React component**
-   - Create file: `YourPageIndex.tsx`
-   - Implement your component design
+3. **Generate boilerplate files** (automated)
+   ```bash
+   yarn generate YourPage page
+   ```
+   This generates:
+   - `YourPageIndex.tsx` (React component)
+   - `YourPage.graphql` (GraphQL fragment with all properties)
+   - Updates factory registration
 
-4. **Create GraphQL fragment**
-   - Create file: `YourPage.graphql`
-   - Define what data to fetch
+4. **Customize the component**
+   - Edit `YourPageIndex.tsx` to implement your design
+   - Adjust GraphQL fragment if needed
 
-5. **Register in factory**
-   - Add to `src/components/cms/page/index.ts`
-
-6. **Compile and test**
+5. **Compile and test**
    ```bash
    yarn compile
    yarn dev
    ```
 
-### Updating Existing Content Types
+### Updating Existing Content Types (Incremental Updates)
 
 1. **Update the `.ts` file** with new properties
 2. **Push changes**: `yarn opti:push`
-3. **Update GraphQL fragment** if properties changed
+3. **Re-run generator** to update GraphQL fragment:
+   ```bash
+   yarn generate YourPage page
+   ```
+   The generator will:
+   - ✅ Preserve your custom component code
+   - ✅ Add only new properties to GraphQL fragment
+   - ✅ Skip already-registered factory entries
 4. **Update component code** to use new properties
 5. **Recompile**: `yarn compile`
 

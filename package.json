@@ -13,6 +13,7 @@
     "compile": "graphql-codegen",
     "install:quiet": "npm install --loglevel=error",
     "watch": "graphql-codegen -w",
+    "generate": "node scripts/generate-component.mjs",
     "webhook:create": "echo 'opti-graph not installed. Skipping webhook creation.'",
     "webhook:list": "echo 'opti-graph not installed. Skipping webhook list.'",
     "opti:login": "npx @optimizely/cms-cli@latest login",

@@ -12,4 +12,24 @@ fragment SyncTestData on _IContent {
     }
     types
   }
+  Heading
+  MainIntro {
+    html
+  }
+  MainBody {
+    html
+  }
+  Subtitle
+  IsPublished
+  Priority
+  PublishDate
+  ContentArea {
+    __typename
+    _metadata {
+      key
+      displayName
+    }
+  }
+  Tags
+  ExternalLink
 }

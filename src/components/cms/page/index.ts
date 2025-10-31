@@ -5,7 +5,6 @@ import MyTestComponent from "./MyTest/MyTestIndex";
 import LandingPageComponent from "./LandingPage/LandingPageIndex";
 import ArticlePageComponent from "./ArticlePage/ArticlePageIndex";
 import NewsPageComponent from "./NewsPage/NewsPageIndex";
-import SyncTestComponent from "./SyncTest/SyncTestIndex";
 
 // Build dictionary
 export const PageFactory : ComponentTypeDictionary = {
@@ -13,8 +12,7 @@ export const PageFactory : ComponentTypeDictionary = {
     "MyTest": MyTestComponent,
     "LandingPage": LandingPageComponent,
     "ArticlePage": ArticlePageComponent,
-    "NewsPage": NewsPageComponent,
-    "SyncTest": SyncTestComponent
+    "NewsPage": NewsPageComponent
 };
 
 // Export dictionary

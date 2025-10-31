@@ -13,6 +13,7 @@
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w",
     "generate": "node scripts/generate-component.mjs",
+    "cleanup": "node scripts/cleanup-stale-types.mjs",
     "opti:login": "npx @optimizely/cms-cli@latest login",
     "opti:push": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs --force",
     "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs"

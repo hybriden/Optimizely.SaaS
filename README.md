@@ -40,9 +40,34 @@ Proxima is a custom implementation for Optimizely SaaS CMS with a streamlined, a
 - **TypeScript 5.8** - Strict type safety
 - **Tailwind CSS v4** - Utility-first styling
 - **GraphQL** - Type-safe content queries via Optimizely Graph
+- **Optimizely Content JS SDK** - Official SDK for content type management (alpha)
 - **Yarn 4** - Modern package manager with workspaces
 
 ## Key Features
+
+### Optimizely Content JS SDK Integration
+
+This project uses the **official Optimizely Content JS SDK** (@optimizely/cms-sdk) for programmatic content type management:
+
+- **Code-First Content Types**: Define content types in TypeScript (`src/contentTypes/`)
+- **Bidirectional Sync**: Push local content type definitions to CMS via REST API
+- **Type Safety**: Full TypeScript support with type inference
+- **Official CLI**: Use `@optimizely/cms-cli` for authentication and deployment
+
+**Available Commands:**
+```bash
+yarn opti:login      # Authenticate with Optimizely CMS
+yarn opti:push       # Push content types (with --force)
+yarn opti:push:safe  # Push safely (checks for breaking changes)
+yarn opti:pull       # Pull content type definitions from CMS
+```
+
+**Configuration:**
+- Content types defined in [src/contentTypes/](src/contentTypes/) using `contentType()` from SDK
+- Configuration in [optimizely.config.mjs](optimizely.config.mjs)
+- OAuth credentials in `.env` file (OPTIMIZELY_CMS_CLIENT_ID, OPTIMIZELY_CMS_CLIENT_SECRET)
+
+**Note**: The SDK is currently in alpha (v0.1.0-alpha.11). System content types (media, folders, BlankSection) are excluded as they're read-only.
 
 ### Proxima CLI Tool
 

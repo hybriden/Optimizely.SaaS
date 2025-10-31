@@ -53,8 +53,8 @@ program
     Logger.info('For more information, see the project documentation.');
     Logger.log('');
     Logger.info('Note: Content type definitions are now managed via the Optimizely SDK');
-    Logger.info('      Content types are co-located with components in *.opti-type.ts files');
-    Logger.info('      Example: src/components/cms/page/StartPage/StartPage.opti-type.ts');
+    Logger.info('      Content types are co-located: FolderName/FolderName.ts');
+    Logger.info('      Example: src/components/cms/page/StartPage/StartPage.ts');
   });
 
 // Parse arguments

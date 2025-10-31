@@ -29,7 +29,6 @@ type Documents = {
     "fragment MyTestData on MyTest {\n  _metadata {\n    key\n  }\n}": typeof types.MyTestDataFragmentDoc,
     "fragment NewsPageData on NewsPage {\n  _metadata {\n    key\n    published\n    lastModified\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      types\n      locale\n      displayName\n      url {\n        base\n        default\n      }\n      published\n    }\n    ... on LandingPage {\n      Title\n      MetaDescription\n    }\n  }\n}": typeof types.NewsPageDataFragmentDoc,
     "fragment StartPageData on StartPage {\n  Heading\n  MainIntro {\n    json\n    html\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n    }\n    ...HeroBlockData\n    ...TextBlockData\n    ...SliderBlockData\n    ...ContentAreaData\n  }\n}": typeof types.StartPageDataFragmentDoc,
-    "fragment SyncTestData on SyncTest {\n  _metadata {\n    key\n    version\n    published\n    lastModified\n    displayName\n    url {\n      base\n      default\n    }\n  }\n  Heading\n  MainIntro {\n    html\n  }\n  Subtitle\n  IsPublished\n  Priority\n  PublishDate\n  ContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }\n  Tags\n  ExternalLink\n}": typeof types.SyncTestDataFragmentDoc,
 };
 const documents: Documents = {
     "fragment BlankSectionData on BlankSection {\n  _metadata {\n    key\n  }\n}": types.BlankSectionDataFragmentDoc,
@@ -47,7 +46,6 @@ const documents: Documents = {
     "fragment MyTestData on MyTest {\n  _metadata {\n    key\n  }\n}": types.MyTestDataFragmentDoc,
     "fragment NewsPageData on NewsPage {\n  _metadata {\n    key\n    published\n    lastModified\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      types\n      locale\n      displayName\n      url {\n        base\n        default\n      }\n      published\n    }\n    ... on LandingPage {\n      Title\n      MetaDescription\n    }\n  }\n}": types.NewsPageDataFragmentDoc,
     "fragment StartPageData on StartPage {\n  Heading\n  MainIntro {\n    json\n    html\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n    }\n    ...HeroBlockData\n    ...TextBlockData\n    ...SliderBlockData\n    ...ContentAreaData\n  }\n}": types.StartPageDataFragmentDoc,
-    "fragment SyncTestData on SyncTest {\n  _metadata {\n    key\n    version\n    published\n    lastModified\n    displayName\n    url {\n      base\n      default\n    }\n  }\n  Heading\n  MainIntro {\n    html\n  }\n  Subtitle\n  IsPublished\n  Priority\n  PublishDate\n  ContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }\n  Tags\n  ExternalLink\n}": types.SyncTestDataFragmentDoc,
 };
 
 /**
@@ -124,10 +122,6 @@ export function gql(source: "fragment NewsPageData on NewsPage {\n  _metadata {\
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "fragment StartPageData on StartPage {\n  Heading\n  MainIntro {\n    json\n    html\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n    }\n    ...HeroBlockData\n    ...TextBlockData\n    ...SliderBlockData\n    ...ContentAreaData\n  }\n}"): (typeof documents)["fragment StartPageData on StartPage {\n  Heading\n  MainIntro {\n    json\n    html\n  }\n  MainContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n      types\n    }\n    ...HeroBlockData\n    ...TextBlockData\n    ...SliderBlockData\n    ...ContentAreaData\n  }\n}"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "fragment SyncTestData on SyncTest {\n  _metadata {\n    key\n    version\n    published\n    lastModified\n    displayName\n    url {\n      base\n      default\n    }\n  }\n  Heading\n  MainIntro {\n    html\n  }\n  Subtitle\n  IsPublished\n  Priority\n  PublishDate\n  ContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }\n  Tags\n  ExternalLink\n}"): (typeof documents)["fragment SyncTestData on SyncTest {\n  _metadata {\n    key\n    version\n    published\n    lastModified\n    displayName\n    url {\n      base\n      default\n    }\n  }\n  Heading\n  MainIntro {\n    html\n  }\n  Subtitle\n  IsPublished\n  Priority\n  PublishDate\n  ContentArea {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }\n  Tags\n  ExternalLink\n}"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

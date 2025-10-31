@@ -14,17 +14,7 @@ fragment SyncTestData on SyncTest {
   MainIntro {
     html
   }
-  Subtitle
-  IsPublished
-  Priority
-  PublishDate
-  ContentArea {
-    __typename
-    _metadata {
-      key
-      displayName
-    }
+  MainBody {
+    html
   }
-  Tags
-  ExternalLink
 }

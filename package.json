@@ -15,8 +15,7 @@
     "generate": "node scripts/generate-component.mjs",
     "opti:login": "npx @optimizely/cms-cli@latest login",
     "opti:push": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs --force",
-    "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs",
-    "opti:pull": "npx @optimizely/cms-cli@latest config pull --output optimizely-types.json"
+    "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs"
   },
   "dependencies": {
     "@optimizely/cms-sdk": "^0.1.0-alpha.11",

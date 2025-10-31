@@ -54,8 +54,16 @@ This project uses the **official Optimizely Content JS SDK** (@optimizely/cms-sd
 yarn opti:login      # Authenticate with Optimizely CMS
 yarn opti:push       # Push content types (with --force)
 yarn opti:push:safe  # Push safely (checks for breaking changes)
-yarn opti:pull       # Pull content type definitions from CMS
 ```
+
+**⚠️ Important: Code-First Architecture**
+
+TypeScript content type definitions (`.ts` files) are the **single source of truth**. The CMS is synced FROM your code, never the other way around:
+
+- ✅ Edit TypeScript files → Push to CMS (`yarn opti:push`)
+- ❌ Never pull from CMS (no `opti:pull` - removed intentionally)
+- ✅ GraphQL schema auto-fetched during compilation
+- ✅ Use version control for content type history
 
 **Configuration:**
 - Content types co-located with components (matches folder name)

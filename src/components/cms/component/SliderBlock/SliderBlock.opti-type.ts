@@ -16,8 +16,9 @@ export const SliderBlockContentType = contentType({
       "sortOrder": 0,
       "items": {
         "type": "content",
+        // ImageMedia is a system content type - allowedTypes enforced in CMS
         "allowedTypes": [
-          "ImageMedia"
+          "ImageMedia" as any
         ]
       }
     }

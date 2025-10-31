@@ -32,9 +32,9 @@ export const StartPageContentType = contentType({
       "items": {
         "type": "content",
         "allowedTypes": [
-          "HeroBlock",
-          "TextBlock",
-          "SliderBlock"
+          "HeroBlock" as any,
+          "TextBlock" as any,
+          "SliderBlock" as any
         ]
       }
     }

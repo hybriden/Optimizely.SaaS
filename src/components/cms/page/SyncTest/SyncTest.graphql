@@ -1,5 +1,4 @@
-fragment SyncTestData on _IContent {
-  __typename
+fragment SyncTestData on SyncTest {
   _metadata {
     key
     version
@@ -10,13 +9,9 @@ fragment SyncTestData on _IContent {
       base
       default
     }
-    types
   }
   Heading
   MainIntro {
-    html
-  }
-  MainBody {
     html
   }
   Subtitle

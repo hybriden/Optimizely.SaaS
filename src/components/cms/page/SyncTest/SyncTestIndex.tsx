@@ -40,11 +40,6 @@ export const SyncTestPage: CmsComponent<SyncTestDataFragment> = ({ data, childre
                         <p className="text-sm text-slate-400">
                             Key: <span className="font-mono text-emerald-400">{data._metadata?.key}</span>
                         </p>
-                        {data._metadata?.types && data._metadata.types.length > 0 && (
-                            <p className="text-sm text-slate-400">
-                                Types: <span className="font-mono text-emerald-400">{data._metadata.types.join(', ')}</span>
-                            </p>
-                        )}
                     </div>
 
                     {/* Properties Info */}

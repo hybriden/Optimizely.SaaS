@@ -2022,6 +2022,7 @@ export type Query = {
   NewsPage?: Maybe<NewsPageOutput>;
   SliderBlock?: Maybe<SliderBlockOutput>;
   StartPage?: Maybe<StartPageOutput>;
+  SyncTest?: Maybe<SyncTestOutput>;
   SysContentFolder?: Maybe<SysContentFolderOutput>;
   TextBlock?: Maybe<TextBlockOutput>;
   VideoMedia?: Maybe<VideoMediaOutput>;
@@ -2219,6 +2220,20 @@ export type QueryStartPageArgs = {
 };
 
 
+export type QuerySyncTestArgs = {
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  limit?: Scalars['Int']['input'];
+  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
+  orderBy?: InputMaybe<SyncTestOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  track?: InputMaybe<Scalars['String']['input']>;
+  usePinned?: InputMaybe<UsePinnedInput>;
+  variation?: InputMaybe<VariationInput>;
+  where?: InputMaybe<SyncTestWhereInput>;
+};
+
+
 export type QuerySysContentFolderArgs = {
   cursor?: InputMaybe<Scalars['String']['input']>;
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -2401,6 +2416,7 @@ export type QueryRef = {
   NewsPage?: Maybe<NewsPageOutput>;
   SliderBlock?: Maybe<SliderBlockOutput>;
   StartPage?: Maybe<StartPageOutput>;
+  SyncTest?: Maybe<SyncTestOutput>;
   SysContentFolder?: Maybe<SysContentFolderOutput>;
   TextBlock?: Maybe<TextBlockOutput>;
   VideoMedia?: Maybe<VideoMediaOutput>;
@@ -2595,6 +2611,20 @@ export type QueryRefStartPageArgs = {
   usePinned?: InputMaybe<UsePinnedInput>;
   variation?: InputMaybe<VariationInput>;
   where?: InputMaybe<StartPageWhereInput>;
+};
+
+
+export type QueryRefSyncTestArgs = {
+  cursor?: InputMaybe<Scalars['String']['input']>;
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  limit?: Scalars['Int']['input'];
+  locale?: InputMaybe<Array<InputMaybe<Locales>>>;
+  orderBy?: InputMaybe<SyncTestOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  track?: InputMaybe<Scalars['String']['input']>;
+  usePinned?: InputMaybe<UsePinnedInput>;
+  variation?: InputMaybe<VariationInput>;
+  where?: InputMaybe<SyncTestWhereInput>;
 };
 
 
@@ -3025,6 +3055,95 @@ export type StringFilterInput = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
   /** expands query value with synonyms. Example: if `H2O` is a synonym of `water`, then querying for `water` will also return results with `H2O`. */
   synonyms?: InputMaybe<Array<InputMaybe<SynonymSlot>>>;
+};
+
+export type SyncTest = IData & _IContent & _IPage & {
+  __typename?: 'SyncTest';
+  ContentArea?: Maybe<Array<Maybe<_IContent>>>;
+  ExternalLink?: Maybe<Scalars['String']['output']>;
+  Heading?: Maybe<Scalars['String']['output']>;
+  IsPublished?: Maybe<Scalars['Boolean']['output']>;
+  MainBody?: Maybe<ContentReference>;
+  MainIntro?: Maybe<RichText>;
+  Priority?: Maybe<Scalars['String']['output']>;
+  PublishDate?: Maybe<Scalars['String']['output']>;
+  Subtitle?: Maybe<Scalars['String']['output']>;
+  Tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  /** @deprecated Use `_link` field instead */
+  _children?: Maybe<QueryRef>;
+  _deleted?: Maybe<Scalars['Bool']['output']>;
+  _fulltext?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  _id?: Maybe<Scalars['String']['output']>;
+  _link?: Maybe<QueryRef>;
+  _metadata?: Maybe<IContentMetadata>;
+  _modified?: Maybe<Scalars['Date']['output']>;
+  _score?: Maybe<Scalars['Float']['output']>;
+  _track?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type SyncTest_FulltextArgs = {
+  highlight?: InputMaybe<HighlightOptions>;
+};
+
+
+export type SyncTest_LinkArgs = {
+  type?: InputMaybe<LinkTypes>;
+};
+
+export type SyncTestAutocomplete = {
+  __typename?: 'SyncTestAutocomplete';
+  ContentArea?: Maybe<_IContentAutocomplete>;
+  MainBody?: Maybe<ContentReferenceAutocomplete>;
+  MainIntro?: Maybe<RichTextAutocomplete>;
+  _metadata?: Maybe<IContentMetadataAutocomplete>;
+};
+
+export type SyncTestFacet = {
+  __typename?: 'SyncTestFacet';
+  ContentArea?: Maybe<_IContentFacet>;
+  MainBody?: Maybe<ContentReferenceFacet>;
+  MainIntro?: Maybe<RichTextFacet>;
+  _metadata?: Maybe<IContentMetadataFacet>;
+};
+
+export type SyncTestOrderByInput = {
+  ContentArea?: InputMaybe<_IContentOrderByInput>;
+  MainBody?: InputMaybe<ContentReferenceOrderByInput>;
+  MainIntro?: InputMaybe<RichTextOrderByInput>;
+  _metadata?: InputMaybe<IContentMetadataOrderByInput>;
+  _minimumScore?: InputMaybe<Scalars['Float']['input']>;
+  _modified?: InputMaybe<OrderBy>;
+  _ranking?: InputMaybe<Ranking>;
+  /** The value needs to be a positive value, but cannot exceed the maximum value of an integer. In case it is exceeded, the maximum of an integer is used. In case of a negative value, semantic search will be disabled. */
+  _semanticWeight?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type SyncTestOutput = {
+  __typename?: 'SyncTestOutput';
+  autocomplete?: Maybe<SyncTestAutocomplete>;
+  cursor?: Maybe<Scalars['String']['output']>;
+  facets?: Maybe<SyncTestFacet>;
+  item?: Maybe<SyncTest>;
+  items?: Maybe<Array<Maybe<SyncTest>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type SyncTestOutputTotalArgs = {
+  all?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type SyncTestWhereInput = {
+  ContentArea?: InputMaybe<_IContentWhereInput>;
+  MainBody?: InputMaybe<ContentReferenceWhereInput>;
+  MainIntro?: InputMaybe<RichTextWhereInput>;
+  _and?: InputMaybe<Array<InputMaybe<SyncTestWhereInput>>>;
+  _fulltext?: InputMaybe<SearchableStringFilterInput>;
+  _metadata?: InputMaybe<IContentMetadataWhereInput>;
+  _modified?: InputMaybe<DateFilterInput>;
+  _not?: InputMaybe<Array<InputMaybe<SyncTestWhereInput>>>;
+  _or?: InputMaybe<Array<InputMaybe<SyncTestWhereInput>>>;
 };
 
 export type SynonymSlot =
@@ -4235,6 +4354,12 @@ export type SliderBlockDataFragment = { __typename?: 'SliderBlock', SliderConten
         | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
         | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
        | null }
+    | { __typename: 'SyncTest', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
+       | null }
     | { __typename: 'SysContentFolder', _metadata?:
         | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
         | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', default?: string | null, base?: string | null } | null }
@@ -4426,6 +4551,12 @@ export type NewsPageDataFragment = { __typename?: 'NewsPage', _metadata?:
         | { __typename?: 'ItemMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
         | { __typename?: 'MediaMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
        | null }
+    | { __typename: 'SyncTest', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+       | null }
     | { __typename: 'SysContentFolder', _metadata?:
         | { __typename?: 'ContentMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
         | { __typename?: 'InstanceMetadata', key?: string | null, types?: Array<string | null> | null, locale?: string | null, displayName?: string | null, published?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
@@ -4582,6 +4713,12 @@ export type StartPageDataFragment = { __typename?: 'StartPage', Heading?: string
         | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
         | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
        | null }
+    | { __typename: 'SyncTest', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
+       | null }
     | { __typename: 'SysContentFolder', _metadata?:
         | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
         | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, types?: Array<string | null> | null }
@@ -4659,200 +4796,163 @@ export type StartPageDataFragment = { __typename?: 'StartPage', Heading?: string
        | null }
    | null> | null } & { ' $fragmentName'?: 'StartPageDataFragment' };
 
-type SyncTestData_ArticlePage_Fragment = { __typename: 'ArticlePage', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_ArticlePage_Fragment' };
-
-type SyncTestData_BlankExperience_Fragment = { __typename: 'BlankExperience', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_BlankExperience_Fragment' };
-
-type SyncTestData_BlankSection_Fragment = { __typename: 'BlankSection', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_BlankSection_Fragment' };
-
-type SyncTestData_ContentArea_Fragment = { __typename: 'ContentArea', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_ContentArea_Fragment' };
-
-type SyncTestData_GenericMedia_Fragment = { __typename: 'GenericMedia', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_GenericMedia_Fragment' };
-
-type SyncTestData_HeroBlock_Fragment = { __typename: 'HeroBlock', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_HeroBlock_Fragment' };
-
-type SyncTestData_ImageMedia_Fragment = { __typename: 'ImageMedia', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_ImageMedia_Fragment' };
-
-type SyncTestData_LandingPage_Fragment = { __typename: 'LandingPage', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_LandingPage_Fragment' };
-
-type SyncTestData_MyTest_Fragment = { __typename: 'MyTest', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_MyTest_Fragment' };
-
-type SyncTestData_NewsPage_Fragment = { __typename: 'NewsPage', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_NewsPage_Fragment' };
-
-type SyncTestData_SliderBlock_Fragment = { __typename: 'SliderBlock', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_SliderBlock_Fragment' };
-
-type SyncTestData_StartPage_Fragment = { __typename: 'StartPage', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_StartPage_Fragment' };
-
-type SyncTestData_SysContentFolder_Fragment = { __typename: 'SysContentFolder', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_SysContentFolder_Fragment' };
-
-type SyncTestData_TextBlock_Fragment = { __typename: 'TextBlock', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_TextBlock_Fragment' };
-
-type SyncTestData_VideoMedia_Fragment = { __typename: 'VideoMedia', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData_VideoMedia_Fragment' };
-
-type SyncTestData__Component_Fragment = { __typename: '_Component', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Component_Fragment' };
-
-type SyncTestData__Content_Fragment = { __typename: '_Content', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Content_Fragment' };
-
-type SyncTestData__Experience_Fragment = { __typename: '_Experience', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Experience_Fragment' };
-
-type SyncTestData__Folder_Fragment = { __typename: '_Folder', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Folder_Fragment' };
-
-type SyncTestData__Image_Fragment = { __typename: '_Image', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Image_Fragment' };
-
-type SyncTestData__Media_Fragment = { __typename: '_Media', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Media_Fragment' };
-
-type SyncTestData__Page_Fragment = { __typename: '_Page', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Page_Fragment' };
-
-type SyncTestData__Section_Fragment = { __typename: '_Section', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Section_Fragment' };
-
-type SyncTestData__Video_Fragment = { __typename: '_Video', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, types?: Array<string | null> | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
-   | null } & { ' $fragmentName'?: 'SyncTestData__Video_Fragment' };
-
-export type SyncTestDataFragment =
-  | SyncTestData_ArticlePage_Fragment
-  | SyncTestData_BlankExperience_Fragment
-  | SyncTestData_BlankSection_Fragment
-  | SyncTestData_ContentArea_Fragment
-  | SyncTestData_GenericMedia_Fragment
-  | SyncTestData_HeroBlock_Fragment
-  | SyncTestData_ImageMedia_Fragment
-  | SyncTestData_LandingPage_Fragment
-  | SyncTestData_MyTest_Fragment
-  | SyncTestData_NewsPage_Fragment
-  | SyncTestData_SliderBlock_Fragment
-  | SyncTestData_StartPage_Fragment
-  | SyncTestData_SysContentFolder_Fragment
-  | SyncTestData_TextBlock_Fragment
-  | SyncTestData_VideoMedia_Fragment
-  | SyncTestData__Component_Fragment
-  | SyncTestData__Content_Fragment
-  | SyncTestData__Experience_Fragment
-  | SyncTestData__Folder_Fragment
-  | SyncTestData__Image_Fragment
-  | SyncTestData__Media_Fragment
-  | SyncTestData__Page_Fragment
-  | SyncTestData__Section_Fragment
-  | SyncTestData__Video_Fragment
-;
+export type SyncTestDataFragment = { __typename?: 'SyncTest', Heading?: string | null, Subtitle?: string | null, IsPublished?: boolean | null, Priority?: string | null, PublishDate?: string | null, Tags?: Array<string | null> | null, ExternalLink?: string | null, _metadata?:
+    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+   | null, MainIntro?: { __typename?: 'RichText', html?: string | null } | null, ContentArea?: Array<
+    | { __typename: 'ArticlePage', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'BlankExperience', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'BlankSection', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'ContentArea', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'GenericMedia', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'HeroBlock', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'ImageMedia', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'LandingPage', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'MyTest', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'NewsPage', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'SliderBlock', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'StartPage', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'SyncTest', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'SysContentFolder', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'TextBlock', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: 'VideoMedia', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Component', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Content', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Experience', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Folder', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Image', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Media', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Page', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Section', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+    | { __typename: '_Video', _metadata?:
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+       | null }
+   | null> | null } & { ' $fragmentName'?: 'SyncTestDataFragment' };
 
 export const BlankSectionDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BlankSectionData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BlankSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<BlankSectionDataFragment, unknown>;
 export const GenericMediaDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GenericMediaData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GenericMedia"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<GenericMediaDataFragment, unknown>;
@@ -4869,4 +4969,4 @@ export const TextBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind
 export const SliderBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SliderBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SliderBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SliderContent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"types"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}},{"kind":"Field","name":{"kind":"Name","value":"base"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SliderBlockDataFragment, unknown>;
 export const ContentAreaDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ContentAreaData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ContentArea"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<ContentAreaDataFragment, unknown>;
 export const StartPageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"StartPageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"StartPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"MainIntro"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"json"}},{"kind":"Field","name":{"kind":"Name","value":"html"}}]}},{"kind":"Field","name":{"kind":"Name","value":"MainContentArea"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"types"}}]}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"HeroBlockData"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"TextBlockData"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"SliderBlockData"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ContentAreaData"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"HeroBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"HeroBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"Image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"MainIntro"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"json"}},{"kind":"Field","name":{"kind":"Name","value":"html"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ContentLink"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Width"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TextBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TextBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Text"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"json"}},{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SliderBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SliderBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"SliderContent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"types"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}},{"kind":"Field","name":{"kind":"Name","value":"base"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ContentAreaData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ContentArea"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<StartPageDataFragment, unknown>;
-export const SyncTestDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SyncTestData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"_IContent"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}},{"kind":"Field","name":{"kind":"Name","value":"types"}}]}}]}}]} as unknown as DocumentNode<SyncTestDataFragment, unknown>;
+export const SyncTestDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SyncTestData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SyncTest"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"MainIntro"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"html"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Subtitle"}},{"kind":"Field","name":{"kind":"Name","value":"IsPublished"}},{"kind":"Field","name":{"kind":"Name","value":"Priority"}},{"kind":"Field","name":{"kind":"Name","value":"PublishDate"}},{"kind":"Field","name":{"kind":"Name","value":"ContentArea"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Tags"}},{"kind":"Field","name":{"kind":"Name","value":"ExternalLink"}}]}}]} as unknown as DocumentNode<SyncTestDataFragment, unknown>;

@@ -4,9 +4,6 @@
   "private": true,
   "license": "Apache-2.0",
   "packageManager": "yarn@4.9.2",
-  "workspaces": [
-    "tools/proxima-cli"
-  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -18,14 +15,6 @@
     "watch": "graphql-codegen -w",
     "webhook:create": "echo 'opti-graph not installed. Skipping webhook creation.'",
     "webhook:list": "echo 'opti-graph not installed. Skipping webhook list.'",
-    "proxima:setup": "yarn workspace @epinova/proxima-cli install && yarn workspace @epinova/proxima-cli build",
-    "proxima:build": "yarn workspace @epinova/proxima-cli build",
-    "proxima:create": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev nextjs create -d ../../src/components/cms",
-    "proxima:components": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev nextjs components -d ../../src/components/cms",
-    "proxima:fragments": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev nextjs fragments -d ../../src/components/cms",
-    "proxima:factory": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev nextjs factory -d ../../src/components/cms",
-    "proxima:help": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev help",
-    "proxima:info": "yarn proxima:build && yarn workspace @epinova/proxima-cli run dev cms info",
     "opti:login": "npx @optimizely/cms-cli@latest login",
     "opti:push": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs --force",
     "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs",

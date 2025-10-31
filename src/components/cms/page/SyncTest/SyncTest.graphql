@@ -1,0 +1,15 @@
+fragment SyncTestData on _IContent {
+  __typename
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+    types
+  }
+}

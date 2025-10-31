@@ -74,26 +74,30 @@ function parseContentTypeDefinition(filePath) {
   const baseTypeMatch = content.match(/"baseType":\s*"([^"]+)"/);
   const extractedBaseType = baseTypeMatch ? baseTypeMatch[1] : `_${baseType}`;
 
-  // Extract all property names using a more robust parser
+  // Extract all property names and their types
   const properties = [];
+  const propertyTypes = {};
   const propertiesMatch = content.match(/"properties":\s*\{([\s\S]*)\}\s*\}\s*\);/);
 
   if (propertiesMatch) {
     const propsContent = propertiesMatch[1];
-    // Match top-level property names (before their opening brace)
-    // Look for pattern: "PropertyName": { at the beginning of a line (after whitespace)
-    // Skip "items", "allowedTypes", "type" which are configuration properties, not data properties
-    const propMatches = propsContent.matchAll(/^\s*"(\w+)":\s*\{/gm);
-    for (const match of propMatches) {
+    // Match property blocks: "PropertyName": { ... }
+    const propBlockMatches = propsContent.matchAll(/"(\w+)":\s*\{([^}]+)\}/g);
+
+    for (const match of propBlockMatches) {
       const propName = match[1];
-      // Skip configuration properties
-      if (!['items', 'allowedTypes', 'type'].includes(propName)) {
-        properties.push(propName);
-      }
+      const propConfig = match[2];
+
+      // Extract the type from the property configuration
+      const typeMatch = propConfig.match(/"type":\s*"([^"]+)"/);
+      const propType = typeMatch ? typeMatch[1] : 'string';
+
+      properties.push(propName);
+      propertyTypes[propName] = propType;
     }
   }
 
-  return { key, displayName, baseType: extractedBaseType, properties };
+  return { key, displayName, baseType: extractedBaseType, properties, propertyTypes };
 }
 
 // ============================================================================
@@ -101,7 +105,7 @@ function parseContentTypeDefinition(filePath) {
 // ============================================================================
 
 function generateGraphQLFragment(contentTypeInfo) {
-  const { key, properties } = contentTypeInfo;
+  const { key, properties, propertyTypes } = contentTypeInfo;
 
   // Check if fragment already exists
   if (fs.existsSync(graphqlFile)) {
@@ -123,11 +127,13 @@ function generateGraphQLFragment(contentTypeInfo) {
   }`;
 
   const propertyFields = properties.map(prop => {
-    // Handle complex types that need subfields
-    if (prop.toLowerCase().includes('intro') || prop.toLowerCase().includes('text') || prop.toLowerCase().includes('body')) {
+    const propType = propertyTypes[prop] || 'string';
+
+    // Handle complex types based on actual type definition
+    if (propType === 'richText' || propType === 'xhtmlString') {
       return `  ${prop} {\n    html\n  }`;
     }
-    if (prop.toLowerCase().includes('contentarea') || prop.toLowerCase().includes('content')) {
+    if (propType === 'array' || prop.toLowerCase().includes('contentarea')) {
       return `  ${prop} {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }`;
     }
     return `  ${prop}`;
@@ -143,7 +149,7 @@ ${propertyFields}
 }
 
 function updateGraphQLFragment(contentTypeInfo) {
-  const { key, properties } = contentTypeInfo;
+  const { key, properties, propertyTypes } = contentTypeInfo;
   const existingContent = fs.readFileSync(graphqlFile, 'utf-8');
 
   // Extract existing properties from fragment
@@ -169,11 +175,13 @@ function updateGraphQLFragment(contentTypeInfo) {
 
   // Add new properties before the closing brace
   const newLines = newProps.map(prop => {
-    // Handle complex types
-    if (prop.toLowerCase().includes('intro') || prop.toLowerCase().includes('text') || prop.toLowerCase().includes('body')) {
+    const propType = propertyTypes[prop] || 'string';
+
+    // Handle complex types based on actual type definition
+    if (propType === 'richText' || propType === 'xhtmlString') {
       return `  ${prop} {\n    html\n  }`;
     }
-    if (prop.toLowerCase().includes('contentarea') || prop.toLowerCase().includes('content')) {
+    if (propType === 'array' || prop.toLowerCase().includes('contentarea')) {
       return `  ${prop} {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }`;
     }
     return `  ${prop}`;

@@ -19,7 +19,6 @@ query getContentByPath($path: [String!]!, $locale: [Locales!], $changeset: Strin
       ...PageData
       ... on StartPage {
       ... on NewsPage {
-      ... on MyTest {
       ... on LandingPage {
       ... on ArticlePage {
     }

@@ -1,3 +1,18 @@
 fragment ArticlePageData on ArticlePage {
-  _metadata { key }
+  _metadata {
+    key
+    version
+    published
+    lastModified
+    displayName
+    url {
+      base
+      default
+    }
+  }
+  Heading
+  MainIntro
+  MainBody {
+    html
+  }
 }

@@ -7,5 +7,19 @@ export const ArticlePageContentType = contentType({
   "key": "ArticlePage",
   "displayName": "ArticlePage",
   "description": "",
-  "baseType": "_page"
+  "baseType": "_page",
+  "properties": {
+    "Heading": {
+      "type": "string",
+      "displayName": "Heading"
+    },
+    "MainIntro": {
+      "type": "string",
+      "displayName": "Main Intro"
+    },
+    "MainBody": {
+      "type": "richText",
+      "displayName": "Main Body"
+    }
+  }
 });

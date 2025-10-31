@@ -10,7 +10,7 @@ export const NewsPageContentType = contentType({
   "baseType": "_page",
   "properties": {
     "MainBody": {
-      "type": "contentReference",
+      "type": "richText",
       "displayName": "MainBody"
     },
     "MainContentArea": {

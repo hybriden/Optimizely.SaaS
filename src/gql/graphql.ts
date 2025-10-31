@@ -24,7 +24,9 @@ export type Scalars = {
 export type ArticlePage = IData & _IContent & _IPage & {
   __typename?: 'ArticlePage';
   Heading?: Maybe<Scalars['String']['output']>;
+  MainBody?: Maybe<RichText>;
   MainContentArea?: Maybe<Array<Maybe<_IContent>>>;
+  MainIntro?: Maybe<Scalars['String']['output']>;
   /** @deprecated Use `_link` field instead */
   _children?: Maybe<QueryRef>;
   _deleted?: Maybe<Scalars['Bool']['output']>;
@@ -49,17 +51,20 @@ export type ArticlePage_LinkArgs = {
 
 export type ArticlePageAutocomplete = {
   __typename?: 'ArticlePageAutocomplete';
+  MainBody?: Maybe<RichTextAutocomplete>;
   MainContentArea?: Maybe<_IContentAutocomplete>;
   _metadata?: Maybe<IContentMetadataAutocomplete>;
 };
 
 export type ArticlePageFacet = {
   __typename?: 'ArticlePageFacet';
+  MainBody?: Maybe<RichTextFacet>;
   MainContentArea?: Maybe<_IContentFacet>;
   _metadata?: Maybe<IContentMetadataFacet>;
 };
 
 export type ArticlePageOrderByInput = {
+  MainBody?: InputMaybe<RichTextOrderByInput>;
   MainContentArea?: InputMaybe<_IContentOrderByInput>;
   _metadata?: InputMaybe<IContentMetadataOrderByInput>;
   _minimumScore?: InputMaybe<Scalars['Float']['input']>;
@@ -85,6 +90,7 @@ export type ArticlePageOutputTotalArgs = {
 };
 
 export type ArticlePageWhereInput = {
+  MainBody?: InputMaybe<RichTextWhereInput>;
   MainContentArea?: InputMaybe<_IContentWhereInput>;
   _and?: InputMaybe<Array<InputMaybe<ArticlePageWhereInput>>>;
   _fulltext?: InputMaybe<SearchableStringFilterInput>;
@@ -1840,7 +1846,11 @@ export type MediaMetadataDisplayNameArgs = {
 
 export type MyTest = IData & _IContent & _IPage & {
   __typename?: 'MyTest';
+  MainBody?: Maybe<RichText>;
   MainContentArea?: Maybe<Array<Maybe<_IContent>>>;
+  MetaDescription?: Maybe<Scalars['String']['output']>;
+  Title?: Maybe<Scalars['String']['output']>;
+  UrlSegment?: Maybe<Scalars['String']['output']>;
   /** @deprecated Use `_link` field instead */
   _children?: Maybe<QueryRef>;
   _deleted?: Maybe<Scalars['Bool']['output']>;
@@ -1865,17 +1875,20 @@ export type MyTest_LinkArgs = {
 
 export type MyTestAutocomplete = {
   __typename?: 'MyTestAutocomplete';
+  MainBody?: Maybe<RichTextAutocomplete>;
   MainContentArea?: Maybe<_IContentAutocomplete>;
   _metadata?: Maybe<IContentMetadataAutocomplete>;
 };
 
 export type MyTestFacet = {
   __typename?: 'MyTestFacet';
+  MainBody?: Maybe<RichTextFacet>;
   MainContentArea?: Maybe<_IContentFacet>;
   _metadata?: Maybe<IContentMetadataFacet>;
 };
 
 export type MyTestOrderByInput = {
+  MainBody?: InputMaybe<RichTextOrderByInput>;
   MainContentArea?: InputMaybe<_IContentOrderByInput>;
   _metadata?: InputMaybe<IContentMetadataOrderByInput>;
   _minimumScore?: InputMaybe<Scalars['Float']['input']>;
@@ -1901,6 +1914,7 @@ export type MyTestOutputTotalArgs = {
 };
 
 export type MyTestWhereInput = {
+  MainBody?: InputMaybe<RichTextWhereInput>;
   MainContentArea?: InputMaybe<_IContentWhereInput>;
   _and?: InputMaybe<Array<InputMaybe<MyTestWhereInput>>>;
   _fulltext?: InputMaybe<SearchableStringFilterInput>;
@@ -1912,7 +1926,7 @@ export type MyTestWhereInput = {
 
 export type NewsPage = IData & _IContent & _IPage & {
   __typename?: 'NewsPage';
-  MainBody?: Maybe<ContentReference>;
+  MainBody?: Maybe<RichText>;
   MainContentArea?: Maybe<Array<Maybe<_IContent>>>;
   /** @deprecated Use `_link` field instead */
   _children?: Maybe<QueryRef>;
@@ -1938,20 +1952,20 @@ export type NewsPage_LinkArgs = {
 
 export type NewsPageAutocomplete = {
   __typename?: 'NewsPageAutocomplete';
-  MainBody?: Maybe<ContentReferenceAutocomplete>;
+  MainBody?: Maybe<RichTextAutocomplete>;
   MainContentArea?: Maybe<_IContentAutocomplete>;
   _metadata?: Maybe<IContentMetadataAutocomplete>;
 };
 
 export type NewsPageFacet = {
   __typename?: 'NewsPageFacet';
-  MainBody?: Maybe<ContentReferenceFacet>;
+  MainBody?: Maybe<RichTextFacet>;
   MainContentArea?: Maybe<_IContentFacet>;
   _metadata?: Maybe<IContentMetadataFacet>;
 };
 
 export type NewsPageOrderByInput = {
-  MainBody?: InputMaybe<ContentReferenceOrderByInput>;
+  MainBody?: InputMaybe<RichTextOrderByInput>;
   MainContentArea?: InputMaybe<_IContentOrderByInput>;
   _metadata?: InputMaybe<IContentMetadataOrderByInput>;
   _minimumScore?: InputMaybe<Scalars['Float']['input']>;
@@ -1977,7 +1991,7 @@ export type NewsPageOutputTotalArgs = {
 };
 
 export type NewsPageWhereInput = {
-  MainBody?: InputMaybe<ContentReferenceWhereInput>;
+  MainBody?: InputMaybe<RichTextWhereInput>;
   MainContentArea?: InputMaybe<_IContentWhereInput>;
   _and?: InputMaybe<Array<InputMaybe<NewsPageWhereInput>>>;
   _fulltext?: InputMaybe<SearchableStringFilterInput>;
@@ -3063,7 +3077,7 @@ export type SyncTest = IData & _IContent & _IPage & {
   ExternalLink?: Maybe<Scalars['String']['output']>;
   Heading?: Maybe<Scalars['String']['output']>;
   IsPublished?: Maybe<Scalars['Boolean']['output']>;
-  MainBody?: Maybe<ContentReference>;
+  MainBody?: Maybe<RichText>;
   MainIntro?: Maybe<RichText>;
   Priority?: Maybe<Scalars['String']['output']>;
   PublishDate?: Maybe<Scalars['String']['output']>;
@@ -3094,7 +3108,7 @@ export type SyncTest_LinkArgs = {
 export type SyncTestAutocomplete = {
   __typename?: 'SyncTestAutocomplete';
   ContentArea?: Maybe<_IContentAutocomplete>;
-  MainBody?: Maybe<ContentReferenceAutocomplete>;
+  MainBody?: Maybe<RichTextAutocomplete>;
   MainIntro?: Maybe<RichTextAutocomplete>;
   _metadata?: Maybe<IContentMetadataAutocomplete>;
 };
@@ -3102,14 +3116,14 @@ export type SyncTestAutocomplete = {
 export type SyncTestFacet = {
   __typename?: 'SyncTestFacet';
   ContentArea?: Maybe<_IContentFacet>;
-  MainBody?: Maybe<ContentReferenceFacet>;
+  MainBody?: Maybe<RichTextFacet>;
   MainIntro?: Maybe<RichTextFacet>;
   _metadata?: Maybe<IContentMetadataFacet>;
 };
 
 export type SyncTestOrderByInput = {
   ContentArea?: InputMaybe<_IContentOrderByInput>;
-  MainBody?: InputMaybe<ContentReferenceOrderByInput>;
+  MainBody?: InputMaybe<RichTextOrderByInput>;
   MainIntro?: InputMaybe<RichTextOrderByInput>;
   _metadata?: InputMaybe<IContentMetadataOrderByInput>;
   _minimumScore?: InputMaybe<Scalars['Float']['input']>;
@@ -3136,7 +3150,7 @@ export type SyncTestOutputTotalArgs = {
 
 export type SyncTestWhereInput = {
   ContentArea?: InputMaybe<_IContentWhereInput>;
-  MainBody?: InputMaybe<ContentReferenceWhereInput>;
+  MainBody?: InputMaybe<RichTextWhereInput>;
   MainIntro?: InputMaybe<RichTextWhereInput>;
   _and?: InputMaybe<Array<InputMaybe<SyncTestWhereInput>>>;
   _fulltext?: InputMaybe<SearchableStringFilterInput>;
@@ -4251,13 +4265,6 @@ export type UsePinnedInput = {
   phrase?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type BlankSectionDataFragment = { __typename?: 'BlankSection', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null }
-    | { __typename?: 'ItemMetadata', key?: string | null }
-    | { __typename?: 'MediaMetadata', key?: string | null }
-   | null } & { ' $fragmentName'?: 'BlankSectionDataFragment' };
-
 export type ContentAreaDataFragment = { __typename?: 'ContentArea', _metadata?:
     | { __typename?: 'ContentMetadata', key?: string | null }
     | { __typename?: 'InstanceMetadata', key?: string | null }
@@ -4265,21 +4272,7 @@ export type ContentAreaDataFragment = { __typename?: 'ContentArea', _metadata?:
     | { __typename?: 'MediaMetadata', key?: string | null }
    | null } & { ' $fragmentName'?: 'ContentAreaDataFragment' };
 
-export type GenericMediaDataFragment = { __typename?: 'GenericMedia', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null }
-    | { __typename?: 'ItemMetadata', key?: string | null }
-    | { __typename?: 'MediaMetadata', key?: string | null }
-   | null } & { ' $fragmentName'?: 'GenericMediaDataFragment' };
-
 export type HeroBlockDataFragment = { __typename?: 'HeroBlock', Heading?: string | null, Width?: Array<string | null> | null, Image?: { __typename?: 'ContentReference', url?: { __typename?: 'ContentUrl', default?: string | null } | null } | null, MainIntro?: { __typename?: 'RichText', json?: any | null, html?: string | null } | null, ContentLink?: { __typename?: 'ContentReference', url?: { __typename?: 'ContentUrl', default?: string | null } | null } | null } & { ' $fragmentName'?: 'HeroBlockDataFragment' };
-
-export type ImageMediaDataFragment = { __typename?: 'ImageMedia', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null }
-    | { __typename?: 'ItemMetadata', key?: string | null }
-    | { __typename?: 'MediaMetadata', key?: string | null }
-   | null } & { ' $fragmentName'?: 'ImageMediaDataFragment' };
 
 export type SliderBlockDataFragment = { __typename?: 'SliderBlock', SliderContent?: Array<
     | { __typename: 'ArticlePage', _metadata?:
@@ -4434,21 +4427,7 @@ export type SliderBlockDataFragment = { __typename?: 'SliderBlock', SliderConten
        | null }
    | null> | null } & { ' $fragmentName'?: 'SliderBlockDataFragment' };
 
-export type SysContentFolderDataFragment = { __typename?: 'SysContentFolder', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null }
-    | { __typename?: 'ItemMetadata', key?: string | null }
-    | { __typename?: 'MediaMetadata', key?: string | null }
-   | null } & { ' $fragmentName'?: 'SysContentFolderDataFragment' };
-
 export type TextBlockDataFragment = { __typename?: 'TextBlock', Text?: { __typename?: 'RichText', json?: any | null, html?: string | null } | null } & { ' $fragmentName'?: 'TextBlockDataFragment' };
-
-export type VideoMediaDataFragment = { __typename?: 'VideoMedia', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null }
-    | { __typename?: 'ItemMetadata', key?: string | null }
-    | { __typename?: 'MediaMetadata', key?: string | null }
-   | null } & { ' $fragmentName'?: 'VideoMediaDataFragment' };
 
 export type BlankExperienceDataFragment = { __typename?: 'BlankExperience', _metadata?:
     | { __typename?: 'ContentMetadata', key?: string | null }
@@ -4457,21 +4436,14 @@ export type BlankExperienceDataFragment = { __typename?: 'BlankExperience', _met
     | { __typename?: 'MediaMetadata', key?: string | null }
    | null, composition?: { __typename?: 'CompositionStructureNode', key?: string | null, displayName?: string | null, nodeType?: string | null, type?: string | null, displayTemplateKey?: string | null } | null } & { ' $fragmentName'?: 'BlankExperienceDataFragment' };
 
-export type ArticlePageDataFragment = { __typename?: 'ArticlePage', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null }
-    | { __typename?: 'ItemMetadata', key?: string | null }
-    | { __typename?: 'MediaMetadata', key?: string | null }
-   | null } & { ' $fragmentName'?: 'ArticlePageDataFragment' };
+export type ArticlePageDataFragment = { __typename?: 'ArticlePage', Heading?: string | null, MainIntro?: string | null, _metadata?:
+    | { __typename?: 'ContentMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+    | { __typename?: 'InstanceMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+    | { __typename?: 'ItemMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+    | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
+   | null, MainBody?: { __typename?: 'RichText', html?: string | null } | null } & { ' $fragmentName'?: 'ArticlePageDataFragment' };
 
 export type LandingPageDataFragment = { __typename?: 'LandingPage', Title?: string | null, MetaDescription?: string | null, UrlSegment?: string | null, MainBody?: { __typename?: 'RichText', html?: string | null } | null } & { ' $fragmentName'?: 'LandingPageDataFragment' };
-
-export type MyTestDataFragment = { __typename?: 'MyTest', _metadata?:
-    | { __typename?: 'ContentMetadata', key?: string | null }
-    | { __typename?: 'InstanceMetadata', key?: string | null }
-    | { __typename?: 'ItemMetadata', key?: string | null }
-    | { __typename?: 'MediaMetadata', key?: string | null }
-   | null } & { ' $fragmentName'?: 'MyTestDataFragment' };
 
 export type NewsPageDataFragment = { __typename?: 'NewsPage', _metadata?:
     | { __typename?: 'ContentMetadata', key?: string | null, published?: string | null, lastModified?: string | null }
@@ -4796,15 +4768,9 @@ export type StartPageDataFragment = { __typename?: 'StartPage', Heading?: string
        | null }
    | null> | null } & { ' $fragmentName'?: 'StartPageDataFragment' };
 
-export const BlankSectionDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BlankSectionData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BlankSection"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<BlankSectionDataFragment, unknown>;
-export const GenericMediaDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GenericMediaData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"GenericMedia"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<GenericMediaDataFragment, unknown>;
-export const ImageMediaDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ImageMediaData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ImageMedia"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<ImageMediaDataFragment, unknown>;
-export const SysContentFolderDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SysContentFolderData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SysContentFolder"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<SysContentFolderDataFragment, unknown>;
-export const VideoMediaDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"VideoMediaData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"VideoMedia"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<VideoMediaDataFragment, unknown>;
 export const BlankExperienceDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BlankExperienceData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BlankExperience"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"composition"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"nodeType"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"displayTemplateKey"}}]}}]}}]} as unknown as DocumentNode<BlankExperienceDataFragment, unknown>;
-export const ArticlePageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ArticlePageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ArticlePage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<ArticlePageDataFragment, unknown>;
+export const ArticlePageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ArticlePageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ArticlePage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"MainIntro"}},{"kind":"Field","name":{"kind":"Name","value":"MainBody"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}}]} as unknown as DocumentNode<ArticlePageDataFragment, unknown>;
 export const LandingPageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"LandingPageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"LandingPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Title"}},{"kind":"Field","name":{"kind":"Name","value":"MetaDescription"}},{"kind":"Field","name":{"kind":"Name","value":"UrlSegment"}},{"kind":"Field","name":{"kind":"Name","value":"MainBody"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}}]} as unknown as DocumentNode<LandingPageDataFragment, unknown>;
-export const MyTestDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MyTestData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MyTest"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<MyTestDataFragment, unknown>;
 export const NewsPageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NewsPageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewsPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}}]}},{"kind":"Field","name":{"kind":"Name","value":"MainContentArea"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"types"}},{"kind":"Field","name":{"kind":"Name","value":"locale"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}},{"kind":"Field","name":{"kind":"Name","value":"published"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"LandingPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Title"}},{"kind":"Field","name":{"kind":"Name","value":"MetaDescription"}}]}}]}}]}}]} as unknown as DocumentNode<NewsPageDataFragment, unknown>;
 export const HeroBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"HeroBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"HeroBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"Image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"MainIntro"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"json"}},{"kind":"Field","name":{"kind":"Name","value":"html"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ContentLink"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Width"}}]}}]} as unknown as DocumentNode<HeroBlockDataFragment, unknown>;
 export const TextBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TextBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TextBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Text"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"json"}},{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}}]} as unknown as DocumentNode<TextBlockDataFragment, unknown>;

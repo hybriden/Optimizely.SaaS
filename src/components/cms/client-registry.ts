@@ -15,11 +15,6 @@ import TextBlockComponent from './component/TextBlock/TextBlockIndex';
 import SliderBlockComponent from './component/SliderBlock/SliderBlockIndex';
 import HeroBlockComponent from './component/HeroBlock/HeroBlockIndex';
 import ContentAreaComponent from './component/ContentArea/ContentAreaIndex';
-import BlankSectionComponent from './component/BlankSection/BlankSectionIndex';
-import ImageMediaComponent from './component/ImageMedia/ImageMediaIndex';
-import VideoMediaComponent from './component/VideoMedia/VideoMediaIndex';
-import GenericMediaComponent from './component/GenericMedia/GenericMediaIndex';
-import SysContentFolderComponent from './component/SysContentFolder/SysContentFolderIndex';
 
 // Note: Pages are NOT imported here to avoid circular dependencies
 // Pages use ContentAreaRenderer, which imports this registry
@@ -49,11 +44,6 @@ const COMPONENT_REGISTRY: ComponentRegistry = {
   'SliderBlock': SliderBlockComponent,
   'HeroBlock': HeroBlockComponent,
   'ContentArea': ContentAreaComponent,
-  'BlankSection': BlankSectionComponent,
-  'ImageMedia': ImageMediaComponent,
-  'VideoMedia': VideoMediaComponent,
-  'GenericMedia': GenericMediaComponent,
-  'SysContentFolder': SysContentFolderComponent,
 };
 
 /**

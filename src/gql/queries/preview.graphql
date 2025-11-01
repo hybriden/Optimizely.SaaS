@@ -22,21 +22,6 @@ query getContentById($key: String!, $version: String, $locale: [Locales!], $chan
       }
       ...IContentData
       ...PageData
-      ... on StartPage {
-        ...StartPageData
-      }
-      ... on LandingPage {
-        ...LandingPageData
-      }
-      ... on MyTest {
-        ...MyTestData
-      }
-      ... on ArticlePage {
-        ...ArticlePageData
-      }
-      ... on BlankExperience {
-        ...BlankExperienceData
-      }
     }
   }
 }

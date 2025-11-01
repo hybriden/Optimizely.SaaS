@@ -10,7 +10,7 @@ import Link from "next/link";
 export const ArticlePageTeaser: CmsComponent<ArticlePageDataFragment> = ({ data }) => {
     const url = data._metadata?.url?.default || '#';
     const heading = data.Heading || data._metadata?.displayName || 'Untitled Article';
-    const intro = data.MainIntro || '';
+    const intro = data.Intro || '';
 
     return (
         <Link

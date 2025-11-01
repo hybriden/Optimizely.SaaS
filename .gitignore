@@ -7,6 +7,7 @@
 .pnp.js
 .yarn/install-state.gz
 .yarn/unplugged
+package-lock.json
 
 # testing
 /coverage

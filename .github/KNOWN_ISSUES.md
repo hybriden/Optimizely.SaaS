@@ -77,7 +77,61 @@ Add to your npm scripts (not recommended as it hides other warnings):
 
 ## Other Known Issues
 
-None at this time.
+### Yarn Peer Dependency Warnings
+
+**Status:** Harmless, can be ignored
+**Severity:** Low (informational only)
+**Affects:** `yarn install`
+
+#### The Warnings
+
+```
+➤ YN0086: │ Some peer dependencies are incorrectly met by dependencies
+➤ YN0068: │ @typescript-eslint/type-utils ➤ dependencies ➤ eslint: No matching package
+➤ YN0068: │ @typescript-eslint/utils ➤ dependencies ➤ typescript: No matching package
+```
+
+#### Root Cause
+
+These warnings occur because:
+
+1. **Phantom dependencies:** Some package in your dependency tree declares `@typescript-eslint/*` packages as dependencies, but you don't actually have them installed
+2. **Yarn PnP strict mode:** Yarn 4's Plug'n'Play mode is stricter about peer dependencies
+3. **Package metadata issues:** The package declaring these dependencies may have incorrect or outdated metadata
+
+#### Why It's Harmless
+
+1. **Not using TypeScript ESLint:** Your project uses basic ESLint without TypeScript-specific rules
+2. **No functionality broken:** Everything works correctly despite the warnings
+3. **Informational only:** Yarn is just reporting inconsistencies in package metadata
+4. **Not your packages:** The issue is in a transitive dependency, not your direct dependencies
+
+#### Solution
+
+**Option 1: Ignore it (RECOMMENDED)**
+- The warnings are informational and don't affect functionality
+- Your ESLint setup works fine without TypeScript-specific packages
+- No action needed
+
+**Option 2: Suppress specific warnings (if they bother you)**
+
+Add to `.yarnrc.yml`:
+
+```yaml
+logFilters:
+  - code: YN0086
+    level: discard
+  - code: YN0068
+    level: discard
+```
+
+**Not recommended** as it hides all peer dependency warnings, some of which might be important.
+
+#### Action Items
+
+- ✅ **No action required** - Safe to ignore
+- ✅ Document the issue (this file)
+- ⏳ Will likely resolve itself with future dependency updates
 
 ---
 

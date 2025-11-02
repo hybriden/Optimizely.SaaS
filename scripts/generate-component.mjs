@@ -16,6 +16,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import config from './config.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,8 +34,8 @@ if (!contentTypeName || !baseType) {
   process.exit(1);
 }
 
-if (!['page', 'component', 'experience'].includes(baseType)) {
-  console.error('Base type must be one of: page, component, experience');
+if (!config.VALIDATION.baseTypes.includes(baseType)) {
+  console.error(`Base type must be one of: ${config.VALIDATION.baseTypes.join(', ')}`);
   process.exit(1);
 }
 
@@ -42,12 +43,12 @@ if (!['page', 'component', 'experience'].includes(baseType)) {
 // Path Resolution
 // ============================================================================
 
-const baseDir = path.join(projectRoot, 'src', 'components', 'cms', baseType);
+const baseDir = config.getAbsolutePath(config.PATHS.cms[baseType]);
 const contentTypeDir = path.join(baseDir, contentTypeName);
-const contentTypeFile = path.join(contentTypeDir, `${contentTypeName}.ts`);
-const componentFile = path.join(contentTypeDir, `${contentTypeName}Index.tsx`);
-const graphqlFile = path.join(contentTypeDir, `${contentTypeName}.graphql`);
-const factoryFile = path.join(baseDir, 'index.ts');
+const contentTypeFile = path.join(contentTypeDir, config.NAMING.contentTypeFile(contentTypeName));
+const componentFile = path.join(contentTypeDir, config.NAMING.indexFile(contentTypeName));
+const graphqlFile = path.join(contentTypeDir, config.NAMING.graphqlFile(contentTypeName));
+const factoryFile = path.join(baseDir, config.NAMING.factoryFile());
 
 // ============================================================================
 // Content Type Parser
@@ -117,7 +118,7 @@ function mapPropertyTypeToGraphQL(prop, propType) {
   }
 
   // Images and media
-  if (typeLower === 'image' || typeLower === 'contentreference' && propLower.includes('image')) {
+  if (typeLower === 'image' || (typeLower === 'contentreference' && propLower.includes('image'))) {
     return `  ${prop} {\n    url {\n      default\n    }\n  }`;
   }
 
@@ -220,11 +221,11 @@ function generateComponent(contentTypeInfo) {
   // Fix: Avoid double suffixes like "ArticlePagePage"
   // Remove existing suffix if present before adding baseType suffix
   let componentName = key;
-  const suffixes = ['Page', 'Block', 'Experience', 'Component'];
-  const hasSuffix = suffixes.some(suffix => key.endsWith(suffix));
+  const hasSuffix = config.NAMING.suffixes.some(suffix => key.endsWith(suffix));
 
   if (!hasSuffix) {
-    componentName = `${key}${baseType === '_page' ? 'Page' : baseType === '_experience' ? 'Experience' : 'Component'}`;
+    const suffix = config.NAMING.getSuffix(baseType);
+    componentName = `${key}${suffix}`;
   }
 
   // Check if component already exists
@@ -390,8 +391,8 @@ async function main() {
         console.log(`   Updated: ${path.relative(projectRoot, factoryFile)}`);
       }
 
-      // 5. Regenerate client registry (if component or teaser was created)
-      if (contentTypeInfo.baseType === '_component' || teaserFile) {
+      // 5. Regenerate client registry (if component or page teaser was created)
+      if (contentTypeInfo.baseType === '_component' || contentTypeInfo.baseType === '_page') {
         console.log(`\n📋 Regenerating client registry...`);
         const { execSync } = await import('child_process');
         try {

@@ -17,6 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import config from './config.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +27,7 @@ const projectRoot = path.resolve(__dirname, '..');
  * Discover all components by scanning the component directory
  */
 function discoverComponents() {
-  const componentDir = path.join(projectRoot, 'src/components/cms/component');
+  const componentDir = config.getAbsolutePath(config.PATHS.cms.component);
 
   if (!fs.existsSync(componentDir)) {
     console.warn(`⚠️  Component directory not found: ${componentDir}`);
@@ -40,13 +41,13 @@ function discoverComponents() {
   const components = [];
 
   for (const folderName of folders) {
-    const indexFile = path.join(componentDir, folderName, `${folderName}Index.tsx`);
+    const indexFile = path.join(componentDir, folderName, config.NAMING.indexFile(folderName));
 
     if (fs.existsSync(indexFile)) {
       components.push({
         name: folderName,
         importPath: `./component/${folderName}/${folderName}Index`,
-        varName: `${folderName}Component`
+        varName: config.NAMING.componentVar(folderName)
       });
     }
   }
@@ -58,7 +59,7 @@ function discoverComponents() {
  * Discover all page teasers by scanning the page directory
  */
 function discoverTeasers() {
-  const pageDir = path.join(projectRoot, 'src/components/cms/page');
+  const pageDir = config.getAbsolutePath(config.PATHS.cms.page);
 
   if (!fs.existsSync(pageDir)) {
     console.warn(`⚠️  Page directory not found: ${pageDir}`);
@@ -72,13 +73,13 @@ function discoverTeasers() {
   const teasers = [];
 
   for (const folderName of folders) {
-    const teaserFile = path.join(pageDir, folderName, `${folderName}Teaser.tsx`);
+    const teaserFile = path.join(pageDir, folderName, config.NAMING.teaserFile(folderName));
 
     if (fs.existsSync(teaserFile)) {
       teasers.push({
         name: folderName,
         importPath: `./page/${folderName}/${folderName}Teaser`,
-        varName: `${folderName}Teaser`
+        varName: config.NAMING.teaserVar(folderName)
       });
     }
   }

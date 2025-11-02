@@ -390,6 +390,20 @@ async function main() {
         console.log(`   Updated: ${path.relative(projectRoot, factoryFile)}`);
       }
 
+      // 5. Regenerate client registry (if component or teaser was created)
+      if (contentTypeInfo.baseType === '_component' || teaserFile) {
+        console.log(`\n📋 Regenerating client registry...`);
+        const { execSync } = await import('child_process');
+        try {
+          execSync('node scripts/generate-client-registry.mjs', {
+            cwd: projectRoot,
+            stdio: 'inherit'
+          });
+        } catch (registryError) {
+          console.warn(`   ⚠️  Warning: Could not regenerate client registry: ${registryError.message}`);
+        }
+      }
+
       console.log(`\n✨ Done! Next steps:`);
       console.log(`   1. Regenerate types: yarn compile`);
       console.log(`   2. Push to CMS: yarn opti:push`);

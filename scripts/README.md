@@ -37,6 +37,12 @@ This directory contains automated build tooling for the Proxima.SaaS project.
   - Client-safe ('use client' directive)
   - Used by ContentAreaRenderer
 
+- **`generate-functions.mjs`** - GraphQL functions generator
+  - Auto-generates `src/gql/functions.ts`
+  - Discovers all content types (pages, experiences)
+  - Generates GraphQL inline fragments automatically
+  - Eliminates hardcoded type references in queries
+
 - **`cleanup-stale-types.mjs`** - Cleanup utility
   - Removes references to deleted content types
   - Cleans factory files
@@ -63,12 +69,18 @@ The build chain runs in this order:
    ├─ Discovers components directly
    ├─ Discovers teasers directly
    └─ Creates client-registry.ts
+
+4. generate-functions.mjs
+   ├─ Discovers pages and experiences
+   ├─ Generates GraphQL inline fragments
+   └─ Creates functions.ts
 ```
 
 This order ensures:
 - Factories exist before registries import them
 - Registries are always in sync with discovered components
 - Both server and client registries stay aligned
+- GraphQL query functions include all discovered content types
 
 ## 🚀 Usage
 
@@ -96,6 +108,9 @@ yarn generate:factories
 
 # Regenerate all registries
 yarn generate:registries
+
+# Regenerate GraphQL functions
+yarn generate:functions
 
 # Regenerate everything
 yarn generate:all
@@ -160,6 +175,7 @@ scripts/
 ├── generate-factories.mjs         # Factory file generator
 ├── generate-registry.mjs          # Server registry generator
 ├── generate-client-registry.mjs   # Client registry generator
+├── generate-functions.mjs         # GraphQL functions generator
 ├── cleanup-stale-types.mjs        # Cleanup utility
 └── README.md                      # This file
 
@@ -170,6 +186,8 @@ Generated Files:
 │   ├── experience/index.ts        # AUTO-GENERATED
 │   ├── registry.ts                # AUTO-GENERATED (server-side)
 │   └── client-registry.ts         # AUTO-GENERATED (client-side)
+├── src/gql/
+│   └── functions.ts               # AUTO-GENERATED
 ```
 
 ## 🔍 How It Works

@@ -391,10 +391,10 @@ async function main() {
       }
 
       console.log(`\n✨ Done! Next steps:`);
-      console.log(`   1. Push to CMS: yarn opti:push`);
-      console.log(`   2. Customize: ${path.relative(projectRoot, componentFile)}`);
-      console.log(`   3. Test: yarn dev`);
-      console.log(`   ⚠️  Note: Avoid running 'yarn compile' until codegen issue is resolved\n`);
+      console.log(`   1. Regenerate types: yarn compile`);
+      console.log(`   2. Push to CMS: yarn opti:push`);
+      console.log(`   3. Customize: ${path.relative(projectRoot, componentFile)}`);
+      console.log(`   4. Test: yarn dev\n`);
 
     } catch (error) {
       // Rollback: Clean up any files we created

@@ -196,39 +196,53 @@ function cleanGraphQLQueryFile(queryPath, validTypes) {
 
 console.log('🧹 Starting cleanup of stale content type references...\n');
 
-// 1. Find all valid content types
-const contentTypes = findAllContentTypes();
-const allTypes = [...contentTypes.page, ...contentTypes.component, ...contentTypes.experience];
+/**
+ * Main execution
+ */
+async function main() {
+  try {
+    // 1. Find all valid content types
+    const contentTypes = findAllContentTypes();
+    const allTypes = [...contentTypes.page, ...contentTypes.component, ...contentTypes.experience];
 
-console.log('📋 Found valid content types:');
-console.log(`   Pages: ${contentTypes.page.join(', ') || '(none)'}`);
-console.log(`   Components: ${contentTypes.component.join(', ') || '(none)'}`);
-console.log(`   Experiences: ${contentTypes.experience.join(', ') || '(none)'}`);
+    console.log('📋 Found valid content types:');
+    console.log(`   Pages: ${contentTypes.page.join(', ') || '(none)'}`);
+    console.log(`   Components: ${contentTypes.component.join(', ') || '(none)'}`);
+    console.log(`   Experiences: ${contentTypes.experience.join(', ') || '(none)'}`);
 
-// 2. Clean factory files
-cleanFactoryFile(
-  path.join(projectRoot, 'src', 'components', 'cms', 'page', 'index.ts'),
-  contentTypes.page
-);
+    // 2. Clean factory files
+    cleanFactoryFile(
+      path.join(projectRoot, 'src', 'components', 'cms', 'page', 'index.ts'),
+      contentTypes.page
+    );
 
-cleanFactoryFile(
-  path.join(projectRoot, 'src', 'components', 'cms', 'component', 'index.ts'),
-  contentTypes.component
-);
+    cleanFactoryFile(
+      path.join(projectRoot, 'src', 'components', 'cms', 'component', 'index.ts'),
+      contentTypes.component
+    );
 
-cleanFactoryFile(
-  path.join(projectRoot, 'src', 'components', 'cms', 'experience', 'index.ts'),
-  contentTypes.experience
-);
+    cleanFactoryFile(
+      path.join(projectRoot, 'src', 'components', 'cms', 'experience', 'index.ts'),
+      contentTypes.experience
+    );
 
-// 3. Clean GraphQL query file
-cleanGraphQLQueryFile(
-  path.join(projectRoot, 'src', 'gql', 'queries', 'content.graphql'),
-  allTypes
-);
+    // 3. Clean GraphQL query file
+    cleanGraphQLQueryFile(
+      path.join(projectRoot, 'src', 'gql', 'queries', 'content.graphql'),
+      allTypes
+    );
 
-console.log('\n✨ Cleanup complete!\n');
-console.log('Next steps:');
-console.log('  1. Review changes: git diff');
-console.log('  2. Test compilation: yarn compile');
-console.log('  3. Test build: yarn build\n');
+    console.log('\n✨ Cleanup complete!\n');
+    console.log('Next steps:');
+    console.log('  1. Review changes: git diff');
+    console.log('  2. Test compilation: yarn compile');
+    console.log('  3. Test build: yarn build\n');
+
+  } catch (error) {
+    console.error(`\n❌ Error during cleanup: ${error.message}`);
+    console.error(error.stack);
+    process.exit(1);
+  }
+}
+
+main();

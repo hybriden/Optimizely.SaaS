@@ -5,14 +5,19 @@
   "license": "Apache-2.0",
   "packageManager": "yarn@4.9.2",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "build:full": "graphql-codegen && next build",
+    "dev": "yarn generate:all && next dev",
+    "build": "yarn generate:all && next build",
+    "build:full": "yarn compile && yarn generate:all && next build",
     "start": "next start",
     "lint": "next lint",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w",
     "generate": "node scripts/generate-component.mjs",
+    "generate:all": "yarn generate:factories && yarn generate:registries && yarn generate:fragments && yarn generate:functions",
+    "generate:factories": "node scripts/generate-factories.mjs",
+    "generate:registries": "node scripts/generate-registry.mjs && node scripts/generate-client-registry.mjs",
+    "generate:fragments": "node scripts/generate-shared-fragments.mjs",
+    "generate:functions": "node scripts/generate-functions.mjs",
     "cleanup": "node scripts/cleanup-stale-types.mjs",
     "opti:login": "npx @optimizely/cms-cli@latest login",
     "opti:push": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs --force",
@@ -46,11 +51,5 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
-  },
-  "resolutions": {
-    "@graphql-codegen/visitor-plugin-common": "file:./packages/graphql-codegen-visitor-plugin-common-v5.8.0-patched.tgz"
-  },
-  "comments": {
-    "resolutions": "Patched version fixes TypeScript issues with fragment generation. Remove when official @graphql-codegen/visitor-plugin-common > v5.8.0 is available."
   }
 }

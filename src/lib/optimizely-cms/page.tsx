@@ -124,8 +124,14 @@ export function createPage<TContent = ContentData>(
         if (content._metadata?.types && content._metadata.types.length > 0) {
           // Use the FIRST type in the array which is the most specific content type
           typename = content._metadata.types[0];
-        } else if (content.Title || content.MetaDescription || content.MainBody) {
-          typename = 'LandingPage';
+        } else {
+          // Cannot determine specific type - log warning and use generic type
+          console.warn('Unable to determine specific content type for:', {
+            path,
+            typename,
+            hasMetadata: !!content._metadata,
+            availableFields: Object.keys(content)
+          });
         }
       }
 

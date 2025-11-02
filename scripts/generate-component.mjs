@@ -16,6 +16,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import config from './config.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,8 +34,8 @@ if (!contentTypeName || !baseType) {
   process.exit(1);
 }
 
-if (!['page', 'component', 'experience'].includes(baseType)) {
-  console.error('Base type must be one of: page, component, experience');
+if (!config.VALIDATION.baseTypes.includes(baseType)) {
+  console.error(`Base type must be one of: ${config.VALIDATION.baseTypes.join(', ')}`);
   process.exit(1);
 }
 
@@ -42,12 +43,12 @@ if (!['page', 'component', 'experience'].includes(baseType)) {
 // Path Resolution
 // ============================================================================
 
-const baseDir = path.join(projectRoot, 'src', 'components', 'cms', baseType);
+const baseDir = config.getAbsolutePath(config.PATHS.cms[baseType]);
 const contentTypeDir = path.join(baseDir, contentTypeName);
-const contentTypeFile = path.join(contentTypeDir, `${contentTypeName}.ts`);
-const componentFile = path.join(contentTypeDir, `${contentTypeName}Index.tsx`);
-const graphqlFile = path.join(contentTypeDir, `${contentTypeName}.graphql`);
-const factoryFile = path.join(baseDir, 'index.ts');
+const contentTypeFile = path.join(contentTypeDir, config.NAMING.contentTypeFile(contentTypeName));
+const componentFile = path.join(contentTypeDir, config.NAMING.indexFile(contentTypeName));
+const graphqlFile = path.join(contentTypeDir, config.NAMING.graphqlFile(contentTypeName));
+const factoryFile = path.join(baseDir, config.NAMING.factoryFile());
 
 // ============================================================================
 // Content Type Parser
@@ -104,6 +105,38 @@ function parseContentTypeDefinition(filePath) {
 // GraphQL Fragment Generator (with incremental update support)
 // ============================================================================
 
+/**
+ * Maps content type property types to GraphQL field selections
+ */
+function mapPropertyTypeToGraphQL(prop, propType) {
+  const typeLower = propType.toLowerCase();
+  const propLower = prop.toLowerCase();
+
+  // Rich text / HTML content
+  if (typeLower === 'richtext' || typeLower === 'xhtmlstring') {
+    return `  ${prop} {\n    html\n  }`;
+  }
+
+  // Images and media
+  if (typeLower === 'image' || (typeLower === 'contentreference' && propLower.includes('image'))) {
+    return `  ${prop} {\n    url {\n      default\n    }\n  }`;
+  }
+
+  // Content areas and content references
+  if (typeLower === 'contentarea' || propLower.includes('contentarea') ||
+      typeLower === 'contentreference' || propLower.includes('contentlink')) {
+    return `  ${prop} {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }`;
+  }
+
+  // Arrays (generic collections)
+  if (typeLower === 'array') {
+    return `  ${prop} {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }`;
+  }
+
+  // Simple scalar types (string, number, boolean, date)
+  return `  ${prop}`;
+}
+
 function generateGraphQLFragment(contentTypeInfo) {
   const { key, properties, propertyTypes } = contentTypeInfo;
 
@@ -128,15 +161,7 @@ function generateGraphQLFragment(contentTypeInfo) {
 
   const propertyFields = properties.map(prop => {
     const propType = propertyTypes[prop] || 'string';
-
-    // Handle complex types based on actual type definition
-    if (propType === 'richText' || propType === 'xhtmlString') {
-      return `  ${prop} {\n    html\n  }`;
-    }
-    if (propType === 'array' || prop.toLowerCase().includes('contentarea')) {
-      return `  ${prop} {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }`;
-    }
-    return `  ${prop}`;
+    return mapPropertyTypeToGraphQL(prop, propType);
   }).join('\n');
 
   const fragment = `fragment ${key}Data on ${key} {
@@ -176,15 +201,7 @@ function updateGraphQLFragment(contentTypeInfo) {
   // Add new properties before the closing brace
   const newLines = newProps.map(prop => {
     const propType = propertyTypes[prop] || 'string';
-
-    // Handle complex types based on actual type definition
-    if (propType === 'richText' || propType === 'xhtmlString') {
-      return `  ${prop} {\n    html\n  }`;
-    }
-    if (propType === 'array' || prop.toLowerCase().includes('contentarea')) {
-      return `  ${prop} {\n    __typename\n    _metadata {\n      key\n      displayName\n    }\n  }`;
-    }
-    return `  ${prop}`;
+    return mapPropertyTypeToGraphQL(prop, propType);
   });
 
   // Insert new properties before the closing brace
@@ -200,7 +217,16 @@ function updateGraphQLFragment(contentTypeInfo) {
 
 function generateComponent(contentTypeInfo) {
   const { key, displayName, baseType } = contentTypeInfo;
-  const componentName = `${key}${baseType === '_page' ? 'Page' : baseType === '_experience' ? 'Experience' : 'Component'}`;
+
+  // Fix: Avoid double suffixes like "ArticlePagePage"
+  // Remove existing suffix if present before adding baseType suffix
+  let componentName = key;
+  const hasSuffix = config.NAMING.suffixes.some(suffix => key.endsWith(suffix));
+
+  if (!hasSuffix) {
+    const suffix = config.NAMING.getSuffix(baseType);
+    componentName = `${key}${suffix}`;
+  }
 
   // Check if component already exists
   if (fs.existsSync(componentFile)) {
@@ -268,32 +294,51 @@ function updateFactory(contentTypeInfo) {
 
   console.log(`➕ Adding to factory registration`);
 
-  // Add import
-  const importStatement = `import ${key}Component from "./${key}/${key}Index";`;
-  const importSectionEnd = content.indexOf('\n// Build dictionary');
-  const beforeImports = content.substring(0, importSectionEnd);
-  const afterImports = content.substring(importSectionEnd);
+  const lines = content.split('\n');
 
-  // Add to dictionary
-  const dictionaryMatch = afterImports.match(/export const \w+Factory[^{]+\{([^}]+)\}/s);
-  if (!dictionaryMatch) {
-    console.error('Could not parse factory dictionary');
+  // Find where to insert import (after last import statement)
+  let lastImportIndex = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].startsWith('import') && lines[i].includes('Component from')) {
+      lastImportIndex = i;
+    }
+  }
+
+  if (lastImportIndex === -1) {
+    console.error('Could not find import section in factory file');
     return false;
   }
 
-  const dictionaryContent = dictionaryMatch[1];
-  const lastEntry = dictionaryContent.trim().split('\n').pop();
-  const needsComma = !lastEntry.trim().endsWith(',');
+  // Insert new import after last import
+  const importStatement = `import ${key}Component from "./${key}/${key}Index";`;
+  lines.splice(lastImportIndex + 1, 0, importStatement);
 
+  // Find dictionary closing brace and insert new entry before it
+  let dictClosingIndex = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim() === '};' && i > lastImportIndex) {
+      dictClosingIndex = i;
+      break;
+    }
+  }
+
+  if (dictClosingIndex === -1) {
+    console.error('Could not find dictionary closing brace');
+    return false;
+  }
+
+  // Check if previous line needs a comma
+  const prevLine = lines[dictClosingIndex - 1].trim();
+  if (prevLine && !prevLine.endsWith(',') && !prevLine.startsWith('//')) {
+    lines[dictClosingIndex - 1] += ',';
+  }
+
+  // Insert new entry before closing brace
   const newEntry = `    "${key}": ${key}Component`;
-  const updatedDictionary = dictionaryContent.trimEnd() + (needsComma ? ',' : '') + '\n' + newEntry;
+  lines.splice(dictClosingIndex, 0, newEntry);
 
-  const updatedContent = beforeImports + '\n' + importStatement + afterImports.replace(
-    dictionaryMatch[0],
-    dictionaryMatch[0].replace(dictionaryContent, updatedDictionary)
-  );
-
-  fs.writeFileSync(factoryFile, updatedContent, 'utf-8');
+  // Write updated content
+  fs.writeFileSync(factoryFile, lines.join('\n'), 'utf-8');
   return true;
 }
 
@@ -301,37 +346,102 @@ function updateFactory(contentTypeInfo) {
 // Main Execution
 // ============================================================================
 
-console.log(`\n🔧 Generating component for: ${contentTypeName} (${baseType})\n`);
+async function main() {
+  try {
+    console.log(`\n🔧 Generating component for: ${contentTypeName} (${baseType})\n`);
 
-// 1. Parse content type definition
-console.log(`📖 Reading content type definition...`);
-const contentTypeInfo = parseContentTypeDefinition(contentTypeFile);
-console.log(`   Found: ${contentTypeInfo.displayName} with ${contentTypeInfo.properties.length} properties`);
+    // Ensure directory structure exists
+    if (!fs.existsSync(contentTypeDir)) {
+      console.log(`📁 Creating directory: ${path.relative(projectRoot, contentTypeDir)}`);
+      fs.mkdirSync(contentTypeDir, { recursive: true });
+    }
 
-// 2. Generate/update GraphQL fragment
-console.log(`\n📝 Processing GraphQL fragment...`);
-const graphqlContent = generateGraphQLFragment(contentTypeInfo);
-fs.writeFileSync(graphqlFile, graphqlContent, 'utf-8');
-console.log(`   Saved: ${path.relative(projectRoot, graphqlFile)}`);
+    // 1. Parse content type definition
+    console.log(`📖 Reading content type definition...`);
+    const contentTypeInfo = parseContentTypeDefinition(contentTypeFile);
+    console.log(`   Found: ${contentTypeInfo.displayName} with ${contentTypeInfo.properties.length} properties`);
 
-// 3. Generate React component (only if doesn't exist)
-console.log(`\n⚛️  Processing React component...`);
-const componentContent = generateComponent(contentTypeInfo);
-if (componentContent) {
-  fs.writeFileSync(componentFile, componentContent, 'utf-8');
-  console.log(`   Created: ${path.relative(projectRoot, componentFile)}`);
-} else {
-  console.log(`   Skipped: ${path.relative(projectRoot, componentFile)} (already exists)`);
+    // Track created files for potential rollback
+    const createdFiles = [];
+
+    try {
+      // 2. Generate/update GraphQL fragment
+      console.log(`\n📝 Processing GraphQL fragment...`);
+      const graphqlContent = generateGraphQLFragment(contentTypeInfo);
+      const graphqlExists = fs.existsSync(graphqlFile);
+      fs.writeFileSync(graphqlFile, graphqlContent, 'utf-8');
+      if (!graphqlExists) createdFiles.push(graphqlFile);
+      console.log(`   Saved: ${path.relative(projectRoot, graphqlFile)}`);
+
+      // 3. Generate React component (only if doesn't exist)
+      console.log(`\n⚛️  Processing React component...`);
+      const componentContent = generateComponent(contentTypeInfo);
+      if (componentContent) {
+        fs.writeFileSync(componentFile, componentContent, 'utf-8');
+        createdFiles.push(componentFile);
+        console.log(`   Created: ${path.relative(projectRoot, componentFile)}`);
+      } else {
+        console.log(`   Skipped: ${path.relative(projectRoot, componentFile)} (already exists)`);
+      }
+
+      // 4. Update factory registration
+      console.log(`\n🏭 Processing factory registration...`);
+      const factoryUpdated = updateFactory(contentTypeInfo);
+      if (factoryUpdated) {
+        console.log(`   Updated: ${path.relative(projectRoot, factoryFile)}`);
+      }
+
+      // 5. Regenerate factories and registries
+      console.log(`\n🔄 Regenerating factories and registries...`);
+      const { execSync } = await import('child_process');
+      try {
+        // Regenerate factories
+        execSync('node scripts/generate-factories.mjs', {
+          cwd: projectRoot,
+          stdio: 'inherit'
+        });
+        // Regenerate registries
+        execSync('node scripts/generate-registry.mjs', {
+          cwd: projectRoot,
+          stdio: 'inherit'
+        });
+        execSync('node scripts/generate-client-registry.mjs', {
+          cwd: projectRoot,
+          stdio: 'inherit'
+        });
+      } catch (error) {
+        console.warn(`   ⚠️  Warning: Could not regenerate all files: ${error.message}`);
+      }
+
+      console.log(`\n✨ Done! Next steps:`);
+      console.log(`   1. Regenerate types: yarn compile`);
+      console.log(`   2. Push to CMS: yarn opti:push`);
+      console.log(`   3. Customize: ${path.relative(projectRoot, componentFile)}`);
+      console.log(`   4. Test: yarn dev\n`);
+
+    } catch (error) {
+      // Rollback: Clean up any files we created
+      console.error(`\n❌ Error during generation: ${error.message}`);
+      if (createdFiles.length > 0) {
+        console.log(`\n🔄 Rolling back created files...`);
+        for (const file of createdFiles) {
+          if (fs.existsSync(file)) {
+            fs.unlinkSync(file);
+            console.log(`   Removed: ${path.relative(projectRoot, file)}`);
+          }
+        }
+      }
+      throw error;
+    }
+
+  } catch (error) {
+    console.error(`\n❌ Fatal error: ${error.message}`);
+    if (error.stack) {
+      console.error(`\nStack trace:\n${error.stack}`);
+    }
+    process.exit(1);
+  }
 }
 
-// 4. Update factory registration
-console.log(`\n🏭 Processing factory registration...`);
-const factoryUpdated = updateFactory(contentTypeInfo);
-if (factoryUpdated) {
-  console.log(`   Updated: ${path.relative(projectRoot, factoryFile)}`);
-}
-
-console.log(`\n✨ Done! Next steps:`);
-console.log(`   1. Run: yarn compile`);
-console.log(`   2. Customize: ${path.relative(projectRoot, componentFile)}`);
-console.log(`   3. Test: yarn dev\n`);
+// Run main function
+main();

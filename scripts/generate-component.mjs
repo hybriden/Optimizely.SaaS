@@ -391,18 +391,26 @@ async function main() {
         console.log(`   Updated: ${path.relative(projectRoot, factoryFile)}`);
       }
 
-      // 5. Regenerate client registry (if component or page teaser was created)
-      if (contentTypeInfo.baseType === '_component' || contentTypeInfo.baseType === '_page') {
-        console.log(`\n📋 Regenerating client registry...`);
-        const { execSync } = await import('child_process');
-        try {
-          execSync('node scripts/generate-client-registry.mjs', {
-            cwd: projectRoot,
-            stdio: 'inherit'
-          });
-        } catch (registryError) {
-          console.warn(`   ⚠️  Warning: Could not regenerate client registry: ${registryError.message}`);
-        }
+      // 5. Regenerate factories and registries
+      console.log(`\n🔄 Regenerating factories and registries...`);
+      const { execSync } = await import('child_process');
+      try {
+        // Regenerate factories
+        execSync('node scripts/generate-factories.mjs', {
+          cwd: projectRoot,
+          stdio: 'inherit'
+        });
+        // Regenerate registries
+        execSync('node scripts/generate-registry.mjs', {
+          cwd: projectRoot,
+          stdio: 'inherit'
+        });
+        execSync('node scripts/generate-client-registry.mjs', {
+          cwd: projectRoot,
+          stdio: 'inherit'
+        });
+      } catch (error) {
+        console.warn(`   ⚠️  Warning: Could not regenerate all files: ${error.message}`);
       }
 
       console.log(`\n✨ Done! Next steps:`);

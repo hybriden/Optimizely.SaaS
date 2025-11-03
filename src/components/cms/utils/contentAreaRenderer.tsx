@@ -34,14 +34,18 @@ export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentA
   return (
     <>
       {contentItems.map((item: any, index: number) => {
+        if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+          console.log(`[ContentAreaRenderer] RAW Item ${index}:`, JSON.stringify(item, null, 2));
+        }
+
         // Try to find the specific component type from the types array
         // The types array typically contains: ["HeroBlock", "_Component", "_Content"]
         // We want the most specific type (not _Component or _Content)
         const types = item._metadata?.types || [];
-        const itemType = types.find((t: string) => !t.startsWith('_')) || item._type;
+        const itemType = types.find((t: string) => !t.startsWith('_')) || item.__typename || item._type;
 
         if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-          console.log(`[ContentAreaRenderer] Item ${index}:`, { types, itemType, item });
+          console.log(`[ContentAreaRenderer] Item ${index}:`, { types, itemType, __typename: item.__typename, item });
         }
 
         const key = item._metadata?.key || `item-${index}`;
@@ -72,7 +76,13 @@ export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentA
         return (
           <div key={key} className="p-4 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg border border-yellow-400 dark:border-yellow-600">
             <p className="text-sm font-semibold">Unknown block type: {itemType}</p>
-            <pre className="text-xs mt-2 overflow-auto">{JSON.stringify(item._metadata, null, 2)}</pre>
+            <pre className="text-xs mt-2 overflow-auto">{JSON.stringify({
+              __typename: item.__typename,
+              _type: item._type,
+              types: item._metadata?.types,
+              displayName: item._metadata?.displayName,
+              key: item._metadata?.key,
+            }, null, 2)}</pre>
           </div>
         );
       })}

@@ -236,10 +236,17 @@ export const COMPONENT_FRAGMENTS = gql`
 
 /**
  * All fragments combined for easier import
+ * Note: Only includes fragments for top-level queryable types (pages, experiences)
+ * Component fragments are available separately for use in ContentArea queries
  */
 export const ALL_FRAGMENTS = gql`
   ${CORE_FRAGMENTS}
   ${PAGE_FRAGMENTS}
   ${EXPERIENCE_FRAGMENTS}
-  ${COMPONENT_FRAGMENTS}
 `;
+
+/**
+ * Component fragments for use in ContentArea rendering
+ * These are blocks/elements used within pages, not top-level content types
+ */
+export const COMPONENT_FRAGMENT_DEFINITIONS = COMPONENT_FRAGMENTS;

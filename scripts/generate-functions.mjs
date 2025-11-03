@@ -94,7 +94,7 @@ function generateFunctionsFile() {
 
 import { gql, type GraphQLClient } from 'graphql-request'
 import type * as Types from './graphql'
-import { ALL_FRAGMENTS } from './fragments/shared-fragments'
+import { ALL_FRAGMENTS, COMPONENT_FRAGMENT_DEFINITIONS } from './fragments/shared-fragments'
 
 // Define variable types inline since client preset doesn't export them
 type GetContentByPathVariables = {
@@ -137,6 +137,7 @@ ${inlineFragments}
     }
 
     \${ALL_FRAGMENTS}
+    \${COMPONENT_FRAGMENT_DEFINITIONS}
   \`
 
   return client.request(query, variables)
@@ -174,6 +175,7 @@ ${inlineFragments}
     }
 
     \${ALL_FRAGMENTS}
+    \${COMPONENT_FRAGMENT_DEFINITIONS}
   \`
 
   return client.request(query, variables)

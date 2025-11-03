@@ -51,6 +51,82 @@ function discoverFragments(type) {
 }
 
 /**
+ * Inject component fragments into ContentArea fields
+ * Detects patterns like "MainContentArea {" or "SliderContent {" and adds inline fragments
+ */
+function injectComponentFragments(fragmentContent, components) {
+  // Match ContentArea field patterns with proper brace matching
+  // Look for field names ending with ContentArea or Content
+  const lines = fragmentContent.split('\n');
+  const result = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmedLine = line.trim();
+
+    // Check if this line starts a ContentArea field
+    const match = trimmedLine.match(/^(\w+ContentArea|\w+Content)\s*\{/);
+    if (match) {
+      const fieldName = match[1];
+      result.push(line);
+      i++;
+
+      // Collect the field content until we find the closing brace
+      const fieldLines = [];
+      let braceCount = 1;
+      let hasInlineFragments = false;
+
+      while (i < lines.length && braceCount > 0) {
+        const fieldLine = lines[i];
+        const fieldTrimmed = fieldLine.trim();
+
+        if (fieldTrimmed.includes('... on')) {
+          hasInlineFragments = true;
+        }
+
+        if (fieldTrimmed.includes('{')) {
+          braceCount++;
+        }
+        if (fieldTrimmed.includes('}')) {
+          braceCount--;
+          if (braceCount === 0) {
+            // This is the closing brace for the ContentArea field
+            if (!hasInlineFragments && components.length > 0) {
+              // Add all field lines collected so far
+              fieldLines.forEach(fl => result.push(fl));
+
+              // Inject component fragments before the closing brace
+              const indent = fieldLine.match(/^\s*/)[0];
+              components.forEach(c => {
+                result.push(`${indent}  ... on ${c.name} {`);
+                result.push(`${indent}    ...${c.name}Data`);
+                result.push(`${indent}  }`);
+              });
+            } else {
+              // Already has fragments or no components, keep as is
+              fieldLines.forEach(fl => result.push(fl));
+            }
+            // Add the closing brace
+            result.push(fieldLine);
+            i++;
+            break;
+          }
+        }
+
+        fieldLines.push(fieldLine);
+        i++;
+      }
+    } else {
+      result.push(line);
+      i++;
+    }
+  }
+
+  return result.join('\n');
+}
+
+/**
  * Generate the shared-fragments.ts file
  */
 function generateSharedFragments() {
@@ -73,13 +149,20 @@ function generateSharedFragments() {
   console.log();
 
   // Generate fragment sections
-  const generateFragmentSection = (fragments) => {
-    return fragments.map(f => `  ${f.content}`).join('\n\n');
+  const generateFragmentSection = (fragments, injectComponents = false) => {
+    return fragments.map(f => {
+      let content = f.content;
+      // Inject component fragments into ContentArea fields for pages and experiences
+      if (injectComponents && components.length > 0) {
+        content = injectComponentFragments(content, components);
+      }
+      return `  ${content}`;
+    }).join('\n\n');
   };
 
-  const pageFragmentsContent = generateFragmentSection(pages);
-  const experienceFragmentsContent = generateFragmentSection(experiences);
-  const componentFragmentsContent = generateFragmentSection(components);
+  const pageFragmentsContent = generateFragmentSection(pages, true);
+  const experienceFragmentsContent = generateFragmentSection(experiences, true);
+  const componentFragmentsContent = generateFragmentSection(components, false);
 
   // Generate file content
   const content = `/**

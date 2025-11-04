@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <html lang={locale ?? "en"} className="dark scroll-smooth">
       <body className={`${inter.className} bg-slate-950 antialiased`}>
-        <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
           <Header />
           <main>{children}</main>
           <Footer />

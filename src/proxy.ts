@@ -13,13 +13,17 @@ export default function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-nonce', nonce);
 
+  // Check if this is a preview request (needs relaxed CSP for Optimizely CMS iframe)
+  const isPreview = request.nextUrl.pathname.startsWith('/preview');
+
   // Build CSP header value
   const cspHeader = [
     "default-src 'self'",
     // Use nonce for scripts instead of unsafe-inline
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.optimizely.com https://optimizely.s3.amazonaws.com`,
-    // Keep unsafe-eval only if absolutely required by Next.js or Optimizely
-    // Consider removing in production
+    // Add unsafe-eval for preview mode as Optimizely edit scripts require it
+    isPreview
+      ? `script-src 'self' 'nonce-${nonce}' 'unsafe-eval' 'strict-dynamic' https://*.optimizely.com https://optimizely.s3.amazonaws.com`
+      : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.optimizely.com https://optimizely.s3.amazonaws.com`,
     "connect-src 'self' https://cg.optimizely.com https://logx.optimizely.com",
     "img-src 'self' data: https://*.cms.optimizely.com https://*.idio.co https://*.cmp.optimizely.com",
     // Use nonce for styles too for better security
@@ -29,7 +33,10 @@ export default function proxy(request: NextRequest) {
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
-    "frame-ancestors 'self'",
+    // Allow preview pages to be embedded in Optimizely CMS
+    isPreview
+      ? "frame-ancestors 'self' https://*.cms.optimizely.com https://*.optimizelyedit.com"
+      : "frame-ancestors 'self'",
     "upgrade-insecure-requests"
   ].join('; ');
 

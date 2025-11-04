@@ -96,18 +96,24 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-ABC123...'
 
 Some scenarios still require `'unsafe-eval'`:
 - Next.js development mode (hot reload)
-- Some Optimizely features (experimentation scripts)
+- Optimizely On-Page Editing scripts
 
-**Current approach:** Removed `'unsafe-eval'` from CSP
-**If needed:** Add back only in development or for specific routes
+**Implemented approach:**
+- ✅ Production pages: NO `'unsafe-eval'` (secure)
+- ✅ Preview pages (`/preview`): `'unsafe-eval'` enabled (needed for Optimizely edit mode)
+
+This provides the best balance: secure CSP for public pages, functional CSP for editor experience.
 
 ### Frame-Ancestors for CMS Preview:
 
-The current `frame-ancestors 'self'` may need adjustment for Optimizely CMS preview:
+**IMPLEMENTED:** Preview pages now use relaxed CSP to work in Optimizely CMS iframe:
 
 ```javascript
-// If preview doesn't work in CMS iframe:
-"frame-ancestors 'self' https://*.cms.optimizely.com"
+// Preview routes (/preview):
+"frame-ancestors 'self' https://*.cms.optimizely.com https://*.optimizelyedit.com"
+
+// All other routes:
+"frame-ancestors 'self'"
 ```
 
 ### Strict-Dynamic Limitations:

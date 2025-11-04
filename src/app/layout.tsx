@@ -21,10 +21,10 @@ export default async function RootLayout({
   const { locale } = await getServerContext();
   return (
     <html lang={locale ?? "en"} className="dark scroll-smooth">
-      <body className={`${inter.className} bg-slate-950 antialiased m-0 p-0`}>
-        <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <body className={`${inter.className} bg-slate-950 antialiased`}>
+        <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
           <Header />
-          <main className="flex-1">{children}</main>
+          <main>{children}</main>
           <Footer />
         </div>
       </body>

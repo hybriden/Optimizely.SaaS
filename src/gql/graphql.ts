@@ -4003,142 +4003,142 @@ export type SliderBlockDataFragment = { __typename?: 'SliderBlock', _metadata?:
     | { __typename?: 'MediaMetadata', key?: string | null, version?: string | null, published?: string | null, lastModified?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', base?: string | null, default?: string | null } | null }
    | null, SliderContent?: Array<
     | { __typename: 'ArticlePage', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'BlankExperience', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'BlankSection', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'ContentArea', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'GenericMedia', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'HeroBlock', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'ImageMedia', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'LandingPage', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'NewsPage', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'SliderBlock', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'StartPage', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'SysContentFolder', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'TextBlock', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: 'VideoMedia', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Component', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Content', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Experience', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Folder', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Image', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Media', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Page', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Section', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
     | { __typename: '_Video', _metadata?:
-        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null }
-        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null }
+        | { __typename?: 'ContentMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'InstanceMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'ItemMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
+        | { __typename?: 'MediaMetadata', key?: string | null, displayName?: string | null, url?: { __typename?: 'ContentUrl', default?: string | null } | null }
        | null }
    | null> | null } & { ' $fragmentName'?: 'SliderBlockDataFragment' };
 
@@ -4464,7 +4464,7 @@ export type StartPageDataFragment = { __typename?: 'StartPage', Heading?: string
 
 export const ContentAreaDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ContentAreaData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ContentArea"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<ContentAreaDataFragment, unknown>;
 export const HeroBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"HeroBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"HeroBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"Image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"MainIntro"}},{"kind":"Field","name":{"kind":"Name","value":"ContentLink"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Width"}}]}}]} as unknown as DocumentNode<HeroBlockDataFragment, unknown>;
-export const SliderBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SliderBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SliderBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"SliderContent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}}]}}]}}]}}]} as unknown as DocumentNode<SliderBlockDataFragment, unknown>;
+export const SliderBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SliderBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SliderBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"SliderContent"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SliderBlockDataFragment, unknown>;
 export const TextBlockDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TextBlockData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TextBlock"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Text"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}}]} as unknown as DocumentNode<TextBlockDataFragment, unknown>;
 export const BlankExperienceDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BlankExperienceData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BlankExperience"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"composition"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"nodeType"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"displayTemplateKey"}}]}}]}}]} as unknown as DocumentNode<BlankExperienceDataFragment, unknown>;
 export const ArticlePageDataFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ArticlePageData"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ArticlePage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"published"}},{"kind":"Field","name":{"kind":"Name","value":"lastModified"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"url"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"base"}},{"kind":"Field","name":{"kind":"Name","value":"default"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"Heading"}},{"kind":"Field","name":{"kind":"Name","value":"Intro"}},{"kind":"Field","name":{"kind":"Name","value":"MainBody"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"html"}}]}}]}}]} as unknown as DocumentNode<ArticlePageDataFragment, unknown>;

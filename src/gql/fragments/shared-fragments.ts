@@ -111,6 +111,18 @@ export const PAGE_FRAGMENTS = gql`
       key
       displayName
     }
+    ... on ContentArea {
+      ...ContentAreaData
+    }
+    ... on HeroBlock {
+      ...HeroBlockData
+    }
+    ... on SliderBlock {
+      ...SliderBlockData
+    }
+    ... on TextBlock {
+      ...TextBlockData
+    }
   }
 }
 
@@ -133,6 +145,18 @@ export const PAGE_FRAGMENTS = gql`
     _metadata {
       key
       displayName
+    }
+    ... on ContentArea {
+      ...ContentAreaData
+    }
+    ... on HeroBlock {
+      ...HeroBlockData
+    }
+    ... on SliderBlock {
+      ...SliderBlockData
+    }
+    ... on TextBlock {
+      ...TextBlockData
     }
   }
 }
@@ -212,6 +236,9 @@ export const COMPONENT_FRAGMENTS = gql`
     _metadata {
       key
       displayName
+      url {
+        default
+      }
     }
   }
 }

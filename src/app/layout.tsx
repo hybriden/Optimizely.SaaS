@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { getServerContext } from "@/lib/optimizely-cms/rsc";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ['300', '400', '700'],
+  subsets: ["latin"],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Optimizely CMS Boilerplate - Create Next App",
@@ -20,9 +24,9 @@ export default async function RootLayout({
 }>) {
   const { locale } = await getServerContext();
   return (
-    <html lang={locale ?? "en"} className="dark scroll-smooth">
-      <body className={`${inter.className} bg-slate-950 antialiased`}>
-        <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <html lang={locale ?? "en"} className="scroll-smooth">
+      <body className={`${poppins.className} antialiased`}>
+        <div className="min-h-screen bg-[#DEE5E4]">
           <Header />
           <main>{children}</main>
           <Footer />

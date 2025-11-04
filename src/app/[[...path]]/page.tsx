@@ -66,10 +66,10 @@ const { CmsPage, generateMetadata, generateStaticParams } = createPage(
 );
 
 // Configure the Next.JS route handling for the pages
-export const dynamic = "error"; // Make sure we cache pages, if one component is not static none of the routes will be static
+export const dynamic = "force-dynamic"; // Force dynamic rendering - fetch fresh content on every request
 export const dynamicParams = true; // Allow new pages to be resolved without rebuilding the site
-export const revalidate = false; // Keep the cache untill manually revalidated using the Webhook
-export const fetchCache = "default-cache"; // Cache fetch results by default
+export const revalidate = 0; // No caching - always fetch fresh content
+export const fetchCache = "force-no-store"; // Never cache fetch results
 
 // Export CMS Page
 export { generateMetadata, generateStaticParams };

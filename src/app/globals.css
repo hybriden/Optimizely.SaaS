@@ -8,6 +8,8 @@
 html {
     scroll-behavior: smooth;
     background-color: #0f172a;
+    min-height: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -17,6 +19,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #0f172a;
     color: #e2e8f0;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* Typography Utilities */
@@ -41,6 +45,10 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #64748b;
+}
+
+::-webkit-scrollbar-corner {
+    background: #0f172a;
 }
 
 /**

@@ -15,9 +15,10 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
     const sliderContent = data.SliderContent || [];
 
     // Extract image URLs from slider content
+    // Try multiple possible URL sources: direct image file URL, ContentReference image URL, or metadata URL as fallback
     const slides = sliderContent.map((item: any) => ({
-        url: item._metadata?.url?.default || '',
-        displayName: item._metadata?.displayName || 'Slide'
+        url: item.url?.default || item.Url?.default || item.Image?.url?.default || item._metadata?.url?.default || '',
+        displayName: item._metadata?.displayName || item.Name || 'Slide'
     })).filter(slide => slide.url);
 
     const totalSlides = slides.length;
@@ -58,7 +59,7 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-2xl ring-1 ring-white/10">
                     {/* Slides Container */}
-                    <div className="relative min-h-[500px] md:min-h-[600px]">
+                    <div className="relative w-full h-[500px] md:h-[600px]">
                         {slides.map((slide, index) => {
                             const isActive = index === currentSlide;
                             const isPrev = index === (currentSlide - 1 + totalSlides) % totalSlides;
@@ -82,19 +83,17 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
                                         transform: isActive ? 'none' : undefined
                                     }}
                                 >
-                                    <div className="relative w-full h-full">
-                                        <Image
-                                            src={slide.url}
-                                            alt={slide.displayName}
-                                            fill
-                                            className={`object-cover transition-transform duration-700 ${
-                                                isActive ? 'scale-100' : 'scale-110'
-                                            }`}
-                                            priority={index === 0}
-                                        />
-                                        {/* Image Overlay with gradient */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent" />
-                                    </div>
+                                    <Image
+                                        src={slide.url}
+                                        alt={slide.displayName}
+                                        fill
+                                        className="object-cover"
+                                        style={{ objectFit: 'cover' }}
+                                        priority={index === 0}
+                                        sizes="100vw"
+                                    />
+                                    {/* Image Overlay with gradient */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent pointer-events-none" />
                                 </div>
                             );
                         })}

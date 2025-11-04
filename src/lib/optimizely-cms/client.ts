@@ -201,12 +201,76 @@ export class RouteResolver {
   }
 
   /**
-   * Resolve a URL path to content
+   * Get all published page routes for sitemap generation
+   * Uses pagination to handle more than 100 pages (Optimizely Graph limit)
    */
   async getRoutes(locale?: string): Promise<Array<{ url: URL; changed?: Date; locale?: string }>> {
-    // This would query all routes from Optimizely Graph
-    // Implementation depends on your specific schema
-    // For now, return empty array - needs to be implemented with actual GraphQL query
-    return [];
+    const allRoutes: Array<{ url: URL; changed?: Date; locale?: string }> = [];
+    let skip = 0;
+    const limit = 100; // Optimizely Graph max limit
+    let hasMore = true;
+
+    while (hasMore) {
+      const query = `
+        query GetAllPages($locale: [Locales!], $skip: Int!, $limit: Int!) {
+          _Page(
+            where: {
+              _metadata: {
+                status: { eq: "Published" }
+                url: { default: { exist: true } }
+              }
+            }
+            locale: $locale
+            skip: $skip
+            limit: $limit
+          ) {
+            items {
+              _metadata {
+                url {
+                  default
+                }
+                lastModified
+                locale
+                status
+              }
+            }
+            total
+          }
+        }
+      `;
+
+      try {
+        const result = await this.client.request(query, {
+          locale: locale ? [locale] : null,
+          skip,
+          limit
+        });
+
+        const pages = result._Page?.items || [];
+        const total = result._Page?.total || 0;
+
+        console.log(`Fetched ${pages.length} pages (skip: ${skip}, total: ${total})`);
+
+        pages
+          .filter((page: any) => !!page._metadata?.url?.default)
+          .forEach((page: any) => {
+            allRoutes.push({
+              url: new URL(page._metadata.url.default, 'https://placeholder.com'), // Base URL will be replaced in sitemap.ts
+              changed: page._metadata?.lastModified ? new Date(page._metadata.lastModified) : undefined,
+              locale: page._metadata?.locale
+            });
+          });
+
+        skip += limit;
+        hasMore = skip < total && pages.length === limit;
+
+      } catch (error) {
+        console.error('Error fetching routes for sitemap:', error);
+        hasMore = false;
+      }
+    }
+
+    console.log(`Total routes for sitemap: ${allRoutes.length}`);
+    return allRoutes;
   }
 }

@@ -20,7 +20,7 @@ export const TextBlockComponent : CmsComponent<TextBlockDataFragment> = ({ data,
                         <div
                             className="prose prose-lg max-w-4xl mx-auto
                                        prose-headings:font-bold prose-headings:text-gray-900 prose-headings:mb-6
-                                       prose-p:text-gray-600 prose-p:leading-relaxed prose-p:font-light
+                                       prose-p:text-gray-800 prose-p:leading-relaxed prose-p:font-light
                                        prose-a:text-[#75E6DA] prose-a:no-underline hover:prose-a:text-[#5fd1c0]
                                        prose-strong:text-gray-900
                                        prose-ul:list-disc prose-ol:list-decimal"

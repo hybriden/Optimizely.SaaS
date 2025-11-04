@@ -12,20 +12,21 @@ export const StartPagePage : CmsComponent<StartPageDataFragment> = ({ data, chil
     const mainContentArea = data.MainContentArea || [];
     
     return (
-        <div className="min-h-screen w-full bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+        <div className="min-h-screen w-full bg-[#DEE5E4]">
             {/* Hero Section with Heading and MainIntro */}
             {(heading || mainIntro) && (
-                <section className="relative w-full bg-gradient-to-br from-blue-950 via-purple-950 to-slate-950 py-24 md:py-32 lg:py-40 overflow-hidden">
-                    {/* Animated background effects */}
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-purple-600/20 via-transparent to-transparent"></div>
-                    
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className="max-w-5xl mx-auto text-center">
+                <section className="relative w-full bg-white py-24 md:py-32 lg:py-40">
+                    <div className="max-w-[1088px] mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-4xl mx-auto text-center space-y-8">
                             {heading && (
-                                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 leading-tight mb-8 px-4 animate-fade-in drop-shadow-2xl">
+                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight tracking-tight">
                                     {heading}
                                 </h1>
+                            )}
+                            {mainIntro && (
+                                <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
+                                    {mainIntro}
+                                </p>
                             )}
                         </div>
                     </div>

@@ -42,53 +42,51 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             
-            <div className="min-h-screen w-full bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-            {/* Page Title if available */}
-            {title && (
-                <section className="relative w-full bg-gradient-to-br from-blue-950 via-purple-950 to-slate-950 py-16 md:py-20 overflow-hidden">
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 leading-tight">
-                            {title}
-                        </h1>
-                    </div>
-                </section>
-            )}
-            
-            {/* Main Body Content */}
-            {mainBody && (
-                <section className="relative w-full py-16 md:py-20 overflow-hidden">
-                    {/* Background decoration */}
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent"></div>
-                    <div className="absolute top-1/4 right-0 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl"></div>
-                    <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl"></div>
-                    
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className="relative group">
-                            {/* Glow effect on hover */}
-                            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 rounded-3xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            
-                            {/* Content card - preserves TinyMCE styling */}
-                            <div 
-                                className="richtext-content relative max-w-none 
-                                           backdrop-blur-md bg-gradient-to-br from-slate-900/80 via-slate-800/60 to-slate-900/80 
-                                           rounded-3xl p-8 md:p-12 lg:p-16 
-                                           border border-white/10 shadow-2xl
-                                           text-slate-200 text-lg md:text-xl leading-relaxed"
-                                dangerouslySetInnerHTML={{ __html: mainBody }}
-                            />
+            <div className="min-h-screen w-full bg-[#DEE5E4]">
+                {/* Page Title if available */}
+                {title && (
+                    <section className="relative w-full bg-white py-20 md:py-28">
+                        <div className="max-w-[1088px] mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="max-w-4xl mx-auto text-center">
+                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight tracking-tight">
+                                    {title}
+                                </h1>
+                                {metaDescription && (
+                                    <p className="mt-8 text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
+                                        {metaDescription}
+                                    </p>
+                                )}
+                            </div>
                         </div>
+                    </section>
+                )}
+                
+                {/* Main Body Content */}
+                {mainBody && (
+                    <section className="relative w-full py-20 md:py-28 bg-white">
+                        <div className="max-w-[1088px] mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="richtext-content max-w-4xl mx-auto">
+                                <div 
+                                    className="prose prose-lg max-w-none
+                                               prose-headings:font-bold prose-headings:text-gray-900 prose-headings:mb-6
+                                               prose-p:text-gray-800 prose-p:leading-relaxed prose-p:font-light
+                                               prose-a:text-[#75E6DA] prose-a:no-underline hover:prose-a:text-[#5fd1c0]
+                                               prose-strong:text-gray-900
+                                               prose-ul:list-disc prose-ol:list-decimal"
+                                    dangerouslySetInnerHTML={{ __html: mainBody }}
+                                />
+                            </div>
+                        </div>
+                    </section>
+                )}
+                
+                {/* Main Content */}
+                {children && (
+                    <div className="w-full">
+                        {children}
                     </div>
-                </section>
-            )}
-            
-            {/* Main Content */}
-            {children && (
-                <div className="w-full">
-                    {children}
-                </div>
-            )}
-        </div>
+                )}
+            </div>
         </>
     );
 }

@@ -33,6 +33,11 @@ export function createEditPageComponent<TContent = ContentData>(
     // Await searchParams (async in Next.js 16)
     const params = await searchParams;
 
+    // Get nonce from headers for CSP (Next.js 16+ with middleware)
+    const { headers } = await import('next/headers');
+    const headersList = await headers();
+    const nonce = headersList.get('x-nonce') || undefined;
+
     // Get content key from search params
     const key = params.key as string;
     const version = params.version as string || params.ver as string;
@@ -116,7 +121,7 @@ export function createEditPageComponent<TContent = ContentData>(
       // Render with editing attributes
       return (
         <>
-          {ctx === 'edit' && <OpeScript />}
+          {ctx === 'edit' && <OpeScript nonce={nonce} />}
           <div data-epi-edit="true">
             <Component data={content} inEditMode={true} />
           </div>

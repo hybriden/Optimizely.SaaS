@@ -8,7 +8,11 @@ interface OptimizelyContentSavedEvent {
   previewToken?: string;
 }
 
-export function OpeScript() {
+interface OpeScriptProps {
+  nonce?: string;
+}
+
+export function OpeScript({ nonce }: OpeScriptProps) {
   const router = useRouter();
   const lastEditTimestampRef = useRef<number>(0);
   const refreshTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -19,6 +23,9 @@ export function OpeScript() {
     const script = document.createElement('script');
     script.src = 'https://cg.optimizely.com/app/editor/clientresources/latest/communicationinjector.js';
     script.async = true;
+    if (nonce) {
+      script.nonce = nonce;
+    }
     document.body.appendChild(script);
 
     // Listen for content saved events from Optimizely CMS

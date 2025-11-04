@@ -15,6 +15,9 @@ fragment SliderBlockData on SliderBlock {
     _metadata {
       key
       displayName
+      url {
+        default
+      }
     }
   }
 }

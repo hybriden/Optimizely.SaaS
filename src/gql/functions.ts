@@ -9,7 +9,7 @@
 
 import { gql, type GraphQLClient } from 'graphql-request'
 import type * as Types from './graphql'
-import { ALL_FRAGMENTS } from './fragments/shared-fragments'
+import { ALL_FRAGMENTS, COMPONENT_FRAGMENT_DEFINITIONS } from './fragments/shared-fragments'
 
 // Define variable types inline since client preset doesn't export them
 type GetContentByPathVariables = {
@@ -66,6 +66,7 @@ export async function getContentByPath(client: GraphQLClient, variables: GetCont
     }
 
     ${ALL_FRAGMENTS}
+    ${COMPONENT_FRAGMENT_DEFINITIONS}
   `
 
   return client.request(query, variables)
@@ -117,6 +118,7 @@ export async function getContentById(client: GraphQLClient, variables: GetConten
     }
 
     ${ALL_FRAGMENTS}
+    ${COMPONENT_FRAGMENT_DEFINITIONS}
   `
 
   return client.request(query, variables)

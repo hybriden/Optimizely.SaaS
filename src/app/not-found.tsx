@@ -4,25 +4,33 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center px-4">
-      <div className="max-w-2xl mx-auto text-center">
-        {/* 404 Number */}
-        <div className="mb-8">
-          <h1 className="text-[180px] md:text-[240px] font-semibold text-gray-200 leading-none">
+    <div className="min-h-screen relative flex items-center justify-center px-4 overflow-hidden">
+      {/* Animated gradient orbs */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--neon-pink)] rounded-full opacity-10 blur-[150px] animate-float" />
+      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[var(--neon-cyan)] rounded-full opacity-10 blur-[150px] animate-float" style={{ animationDelay: '3s' }} />
+
+      <div className="max-w-2xl mx-auto text-center relative z-10">
+        {/* 404 Number with neon glow */}
+        <div className="mb-8 relative">
+          <h1 className="text-[180px] md:text-[240px] font-black bg-gradient-to-r from-[var(--neon-pink)] via-[var(--neon-purple)] to-[var(--neon-cyan)] bg-clip-text text-transparent leading-none animate-glow-pulse">
             404
           </h1>
+          {/* Glitch effect overlay */}
+          <div className="absolute inset-0 text-[180px] md:text-[240px] font-black text-[var(--neon-cyan)] opacity-20 blur-sm leading-none">
+            404
+          </div>
         </div>
 
         {/* Error Message */}
-        <div className="space-y-6">
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">
+        <div className="space-y-6 animate-fade-in">
+          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
             Siden ble ikke funnet
           </h2>
-          <p className="text-xl text-gray-600 leading-relaxed max-w-lg mx-auto">
+          <p className="text-xl text-[var(--text-secondary)] leading-relaxed max-w-lg mx-auto">
             Beklager, vi kan ikke finne siden du leter etter. Den kan ha blitt flyttet eller slettet.
           </p>
 
-          {/* Action Buttons */}
+          {/* Action Buttons with glow */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
             <Link
               href="/"

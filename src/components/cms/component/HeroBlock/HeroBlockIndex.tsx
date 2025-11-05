@@ -3,7 +3,7 @@ import { HeroBlockDataFragmentDoc, type HeroBlockDataFragment } from "@/gql/grap
 import Image from "next/image";
 
 /**
- * Hero Block - Professional Epinova-style
+ * Hero Block - Futuristic Dark Neon Theme
  */
 export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data, children }) => {
     const heading = data.Heading || '';
@@ -25,26 +25,30 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
     const containerClass = widthClasses[width as keyof typeof widthClasses] || widthClasses['Full'];
 
     return (
-        <section className="section bg-white">
+        <section className="relative section section-glow overflow-hidden">
+            {/* Animated gradient orbs in background */}
+            <div className="absolute top-20 -left-40 w-96 h-96 bg-[var(--neon-cyan)] rounded-full opacity-20 blur-[120px] animate-float" />
+            <div className="absolute bottom-20 -right-40 w-96 h-96 bg-[var(--neon-purple)] rounded-full opacity-20 blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
+
             <div className={containerClass}>
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
                     {/* Text Content */}
-                    <div className="space-y-6 animate-fade-in">
+                    <div className="space-y-6 animate-slide-up">
                         {heading && (
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
+                            <h1 className="text-4xl md:text-5xl lg:text-7xl font-black leading-tight bg-gradient-to-r from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] bg-clip-text text-transparent animate-glow-pulse">
                                 {heading}
                             </h1>
                         )}
                         {mainIntro && (
-                            <p className="text-xl text-gray-600 leading-relaxed">
+                            <p className="text-xl md:text-2xl text-[var(--text-secondary)] leading-relaxed">
                                 {mainIntro}
                             </p>
                         )}
                         {contentLink && (
-                            <div className="flex gap-4 pt-4">
-                                <a href={contentLink} className="btn btn-primary btn-large">
+                            <div className="flex flex-wrap gap-4 pt-6">
+                                <a href={contentLink} className="btn btn-primary btn-large group">
                                     Learn More
-                                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
                                 </a>
@@ -60,18 +64,30 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
                         )}
                     </div>
 
-                    {/* Image */}
+                    {/* Image with neon glow */}
                     {imageUrl && (
-                        <div className="relative w-full h-[400px] lg:h-[500px] rounded-lg overflow-hidden shadow-lg animate-slide-up">
-                            <img
-                                src={imageUrl}
-                                alt={heading || 'Hero image'}
-                                className="block absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto min-h-full"
-                            />
+                        <div className="relative w-full h-[400px] lg:h-[600px] animate-fade-in">
+                            {/* Glowing border container */}
+                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] p-[2px] animate-glow-pulse">
+                                <div className="relative w-full h-full bg-[var(--bg-primary)] rounded-2xl overflow-hidden">
+                                    <img
+                                        src={imageUrl}
+                                        alt={heading || 'Hero image'}
+                                        className="block absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto min-h-full object-cover animate-float"
+                                    />
+                                    {/* Image overlay with gradient */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-50" />
+                                </div>
+                            </div>
+                            {/* Additional glow effects */}
+                            <div className="absolute -inset-4 bg-gradient-to-r from-[var(--neon-cyan)] to-[var(--neon-purple)] rounded-2xl blur-2xl opacity-20 -z-10" />
                         </div>
                     )}
                 </div>
             </div>
+
+            {/* Bottom neon line */}
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--neon-cyan)] to-transparent opacity-50" />
         </section>
     );
 }

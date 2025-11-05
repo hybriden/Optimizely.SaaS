@@ -6,106 +6,79 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 /**
- * Slider block
- * 
+ * Slider Block - Professional card-based slider
  */
 export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ data, children }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [direction, setDirection] = useState<'next' | 'prev'>('next');
     const sliderContent = data.SliderContent || [];
 
-    // Extract image URLs from slider content
     const slides = sliderContent.map((item: any) => ({
         url: item._metadata?.url?.default || '',
         displayName: item._metadata?.displayName || 'Slide'
     })).filter(slide => slide.url);
 
     const totalSlides = slides.length;
-    
-    // Auto-play functionality
+
     useEffect(() => {
         if (totalSlides <= 1) return;
-        
+
         const interval = setInterval(() => {
-            setDirection('next');
             setCurrentSlide((prev) => (prev + 1) % totalSlides);
-        }, 5000); // Change slide every 5 seconds
-        
+        }, 5000);
+
         return () => clearInterval(interval);
     }, [totalSlides]);
-    
+
     const nextSlide = () => {
-        setDirection('next');
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
     };
-    
+
     const prevSlide = () => {
-        setDirection('prev');
         setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
     };
-    
+
     const goToSlide = (index: number) => {
-        setDirection(index > currentSlide ? 'next' : 'prev');
         setCurrentSlide(index);
     };
-    
+
     if (totalSlides === 0) {
         return null;
     }
-    
+
     return (
-        <div className="relative w-full bg-white py-20 md:py-28">
-            <div className="max-w-[1088px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
+        <section className="section">
+            <div className="container">
+                <div className="relative overflow-hidden rounded-lg shadow-xl">
                     {/* Slides Container */}
                     <div className="relative w-full h-[500px] md:h-[600px]">
                         {slides.map((slide, index) => {
                             const isActive = index === currentSlide;
-                            const isPrev = index === (currentSlide - 1 + totalSlides) % totalSlides;
-                            const isNext = index === (currentSlide + 1) % totalSlides;
-                            
+
                             return (
                                 <div
                                     key={index}
-                                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                                        isActive 
-                                            ? 'opacity-100 scale-100 z-10' 
-                                            : direction === 'next'
-                                            ? isPrev 
-                                                ? 'opacity-0 scale-95 -translate-x-full'
-                                                : 'opacity-0 scale-95 translate-x-full'
-                                            : isNext
-                                                ? 'opacity-0 scale-95 translate-x-full'
-                                                : 'opacity-0 scale-95 -translate-x-full'
+                                    className={`absolute inset-0 transition-opacity duration-700 ${
+                                        isActive ? 'opacity-100 z-10' : 'opacity-0'
                                     }`}
-                                    style={{
-                                        transform: isActive ? 'none' : undefined
-                                    }}
                                 >
-                                    <div className="relative w-full h-full">
-                                        <Image
-                                            src={slide.url}
-                                            alt={slide.displayName}
-                                            fill
-                                            className={`object-cover transition-transform duration-700 ${
-                                                isActive ? 'scale-100' : 'scale-110'
-                                            }`}
-                                            priority={index === 0}
-                                        />
-                                        {/* Image Overlay with gradient */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 via-transparent to-transparent pointer-events-none" />
-                                    </div>
+                                    <Image
+                                        src={slide.url}
+                                        alt={slide.displayName}
+                                        fill
+                                        className="object-cover"
+                                        priority={index === 0}
+                                    />
                                 </div>
                             );
                         })}
                     </div>
-                    
+
                     {/* Navigation Arrows */}
                     {totalSlides > 1 && (
                         <>
                             <button
                                 onClick={prevSlide}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/95 hover:bg-[#75E6DA] text-gray-700 hover:text-white rounded-full p-3 shadow-md transition-all hover:scale-110 hover:shadow-xl z-20"
+                                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-3 shadow-md transition-all z-20"
                                 aria-label="Previous slide"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,7 +87,7 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
                             </button>
                             <button
                                 onClick={nextSlide}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/95 hover:bg-[#75E6DA] text-gray-700 hover:text-white rounded-full p-3 shadow-md transition-all hover:scale-110 hover:shadow-xl z-20"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-gray-800 rounded-full p-3 shadow-md transition-all z-20"
                                 aria-label="Next slide"
                             >
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,7 +96,7 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
                             </button>
                         </>
                     )}
-                    
+
                     {/* Dots Indicator */}
                     {totalSlides > 1 && (
                         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
@@ -133,32 +106,21 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
                                     onClick={() => goToSlide(index)}
                                     className={`transition-all duration-300 rounded-full ${
                                         index === currentSlide
-                                            ? 'bg-[#75E6DA] w-8 h-2.5'
-                                            : 'bg-gray-400 hover:bg-gray-500 w-2.5 h-2.5'
+                                            ? 'bg-[var(--accent-primary)] w-8 h-2.5'
+                                            : 'bg-white/60 hover:bg-white/80 w-2.5 h-2.5'
                                     }`}
                                     aria-label={`Go to slide ${index + 1}`}
                                 />
                             ))}
                         </div>
                     )}
-
-                    {/* Progress Bar */}
-                    {totalSlides > 1 && (
-                        <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 z-20">
-                            <div
-                                className="h-full bg-[#75E6DA] transition-all duration-[5000ms] ease-linear"
-                                style={{
-                                    width: `${((currentSlide + 1) / totalSlides) * 100}%`
-                                }}
-                            />
-                        </div>
-                    )}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
-SliderBlockComponent.displayName = "Slider block (Component/SliderBlock)"
+
+SliderBlockComponent.displayName = "Slider Block (Component/SliderBlock)"
 SliderBlockComponent.getDataFragment = () => ['SliderBlockData', SliderBlockDataFragmentDoc]
 
 export default SliderBlockComponent

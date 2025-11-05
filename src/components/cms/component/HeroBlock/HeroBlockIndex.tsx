@@ -3,86 +3,80 @@ import { HeroBlockDataFragmentDoc, type HeroBlockDataFragment } from "@/gql/grap
 import Image from "next/image";
 
 /**
- * Hero
- * 
+ * Hero Block - Professional Epinova-style
  */
 export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data, children }) => {
     const heading = data.Heading || '';
     const mainIntro = data.MainIntro || '';
     const width = data.Width || 'Full';
     const imageUrl = (data.Image as any)?.url?.default || '';
-    
-    // Extract ContentLink - use default path for internal links, or full URL for external
+
+    // Extract ContentLink
     const contentLinkData = (data as any).ContentLink;
     const contentLink = contentLinkData?.url?.default || '';
-    
+
     const widthClasses = {
-        'Full': 'max-w-[1088px]',
-        'Wide': 'max-w-[1088px]',
-        'Medium': 'max-w-[900px]',
-        'Narrow': 'max-w-[700px]'
+        'Full': 'container',
+        'Wide': 'container',
+        'Medium': 'container max-w-4xl',
+        'Narrow': 'container max-w-3xl'
     };
 
-    const containerWidth = widthClasses[width as keyof typeof widthClasses] || widthClasses['Full'];
+    const containerClass = widthClasses[width as keyof typeof widthClasses] || widthClasses['Full'];
 
     return (
-        <section className="relative w-full bg-[#D1CEC8] py-20 md:py-28 lg:py-36 overflow-hidden">
-            <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${containerWidth}`}>
-                <div className="flex flex-col gap-16">
-                    {/* Heading and Text Section */}
-                    <div className="space-y-8 text-center">
+        <section className="section bg-white">
+            <div className={containerClass}>
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    {/* Text Content */}
+                    <div className="space-y-6 animate-fade-in">
                         {heading && (
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight animate-fade-in">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">
                                 {heading}
                             </h1>
                         )}
                         {mainIntro && (
-                            <p className="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed font-light animate-slide-in-up">
+                            <p className="text-xl text-gray-600 leading-relaxed">
                                 {mainIntro}
                             </p>
                         )}
                         {contentLink && (
-                            <div className="flex justify-center mt-10 animate-slide-in-up">
-                                <a
-                                    href={contentLink}
-                                    className="group inline-flex items-center gap-2 px-8 py-4 bg-gray-800 text-white font-normal rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:bg-gray-700"
-                                >
-                                    <span>Les mer</span>
-                                    <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="flex gap-4 pt-4">
+                                <a href={contentLink} className="btn btn-primary btn-large">
+                                    Learn More
+                                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
+                                </a>
+                                <a href="#contact" className="btn btn-secondary btn-large">
+                                    Contact Us
                                 </a>
                             </div>
                         )}
                         {children && (
-                            <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
+                            <div className="flex flex-wrap gap-4 pt-4">
                                 {children}
                             </div>
                         )}
                     </div>
 
-                    {/* Image Section */}
+                    {/* Image */}
                     {imageUrl && (
-                        <div className="relative h-[400px] lg:h-[500px] w-full mx-auto rounded-2xl overflow-hidden shadow-lg group animate-fade-in">
-                            {contentLink ? (
-                                <a href={contentLink} className="block w-full h-full">
-                                    <Image
-                                        src={imageUrl}
-                                        alt={heading || 'Hero image'}
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                        priority
-                                    />
-                                </a>
-                            ) : (
-                                <Image
-                                    src={imageUrl}
-                                    alt={heading || 'Hero image'}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                    priority
-                                />
-                            )}
+                        <div className="relative w-full h-[400px] lg:h-[500px] rounded-lg overflow-hidden shadow-lg animate-slide-up">
+                            <img
+                                src={imageUrl}
+                                alt={heading || 'Hero image'}
+                                style={{
+                                    display: 'block',
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    height: '100%',
+                                    width: 'auto',
+                                    minHeight: '100%'
+                                }}
+                            />
                         </div>
                     )}
                 </div>
@@ -90,6 +84,7 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
         </section>
     );
 }
+
 HeroBlockComponent.displayName = "Hero (Component/HeroBlock)"
 HeroBlockComponent.getDataFragment = () => ['HeroBlockData', HeroBlockDataFragmentDoc]
 

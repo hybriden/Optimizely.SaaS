@@ -16,6 +16,9 @@ export default function proxy(request: NextRequest) {
   // Check if this is a preview request (needs relaxed CSP for Optimizely CMS iframe)
   const isPreview = request.nextUrl.pathname.startsWith('/preview');
 
+  // Check if we're in development mode
+  const isDevelopment = process.env.NODE_ENV === 'development';
+
   // Build CSP header value
   const cspHeader = [
     "default-src 'self'",
@@ -26,9 +29,12 @@ export default function proxy(request: NextRequest) {
       : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.optimizely.com https://optimizely.s3.amazonaws.com`,
     "connect-src 'self' https://cg.optimizely.com https://logx.optimizely.com",
     "img-src 'self' data: https://*.cms.optimizely.com https://*.idio.co https://*.cmp.optimizely.com",
-    // Use nonce for styles too for better security
-    `style-src 'self' 'nonce-${nonce}' 'unsafe-inline'`,
-    "font-src 'self' data:",
+    // In development, allow unsafe-inline for dev tools (Turbopack, HMR, etc.)
+    // In production, use nonce-based approach for better security
+    isDevelopment
+      ? "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com"
+      : `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com`,
+    "font-src 'self' data: https://fonts.gstatic.com",
     "frame-src 'self'",
     "object-src 'none'",
     "base-uri 'self'",

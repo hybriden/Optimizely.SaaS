@@ -8,6 +8,7 @@ fragment LandingPageData on LandingPage {
     url {
       base
       default
+      hierarchical
     }
   }
   Title

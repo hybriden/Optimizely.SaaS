@@ -7,7 +7,14 @@ export const NewsPageTeaser: CmsComponent<NewsPageDataFragment> = ({ data }) => 
     const metadata = (data as any)._metadata;
     const title = metadata?.displayName || 'Latest News';
     const publishDate = metadata?.published || new Date().toISOString();
-    const url = metadata?.url?.default || metadata?.url?.base || '#';
+
+    // Try multiple URL extraction methods
+    const url = metadata?.url?.hierarchical
+        || metadata?.url?.default
+        || metadata?.url?.base
+        || metadata?.url
+        || (metadata?.key ? `/${metadata.key}` : undefined)
+        || '#';
 
     return (
         <TeaserCard

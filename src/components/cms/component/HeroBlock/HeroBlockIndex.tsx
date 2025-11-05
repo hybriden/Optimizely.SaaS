@@ -66,16 +66,7 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
                             <img
                                 src={imageUrl}
                                 alt={heading || 'Hero image'}
-                                style={{
-                                    display: 'block',
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
-                                    height: '100%',
-                                    width: 'auto',
-                                    minHeight: '100%'
-                                }}
+                                className="block absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto min-h-full"
                             />
                         </div>
                     )}

@@ -4,27 +4,27 @@ import { StartPageDataFragmentDoc, type StartPageDataFragment } from "@/gql/grap
 import { ContentAreaRenderer } from "@/components/cms/utils/contentAreaRenderer";
 
 /**
- * Startpage Component
+ * StartPage - Professional B2B layout
  */
 export const StartPagePage : CmsComponent<StartPageDataFragment> = ({ data, children }) => {
     const heading = data.Heading || '';
     const mainIntro = data.MainIntro || '';
     const mainContentArea = data.MainContentArea || [];
-    
+
     return (
-        <div className="min-h-screen w-full bg-[#DEE5E4]">
-            {/* Hero Section with Heading and MainIntro */}
+        <div className="min-h-screen">
+            {/* Hero Section */}
             {(heading || mainIntro) && (
-                <section className="relative w-full bg-white py-24 md:py-32 lg:py-40">
-                    <div className="max-w-[1088px] mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="max-w-4xl mx-auto text-center space-y-8">
+                <section className="section bg-gradient-to-b from-white to-gray-50">
+                    <div className="container text-center">
+                        <div className="max-w-4xl mx-auto animate-fade-in">
                             {heading && (
-                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight tracking-tight">
+                                <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 leading-tight">
                                     {heading}
                                 </h1>
                             )}
                             {mainIntro && (
-                                <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
+                                <p className="text-xl md:text-2xl text-gray-600 leading-relaxed">
                                     {mainIntro}
                                 </p>
                             )}
@@ -32,27 +32,27 @@ export const StartPagePage : CmsComponent<StartPageDataFragment> = ({ data, chil
                     </div>
                 </section>
             )}
-            
-            {/* Main Content Area - Generic Renderer */}
+
+            {/* Main Content Area */}
             {mainContentArea.length > 0 && (
-                <div className="w-full">
+                <div>
                     <ContentAreaRenderer items={mainContentArea} />
                 </div>
             )}
-            
-            {/* Fallback to children if provided by CMS */}
+
+            {/* Fallback children */}
             {!mainContentArea.length && children && (
-                <div className="w-full">
+                <div>
                     {children}
                 </div>
             )}
         </div>
     );
 }
-StartPagePage.displayName = "Startpage (Page/StartPage)"
+
+StartPagePage.displayName = "StartPage (Page/StartPage)"
 StartPagePage.getDataFragment = () => ['StartPageData', StartPageDataFragmentDoc]
 StartPagePage.getMetaData = async (contentLink, locale, client) => {
-    // Add your metadata logic here
     return {}
 }
 

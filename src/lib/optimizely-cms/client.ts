@@ -41,11 +41,9 @@ export class OptimizelyGraphClient extends GraphQLClient {
         headers['Authorization'] = `Bearer ${token}`;
         // Disable caching for preview requests
         headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
-        console.log('Client - Using JWT preview token in Authorization header');
       } else {
         // Regular tokens go in URL
         url += `?auth=${token}`;
-        console.log('Client - Using regular token in URL');
       }
     } else if (mergedConfig.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY) {
       // Use Single Key for published content by default
@@ -153,15 +151,6 @@ export class OptimizelyGraphClient extends GraphQLClient {
     // Create signature string: appKey + method + uri + timestamp + nonce + bodyBase64
     const signatureData = `${appKey}${method}${uri}${timestamp}${nonce}${bodyHash}`;
 
-    console.log('HMAC Signature Data:', {
-      appKey: appKey.substring(0, 10) + '...',
-      method,
-      uri,
-      timestamp,
-      nonce,
-      bodyHash: bodyHash.substring(0, 20) + '...'
-    });
-
     return createHmac('sha256', secret)
       .update(signatureData)
       .digest('base64');
@@ -249,8 +238,6 @@ export class RouteResolver {
         const pages = result._Page?.items || [];
         const total = result._Page?.total || 0;
 
-        console.log(`Fetched ${pages.length} pages (skip: ${skip}, total: ${total})`);
-
         pages
           .filter((page: any) => !!page._metadata?.url?.default)
           .forEach((page: any) => {
@@ -270,7 +257,6 @@ export class RouteResolver {
       }
     }
 
-    console.log(`Total routes for sitemap: ${allRoutes.length}`);
     return allRoutes;
   }
 }

@@ -19,6 +19,12 @@ fragment NewsPageData on NewsPage {
     _metadata {
       key
       displayName
+      published
+      url {
+        base
+        default
+        hierarchical
+      }
     }
   }
 }

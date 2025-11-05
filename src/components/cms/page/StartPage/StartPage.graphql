@@ -8,6 +8,7 @@ fragment StartPageData on StartPage {
     url {
       base
       default
+      hierarchical
     }
   }
   Heading
@@ -17,6 +18,12 @@ fragment StartPageData on StartPage {
     _metadata {
       key
       displayName
+      published
+      url {
+        base
+        default
+        hierarchical
+      }
     }
   }
 }

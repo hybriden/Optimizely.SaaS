@@ -2,7 +2,7 @@ import { type CmsComponent } from "@/lib/optimizely-cms";
 import { TextBlockDataFragmentDoc, type TextBlockDataFragment } from "@/gql/graphql";
 
 /**
- * Text Block - Professional styling
+ * Text Block - Futuristic Dark Theme
  */
 export const TextBlockComponent : CmsComponent<TextBlockDataFragment> = ({ data, children }) => {
     const textHtml = data.Text?.html || '';
@@ -12,7 +12,7 @@ export const TextBlockComponent : CmsComponent<TextBlockDataFragment> = ({ data,
     }
 
     return (
-        <section className="section section-gray">
+        <section className="section relative">
             <div className="container max-w-4xl">
                 {textHtml && (
                     <div className="card animate-slide-up">

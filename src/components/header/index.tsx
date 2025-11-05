@@ -1,55 +1,105 @@
+'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export const SiteHeader = ({}) => {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
     return (
-        <header className='sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm'>
-            <div className='container py-4'>
-                <div className="flex items-center justify-between">
-                    <Link
-                        href="/"
-                        className="text-2xl font-semibold text-gray-900 hover:text-[var(--accent-primary)] transition-colors"
-                    >
-                        Proxima
-                    </Link>
-                    <nav className="hidden md:flex items-center gap-8">
+        <>
+            <header className='sticky top-0 z-50 backdrop-blur-xl bg-[var(--bg-card)] border-b border-[var(--border-subtle)] shadow-[0_8px_32px_rgba(0,240,255,0.1)]'>
+                <div className='container py-4'>
+                    <div className="flex items-center justify-between">
+                        {/* Logo with glow effect */}
                         <Link
-                            href="/services"
-                            className="text-sm font-medium text-gray-700 hover:text-[var(--accent-primary)] transition-colors"
+                            href="/"
+                            className="text-3xl font-bold bg-gradient-to-r from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 relative group"
                         >
+                            <span className="relative z-10">PROXIMA</span>
+                            <div className="absolute inset-0 blur-xl opacity-0 group-hover:opacity-100 bg-gradient-to-r from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] transition-opacity duration-300 -z-10" />
+                        </Link>
+
+                        {/* Desktop Navigation */}
+                        <nav className="hidden md:flex items-center gap-8">
+                            <NavLink href="/services">Services</NavLink>
+                            <NavLink href="/projects">Projects</NavLink>
+                            <NavLink href="/about">About</NavLink>
+                            <Link
+                                href="/contact"
+                                className="btn btn-primary btn-sm"
+                            >
+                                Contact Us
+                            </Link>
+                        </nav>
+
+                        {/* Mobile menu button */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="md:hidden p-2 text-[var(--neon-cyan)] border border-[var(--border-glow)] rounded-lg hover:bg-[var(--bg-glass)] transition-all hover:shadow-[var(--glow-cyan-sm)]"
+                            aria-label="Toggle menu"
+                            aria-expanded={isMobileMenuOpen}
+                        >
+                            {isMobileMenuOpen ? (
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            ) : (
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
+                <div className="md:hidden fixed inset-0 z-40 bg-[var(--bg-primary)] bg-opacity-95 backdrop-blur-xl animate-fade-in">
+                    <div className="flex flex-col items-center justify-center h-full space-y-8 p-8">
+                        <MobileNavLink href="/services" onClick={() => setIsMobileMenuOpen(false)}>
                             Services
-                        </Link>
-                        <Link
-                            href="/projects"
-                            className="text-sm font-medium text-gray-700 hover:text-[var(--accent-primary)] transition-colors"
-                        >
+                        </MobileNavLink>
+                        <MobileNavLink href="/projects" onClick={() => setIsMobileMenuOpen(false)}>
                             Projects
-                        </Link>
-                        <Link
-                            href="/about"
-                            className="text-sm font-medium text-gray-700 hover:text-[var(--accent-primary)] transition-colors"
-                        >
+                        </MobileNavLink>
+                        <MobileNavLink href="/about" onClick={() => setIsMobileMenuOpen(false)}>
                             About
-                        </Link>
+                        </MobileNavLink>
                         <Link
                             href="/contact"
-                            className="btn btn-primary"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="btn btn-primary btn-large mt-4"
                         >
                             Contact Us
                         </Link>
-                    </nav>
-                    {/* Mobile menu button */}
-                    <button
-                        className="md:hidden p-2 text-gray-700"
-                        aria-label="Toggle menu"
-                    >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
+                    </div>
                 </div>
-            </div>
-        </header>
+            )}
+        </>
     );
-}
+};
+
+// Desktop Nav Link Component
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+    <Link
+        href={href}
+        className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-all duration-300 relative group uppercase tracking-wider"
+    >
+        {children}
+        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[var(--neon-cyan)] to-[var(--neon-purple)] group-hover:w-full transition-all duration-300 shadow-[var(--glow-cyan-sm)]" />
+    </Link>
+);
+
+// Mobile Nav Link Component
+const MobileNavLink = ({ href, onClick, children }: { href: string; onClick: () => void; children: React.ReactNode }) => (
+    <Link
+        href={href}
+        onClick={onClick}
+        className="text-4xl font-bold text-[var(--text-primary)] hover:text-[var(--neon-cyan)] transition-all duration-300 hover:scale-110 hover:text-glow"
+    >
+        {children}
+    </Link>
+);
 
 export default SiteHeader;

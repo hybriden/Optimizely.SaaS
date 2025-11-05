@@ -8,6 +8,7 @@ fragment ArticlePageData on ArticlePage {
     url {
       base
       default
+      hierarchical
     }
   }
   Heading

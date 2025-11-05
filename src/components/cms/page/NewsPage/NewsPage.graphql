@@ -8,6 +8,7 @@ fragment NewsPageData on NewsPage {
     url {
       base
       default
+      hierarchical
     }
   }
   MainBody {

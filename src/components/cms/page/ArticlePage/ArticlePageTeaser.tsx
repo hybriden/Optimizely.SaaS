@@ -8,10 +8,18 @@ import { TeaserCard } from "@/components/cms/shared/TeaserCard";
  * Card variant for displaying ArticlePage in content areas
  */
 export const ArticlePageTeaser: CmsComponent<ArticlePageDataFragment> = ({ data }) => {
-    const url = data._metadata?.url?.default || '#';
-    const heading = data.Heading || data._metadata?.displayName || 'Untitled Article';
+    const metadata = data._metadata;
+    const heading = data.Heading || metadata?.displayName || 'Untitled Article';
     const intro = data.Intro || '';
-    const publishDate = data._metadata?.published || '';
+    const publishDate = metadata?.published || '';
+
+    // Try multiple URL extraction methods
+    const url = metadata?.url?.hierarchical
+        || metadata?.url?.default
+        || metadata?.url?.base
+        || metadata?.url
+        || (metadata?.key ? `/${metadata.key}` : undefined)
+        || '#';
 
     return (
         <TeaserCard

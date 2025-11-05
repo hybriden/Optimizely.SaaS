@@ -61,6 +61,7 @@ export const PAGE_FRAGMENTS = gql`
     url {
       base
       default
+      hierarchical
     }
   }
   Heading
@@ -80,6 +81,7 @@ export const PAGE_FRAGMENTS = gql`
     url {
       base
       default
+      hierarchical
     }
   }
   Title
@@ -100,6 +102,7 @@ export const PAGE_FRAGMENTS = gql`
     url {
       base
       default
+      hierarchical
     }
   }
   MainBody {
@@ -110,6 +113,12 @@ export const PAGE_FRAGMENTS = gql`
     _metadata {
       key
       displayName
+      published
+      url {
+        base
+        default
+        hierarchical
+      }
     }
     ... on ContentArea {
       ...ContentAreaData
@@ -136,6 +145,7 @@ export const PAGE_FRAGMENTS = gql`
     url {
       base
       default
+      hierarchical
     }
   }
   Heading
@@ -145,6 +155,12 @@ export const PAGE_FRAGMENTS = gql`
     _metadata {
       key
       displayName
+      published
+      url {
+        base
+        default
+        hierarchical
+      }
     }
     ... on ContentArea {
       ...ContentAreaData

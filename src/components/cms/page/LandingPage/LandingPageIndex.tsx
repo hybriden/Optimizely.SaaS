@@ -6,7 +6,7 @@ import { sanitizeHtml } from "@/lib/sanitize";
 /**
  * Landing Page - Futuristic Dark Neon Theme
  */
-export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, children }) => {
+export const LandingPage : CmsComponent<LandingPageDataFragment> = ({ data, children }) => {
     const title = data.Title || '';
     const mainBody = sanitizeHtml(data.MainBody?.html);
     const metaDescription = data.MetaDescription || '';
@@ -92,10 +92,10 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
     );
 }
 
-LandingPagePage.displayName = "Landing Page (Page/LandingPage)"
-LandingPagePage.getDataFragment = () => ['LandingPageData', LandingPageDataFragmentDoc]
-LandingPagePage.getMetaData = async (contentLink, locale, client) => {
+LandingPage.displayName = "Landing Page (Page/LandingPage)"
+LandingPage.getDataFragment = () => ['LandingPageData', LandingPageDataFragmentDoc]
+LandingPage.getMetaData = async (contentLink, locale, client) => {
     return {}
 }
 
-export default LandingPagePage
+export default LandingPage

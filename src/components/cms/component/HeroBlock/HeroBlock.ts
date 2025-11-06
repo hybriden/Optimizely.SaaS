@@ -36,23 +36,20 @@ export const HeroBlockContentType = contentType({
       "sortOrder": 0
     },
     "Width": {
-      "type": "array",
+      "type": "string",
       "displayName": "Width",
       "group": "Information",
       "sortOrder": 10,
-      "items": {
-        "type": "string",
-        "enum": [
-          {
-            "displayName": "Full",
-            "value": "0"
-          },
-          {
-            "displayName": "Regular",
-            "value": "1"
-          }
-        ]
-      }
+      "enum": [
+        {
+          "displayName": "Full Width",
+          "value": "Full"
+        },
+        {
+          "displayName": "Regular Width",
+          "value": "Regular"
+        }
+      ]
     }
   }
 });

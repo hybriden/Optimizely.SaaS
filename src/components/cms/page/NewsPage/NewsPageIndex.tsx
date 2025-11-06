@@ -6,7 +6,7 @@ import { ContentAreaRenderer } from "@/components/cms/utils/contentAreaRenderer"
 /**
  * NewsPage - Futuristic Dark Neon Theme
  */
-export const NewsPageComponent : CmsComponent<NewsPageDataFragment> = ({ data, children }) => {
+export const NewsPage : CmsComponent<NewsPageDataFragment> = ({ data, children }) => {
     // Type-safe access to CMS content properties
     const contentData = data as NewsPageDataFragment & ContentData;
     const metadata = contentData._metadata;
@@ -125,7 +125,7 @@ export const NewsPageComponent : CmsComponent<NewsPageDataFragment> = ({ data, c
     );
 }
 
-NewsPageComponent.displayName = "NewsPage (page/NewsPage)"
-NewsPageComponent.getDataFragment = () => ['NewsPageData', NewsPageDataFragmentDoc]
+NewsPage.displayName = "NewsPage (page/NewsPage)"
+NewsPage.getDataFragment = () => ['NewsPageData', NewsPageDataFragmentDoc]
 
-export default NewsPageComponent
+export default NewsPage

@@ -59,7 +59,9 @@ export function createEditPageComponent<TContent = ContentData>(
     // Preview tokens are now enabled in CMS and should be included in the URL
     const client = config.clientFactory(token);
 
-    console.log('Preview - Loading:', key, 'version:', version || 'LATEST');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Preview - Loading:', key, 'version:', version || 'LATEST');
+    }
 
     try {
       // Load content with version parameter to get specific draft version
@@ -89,7 +91,7 @@ export function createEditPageComponent<TContent = ContentData>(
 
       // Log the version that was actually fetched
       const fetchedVersion = content._metadata?.version;
-      if (version && version !== fetchedVersion) {
+      if (version && version !== fetchedVersion && process.env.NODE_ENV === 'development') {
         console.warn('Preview - Version mismatch! Requested:', version, 'Fetched:', fetchedVersion);
       }
 

@@ -5,11 +5,11 @@ import { ContentAreaDataFragmentDoc, type ContentAreaDataFragment } from "@/gql/
  * ContentArea
  * A reusable component to define a content area.
  */
-export const ContentAreaComponent : CmsComponent<ContentAreaDataFragment> = ({ data, children }) => {
+export const ContentArea : CmsComponent<ContentAreaDataFragment> = ({ data, children }) => {
     if (!children) {
         return null;
     }
-    
+
     return (
         <div className="w-full">
             <div className="flex flex-col gap-0">
@@ -18,7 +18,7 @@ export const ContentAreaComponent : CmsComponent<ContentAreaDataFragment> = ({ d
         </div>
     );
 }
-ContentAreaComponent.displayName = "ContentArea (Component/ContentArea)"
-ContentAreaComponent.getDataFragment = () => ['ContentAreaData', ContentAreaDataFragmentDoc]
+ContentArea.displayName = "ContentArea (Component/ContentArea)"
+ContentArea.getDataFragment = () => ['ContentAreaData', ContentAreaDataFragmentDoc]
 
-export default ContentAreaComponent
+export default ContentArea

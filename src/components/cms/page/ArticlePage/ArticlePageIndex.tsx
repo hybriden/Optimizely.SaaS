@@ -6,7 +6,7 @@ import { sanitizeHtml } from "@/lib/sanitize";
 /**
  * ArticlePage - Futuristic Dark Neon Theme
  */
-export const ArticlePagePage: CmsComponent<ArticlePageDataFragment> = ({ data, children }) => {
+export const ArticlePage: CmsComponent<ArticlePageDataFragment> = ({ data, children }) => {
     const heading = data.Heading || data._metadata?.displayName || 'Untitled Article';
     const intro = data.Intro;
     const mainBody = sanitizeHtml(data.MainBody?.html);
@@ -80,7 +80,7 @@ export const ArticlePagePage: CmsComponent<ArticlePageDataFragment> = ({ data, c
     );
 }
 
-ArticlePagePage.displayName = "ArticlePage (Page/ArticlePage)";
-ArticlePagePage.getDataFragment = () => ['ArticlePageData', ArticlePageDataFragmentDoc];
+ArticlePage.displayName = "ArticlePage (Page/ArticlePage)";
+ArticlePage.getDataFragment = () => ['ArticlePageData', ArticlePageDataFragmentDoc];
 
-export default ArticlePagePage;
+export default ArticlePage;

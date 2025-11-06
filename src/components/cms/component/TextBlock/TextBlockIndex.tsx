@@ -5,7 +5,7 @@ import { sanitizeHtml } from "@/lib/sanitize";
 /**
  * Text Block - Futuristic Dark Theme
  */
-export const TextBlockComponent : CmsComponent<TextBlockDataFragment> = ({ data, children }) => {
+export const TextBlock : CmsComponent<TextBlockDataFragment> = ({ data, children }) => {
     const textHtml = sanitizeHtml(data.Text?.html);
 
     if (!textHtml && !children) {
@@ -33,7 +33,7 @@ export const TextBlockComponent : CmsComponent<TextBlockDataFragment> = ({ data,
     );
 }
 
-TextBlockComponent.displayName = "Text Block (Component/TextBlock)"
-TextBlockComponent.getDataFragment = () => ['TextBlockData', TextBlockDataFragmentDoc]
+TextBlock.displayName = "Text Block (Component/TextBlock)"
+TextBlock.getDataFragment = () => ['TextBlockData', TextBlockDataFragmentDoc]
 
-export default TextBlockComponent
+export default TextBlock

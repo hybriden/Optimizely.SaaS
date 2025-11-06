@@ -100,7 +100,7 @@ async function handleContentUpdate(data: any, config: PublishConfig) {
   // Revalidate by tag if key is available
   if (key) {
     try {
-      revalidateTag(`content-${key}`, 'fetch');
+      revalidateTag(`content-${key}`);
       if (config.debug) {
         console.log(`[Publish API] Revalidated tag: content-${key}`);
       }
@@ -157,7 +157,7 @@ async function handleContentDelete(data: any, config: PublishConfig) {
   // Revalidate by tag
   if (key) {
     try {
-      revalidateTag(`content-${key}`, 'fetch');
+      revalidateTag(`content-${key}`);
     } catch (error) {
       console.error(`[Publish API] Error revalidating deleted content tag ${key}:`, error);
     }

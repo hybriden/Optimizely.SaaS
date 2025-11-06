@@ -17,7 +17,7 @@ export const ArticlePageTeaser: CmsComponent<ArticlePageDataFragment> = ({ data 
     const url = metadata?.url?.hierarchical
         || metadata?.url?.default
         || metadata?.url?.base
-        || metadata?.url
+        || (typeof metadata?.url === 'string' ? metadata.url : undefined)
         || (metadata?.key ? `/${metadata.key}` : undefined)
         || '#';
 

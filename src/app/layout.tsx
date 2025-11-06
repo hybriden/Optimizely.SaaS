@@ -12,6 +12,7 @@ const inter = Inter({
   display: 'swap',
 });
 
+// Keep layout dynamic due to getServerContext() which reads request headers for locale
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {

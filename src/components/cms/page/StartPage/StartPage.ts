@@ -31,6 +31,8 @@ export const StartPageContentType = contentType({
       "maxItems": 4,
       "items": {
         "type": "content",
+        // Note: 'as any' required due to Optimizely SDK alpha type limitations
+        // The SDK doesn't know about our custom content types at compile time
         "allowedTypes": [
           "HeroBlock" as any,
           "TextBlock" as any,

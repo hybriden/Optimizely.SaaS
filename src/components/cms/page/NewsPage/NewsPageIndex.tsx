@@ -1,5 +1,5 @@
 'use client';
-import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
+import { type OptimizelyNextPage as CmsComponent, type ContentData } from "@/lib/optimizely-cms";
 import { NewsPageDataFragmentDoc, type NewsPageDataFragment } from "@/gql/graphql";
 import { ContentAreaRenderer } from "@/components/cms/utils/contentAreaRenderer";
 
@@ -7,9 +7,11 @@ import { ContentAreaRenderer } from "@/components/cms/utils/contentAreaRenderer"
  * NewsPage - Futuristic Dark Neon Theme
  */
 export const NewsPageComponent : CmsComponent<NewsPageDataFragment> = ({ data, children }) => {
-    const metadata = (data as any)._metadata;
+    // Type-safe access to CMS content properties
+    const contentData = data as NewsPageDataFragment & ContentData;
+    const metadata = contentData._metadata;
     const publishDate = metadata?.published || '2025-01-01';
-    const mainContentArea = (data as any).MainContentArea || [];
+    const mainContentArea = data.MainContentArea || [];
 
     const formatDate = (dateString: string) => {
         try {

@@ -1,5 +1,5 @@
 'use client';
-import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
+import { type OptimizelyNextPage as CmsComponent, type ContentData } from "@/lib/optimizely-cms";
 import { LandingPageDataFragmentDoc, type LandingPageDataFragment } from "@/gql/graphql";
 import { sanitizeHtml } from "@/lib/sanitize";
 
@@ -11,7 +11,9 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
     const mainBody = sanitizeHtml(data.MainBody?.html);
     const metaDescription = data.MetaDescription || '';
 
-    const metadata = (data as any)._metadata;
+    // Type-safe access to metadata (all CMS content extends ContentData)
+    const contentData = data as LandingPageDataFragment & ContentData;
+    const metadata = contentData._metadata;
     const publishDate = metadata?.published || '2025-01-01';
     const modifiedDate = metadata?.modified || metadata?.published || '2025-01-01';
 

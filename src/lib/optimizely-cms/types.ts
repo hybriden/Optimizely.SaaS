@@ -10,7 +10,20 @@ export interface ContentLink {
   url?: {
     base?: string;
     default?: string;
+    hierarchical?: string;
   };
+}
+
+/**
+ * Image/Media data structure from CMS
+ */
+export interface ImageData {
+  url?: {
+    base?: string;
+    default?: string;
+  };
+  alt?: string;
+  title?: string;
 }
 
 /**
@@ -22,9 +35,14 @@ export interface ContentMetadata {
   types?: string[];
   displayName?: string;
   version?: string;
+  published?: string;
+  modified?: string;
+  lastModified?: string;
+  status?: string;
   url?: {
     base?: string;
     default?: string;
+    hierarchical?: string;
   };
 }
 

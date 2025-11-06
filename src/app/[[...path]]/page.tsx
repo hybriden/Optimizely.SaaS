@@ -66,10 +66,12 @@ const { CmsPage, generateMetadata, generateStaticParams } = createPage(
 );
 
 // Configure the Next.JS route handling for the pages
-export const dynamic = "force-dynamic"; // Force dynamic rendering - fetch fresh content on every request
+// ✅ PERFORMANCE: Enable ISR with 60-second revalidation
+// Content updates are handled via webhook (/api/content/publish) for instant updates
+export const dynamic = "force-static"; // Enable static generation with ISR
 export const dynamicParams = true; // Allow new pages to be resolved without rebuilding the site
-export const revalidate = 0; // No caching - always fetch fresh content
-export const fetchCache = "force-no-store"; // Never cache fetch results
+export const revalidate = 60; // Revalidate every 60 seconds (safety net if webhook fails)
+// Remove fetchCache directive to allow Next.js caching
 
 // Export CMS Page
 export { generateMetadata, generateStaticParams };

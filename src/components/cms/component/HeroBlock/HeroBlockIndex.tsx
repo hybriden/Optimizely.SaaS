@@ -1,4 +1,4 @@
-import { type CmsComponent } from "@/lib/optimizely-cms";
+import { type CmsComponent, type ImageData, type ContentLink } from "@/lib/optimizely-cms";
 import { HeroBlockDataFragmentDoc, type HeroBlockDataFragment } from "@/gql/graphql";
 import Image from "next/image";
 
@@ -9,10 +9,13 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
     const heading = data.Heading || '';
     const mainIntro = data.MainIntro || '';
     const width = data.Width || 'Full';
-    const imageUrl = (data.Image as any)?.url?.default || '';
 
-    // Extract ContentLink
-    const contentLinkData = (data as any).ContentLink;
+    // Type-safe access to image data
+    const imageData = data.Image as ImageData | undefined;
+    const imageUrl = imageData?.url?.default || '';
+
+    // Type-safe access to ContentLink
+    const contentLinkData = data.ContentLink as ContentLink | undefined;
     const contentLink = contentLinkData?.url?.default || '';
 
     const widthClasses = {

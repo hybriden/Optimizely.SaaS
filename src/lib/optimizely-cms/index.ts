@@ -10,6 +10,7 @@ export type { ClientConfig } from './client';
 // Types
 export type {
   ContentLink,
+  ImageData,
   ContentMetadata,
   ContentData,
   CmsComponentProps,

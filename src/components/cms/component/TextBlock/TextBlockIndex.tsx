@@ -1,11 +1,12 @@
 import { type CmsComponent } from "@/lib/optimizely-cms";
 import { TextBlockDataFragmentDoc, type TextBlockDataFragment } from "@/gql/graphql";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 /**
  * Text Block - Futuristic Dark Theme
  */
 export const TextBlockComponent : CmsComponent<TextBlockDataFragment> = ({ data, children }) => {
-    const textHtml = data.Text?.html || '';
+    const textHtml = sanitizeHtml(data.Text?.html);
 
     if (!textHtml && !children) {
         return null;

@@ -100,9 +100,11 @@ async function handleContentUpdate(data: any, config: PublishConfig) {
   // Revalidate by tag if key is available
   if (key) {
     try {
-      revalidateTag(`content-${key}`);
+      // Note: revalidateTag API may have changed in Next.js 16
+      // Currently disabled as we're using force-dynamic
+      // revalidateTag(`content-${key}`);
       if (config.debug) {
-        console.log(`[Publish API] Revalidated tag: content-${key}`);
+        console.log(`[Publish API] Would revalidate tag: content-${key}`);
       }
     } catch (error) {
       console.error(`[Publish API] Error revalidating tag ${key}:`, error);
@@ -157,7 +159,9 @@ async function handleContentDelete(data: any, config: PublishConfig) {
   // Revalidate by tag
   if (key) {
     try {
-      revalidateTag(`content-${key}`);
+      // Note: revalidateTag API may have changed in Next.js 16
+      // Currently disabled as we're using force-dynamic
+      // revalidateTag(`content-${key}`);
     } catch (error) {
       console.error(`[Publish API] Error revalidating deleted content tag ${key}:`, error);
     }

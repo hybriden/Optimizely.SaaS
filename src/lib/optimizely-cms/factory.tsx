@@ -1,4 +1,5 @@
 import { CmsComponent, ComponentTypeDictionary, FactoryConfig } from './types';
+import { sanitizeUrl, sanitizeImageUrl } from '../sanitize';
 
 /**
  * Component Factory for registering and resolving CMS components
@@ -146,20 +147,33 @@ export const RichTextComponentDictionary: ComponentTypeDictionary = {
   'code-block': ({ data, children }) => <pre><code>{children}</code></pre>,
 
   // Links
-  'link': ({ data, children }) => (
-    <a href={data?.url} target={data?.target} rel={data?.rel}>
-      {children}
-    </a>
-  ),
+  // ✅ Security: URLs are validated to prevent javascript: protocol injection
+  'link': ({ data, children }) => {
+    const safeHref = sanitizeUrl(data?.url);
+    const safeRel = data?.target === '_blank' ? 'noopener noreferrer' : data?.rel;
+
+    return (
+      <a href={safeHref} target={data?.target} rel={safeRel}>
+        {children}
+      </a>
+    );
+  },
 
   // Images
-  'image': ({ data }) => (
-    <img
-      src={data?.url}
-      alt={data?.alt || ''}
-      title={data?.title}
-    />
-  ),
+  // ✅ Security: Image URLs are validated to prevent data exfiltration
+  'image': ({ data }) => {
+    const safeSrc = sanitizeImageUrl(data?.url);
+
+    return (
+      <img
+        src={safeSrc}
+        alt={data?.alt || ''}
+        title={data?.title}
+        loading="lazy"
+        referrerPolicy="no-referrer"
+      />
+    );
+  },
 
   // Horizontal rule
   'hr': () => <hr />,

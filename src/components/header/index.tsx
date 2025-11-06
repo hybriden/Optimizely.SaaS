@@ -1,12 +1,13 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import ThemeToggle from '@/components/theme-toggle';
 
 export const SiteHeader = ({}) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <>
+        <div>
             <header className='sticky top-0 z-50 backdrop-blur-lg bg-[var(--bg-primary)]/90 border-b border-[var(--border-subtle)]'>
                 <div className='container py-4'>
                     <div className="flex items-center justify-between">
@@ -29,15 +30,18 @@ export const SiteHeader = ({}) => {
                             >
                                 Contact Us
                             </Link>
+                            <ThemeToggle />
                         </nav>
 
-                        {/* Mobile menu button */}
-                        <button
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="md:hidden p-2 text-[var(--text-primary)] border border-[var(--border-medium)] rounded-lg hover:bg-[var(--bg-secondary)] transition-all"
-                            aria-label="Toggle menu"
-                            aria-expanded={isMobileMenuOpen}
-                        >
+                        {/* Mobile: Theme Toggle + Menu Button */}
+                        <div className="md:hidden flex items-center gap-3">
+                            <ThemeToggle />
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="p-2 text-[var(--text-primary)] border border-[var(--border-medium)] rounded-lg hover:bg-[var(--bg-secondary)] transition-all"
+                                aria-label="Toggle menu"
+                                aria-expanded={isMobileMenuOpen}
+                            >
                             {isMobileMenuOpen ? (
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -47,7 +51,8 @@ export const SiteHeader = ({}) => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                             )}
-                        </button>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -75,7 +80,7 @@ export const SiteHeader = ({}) => {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

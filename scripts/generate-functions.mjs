@@ -186,7 +186,7 @@ ${inlineFragments}
   const outputPath = path.join(config.PATHS.projectRoot, 'src', 'gql', 'functions.ts');
   fs.writeFileSync(outputPath, content, 'utf-8');
 
-  console.log(`✅ Generated: ${outputPath}`);
+  console.log(`✅ Generated: src/gql/functions.ts`);
   console.log(`\n✨ Successfully generated functions.ts with ${allTypes.length} content type(s)!`);
 }
 

@@ -259,7 +259,7 @@ export const COMPONENT_FRAGMENT_DEFINITIONS = COMPONENT_FRAGMENTS;
   const outputPath = path.join(config.PATHS.projectRoot, 'src', 'gql', 'fragments', 'shared-fragments.ts');
   fs.writeFileSync(outputPath, content, 'utf-8');
 
-  console.log(`✅ Generated: ${outputPath}`);
+  console.log(`✅ Generated: src/gql/fragments/shared-fragments.ts`);
   console.log(`\n✨ Successfully generated shared-fragments.ts with ${pages.length + experiences.length + components.length} fragment(s)!`);
 }
 

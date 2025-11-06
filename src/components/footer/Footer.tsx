@@ -58,126 +58,138 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[var(--bg-secondary)] text-white mt-20 border-t border-[var(--border-subtle)]">
-      {/* Glow effect at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--neon-cyan)] to-transparent opacity-50" />
-
+    <footer className="relative bg-[var(--bg-secondary)] mt-20 border-t border-[var(--border-subtle)]" role="contentinfo" aria-label="Site footer">
       <div className="container">
         {/* Main footer content */}
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand column */}
           <div className="lg:col-span-2">
             <div className="mb-6">
-              <span className="text-3xl font-bold bg-gradient-to-r from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] bg-clip-text text-transparent">
+              <span className="text-2xl font-bold text-gradient" aria-label="Proxima">
                 PROXIMA
               </span>
             </div>
             <p className="text-[var(--text-secondary)] text-sm mb-8 max-w-md leading-relaxed">
-              Cutting-edge digital solutions powered by innovation. We transform businesses with futuristic technology and expert guidance.
+              Cutting-edge digital solutions powered by innovation. We transform businesses with modern technology and expert guidance.
             </p>
 
-            {/* Social links with glow */}
-            <div className="flex gap-4 mb-8">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  className="p-3 rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] hover:border-[var(--neon-cyan)] transition-all duration-300 hover:shadow-[var(--glow-cyan-sm)] hover:scale-110"
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+            {/* Social links */}
+            <nav aria-label="Social media links" className="mb-8">
+              <ul className="flex gap-3">
+                {socialLinks.map((social) => (
+                  <li key={social.name}>
+                    <a
+                      href={social.href}
+                      className="p-2.5 rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--brand-teal)] hover:border-[var(--brand-teal)] transition-all duration-200 inline-flex"
+                      aria-label={`Follow us on ${social.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {social.icon}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-            {/* Offices with neon divider */}
-            <div className="space-y-4">
-              {offices.map((office, index) => (
-                <div key={office.city} className={index > 0 ? "pt-4 border-t border-[var(--border-subtle)]" : ""}>
-                  <h4 className="text-white font-semibold text-sm mb-2 text-glow">{office.city}</h4>
-                  <p className="text-[var(--text-secondary)] text-sm">{office.address}</p>
-                  <p className="text-[var(--neon-cyan)] text-sm font-mono">{office.phone}</p>
-                </div>
-              ))}
-            </div>
+            {/* Offices */}
+            <section aria-label="Office locations">
+              <h3 className="sr-only">Office Locations</h3>
+              <div className="space-y-4">
+                {offices.map((office, index) => (
+                  <address key={office.city} className={`not-italic ${index > 0 ? "pt-4 border-t border-[var(--border-subtle)]" : ""}`}>
+                    <h4 className="text-[var(--text-primary)] font-semibold text-sm mb-1">{office.city}</h4>
+                    <p className="text-[var(--text-secondary)] text-sm">{office.address}</p>
+                    <a href={`tel:${office.phone}`} className="text-[var(--brand-teal)] text-sm hover:underline">
+                      {office.phone}
+                    </a>
+                  </address>
+                ))}
+              </div>
+            </section>
           </div>
 
           {/* Links columns */}
-          <div>
-            <h3 className="text-white font-bold text-sm mb-6 uppercase tracking-wider border-b border-[var(--border-glow)] pb-2">Services</h3>
-            <ul className="space-y-3">
+          <nav aria-label="Services">
+            <h3 className="text-[var(--text-primary)] font-semibold text-sm mb-4">Services</h3>
+            <ul className="space-y-2.5">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-[var(--text-secondary)] text-sm hover:text-[var(--neon-cyan)] transition-all duration-300 hover:translate-x-1 inline-block"
+                    className="text-[var(--text-secondary)] text-sm hover:text-[var(--brand-teal)] transition-colors duration-200"
                   >
-                    → {link.name}
+                    {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div>
-            <h3 className="text-white font-bold text-sm mb-6 uppercase tracking-wider border-b border-[var(--border-glow)] pb-2">Company</h3>
-            <ul className="space-y-3">
+          <nav aria-label="Company">
+            <h3 className="text-[var(--text-primary)] font-semibold text-sm mb-4">Company</h3>
+            <ul className="space-y-2.5">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-[var(--text-secondary)] text-sm hover:text-[var(--neon-purple)] transition-all duration-300 hover:translate-x-1 inline-block"
+                    className="text-[var(--text-secondary)] text-sm hover:text-[var(--brand-teal)] transition-colors duration-200"
                   >
-                    → {link.name}
+                    {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div>
-            <h3 className="text-white font-bold text-sm mb-6 uppercase tracking-wider border-b border-[var(--border-glow)] pb-2">Resources</h3>
-            <ul className="space-y-3">
+          <nav aria-label="Resources">
+            <h3 className="text-[var(--text-primary)] font-semibold text-sm mb-4">Resources</h3>
+            <ul className="space-y-2.5">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-[var(--text-secondary)] text-sm hover:text-[var(--neon-pink)] transition-all duration-300 hover:translate-x-1 inline-block"
+                    className="text-[var(--text-secondary)] text-sm hover:text-[var(--brand-teal)] transition-colors duration-200"
                   >
-                    → {link.name}
+                    {link.name}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         </div>
 
-        {/* Bottom bar with neon line */}
+        {/* Bottom bar */}
         <div className="border-t border-[var(--border-subtle)] py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-[var(--text-secondary)] text-sm font-mono">
-              &copy; {currentYear} <span className="text-[var(--neon-cyan)]">PROXIMA</span>. All rights reserved.
+            <div className="text-[var(--text-secondary)] text-sm">
+              <span aria-label={`Copyright ${currentYear}`}>&copy; {currentYear}</span> <span className="text-[var(--brand-teal)] font-medium">PROXIMA</span>. All rights reserved.
             </div>
 
-            <div className="flex items-center gap-6 text-sm text-[var(--text-secondary)]">
-              <a href="#" className="hover:text-[var(--neon-cyan)] transition-colors">
-                Privacy Policy
-              </a>
-              <span className="text-[var(--border-glow)]">|</span>
-              <a href="#" className="hover:text-[var(--neon-cyan)] transition-colors">
-                Terms of Service
-              </a>
-              <span className="text-[var(--border-glow)]">|</span>
-              <a href="#" className="hover:text-[var(--neon-cyan)] transition-colors">
-                Cookie Policy
-              </a>
-            </div>
+            <nav aria-label="Legal">
+              <ul className="flex items-center gap-6 text-sm text-[var(--text-secondary)]">
+                <li>
+                  <a href="/privacy" className="hover:text-[var(--brand-teal)] transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li aria-hidden="true" className="text-[var(--border-medium)]">|</li>
+                <li>
+                  <a href="/terms" className="hover:text-[var(--brand-teal)] transition-colors">
+                    Terms of Service
+                  </a>
+                </li>
+                <li aria-hidden="true" className="text-[var(--border-medium)]">|</li>
+                <li>
+                  <a href="/cookies" className="hover:text-[var(--brand-teal)] transition-colors">
+                    Cookie Policy
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
-
-      {/* Bottom glow effect */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[var(--neon-purple)] to-transparent opacity-30" />
     </footer>
   );
 }

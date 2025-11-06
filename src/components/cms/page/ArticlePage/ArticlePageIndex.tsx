@@ -1,6 +1,7 @@
 'use client';
 import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
 import { ArticlePageDataFragmentDoc, type ArticlePageDataFragment } from "@/gql/graphql";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 /**
  * ArticlePage - Futuristic Dark Neon Theme
@@ -8,7 +9,7 @@ import { ArticlePageDataFragmentDoc, type ArticlePageDataFragment } from "@/gql/
 export const ArticlePagePage: CmsComponent<ArticlePageDataFragment> = ({ data, children }) => {
     const heading = data.Heading || data._metadata?.displayName || 'Untitled Article';
     const intro = data.Intro;
-    const mainBody = data.MainBody?.html;
+    const mainBody = sanitizeHtml(data.MainBody?.html);
     const published = data._metadata?.published;
 
     return (

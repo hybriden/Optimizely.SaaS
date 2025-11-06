@@ -30,6 +30,22 @@ export function OpeScript({ nonce }: OpeScriptProps) {
 
     // Listen for content saved events from Optimizely CMS
     const handleMessage = (event: MessageEvent<any>) => {
+      // ✅ SECURITY FIX: Validate origin to prevent malicious messages
+      const trustedOrigins = [
+        'https://cg.optimizely.com',
+        'https://cms.optimizely.com',
+        'https://app-preview.cms.optimizely.com',
+      ];
+
+      const isOriginTrusted = trustedOrigins.some(origin =>
+        event.origin === origin || event.origin.endsWith('.cms.optimizely.com')
+      );
+
+      if (!isOriginTrusted) {
+        // Silently ignore messages from untrusted origins
+        return;
+      }
+
       // Check for contentSaved event - Optimizely uses event.data.id
       if (event.data?.id === 'contentSaved' || event.data?.type === 'optimizely:cms:contentSaved') {
         console.log('Content saved event received:', JSON.stringify(event.data, null, 2));

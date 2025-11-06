@@ -26,7 +26,7 @@ export class OptimizelyGraphClient extends GraphQLClient {
 
     // Determine auth mode and construct URL
     let authMode = AuthMode.Public;
-    let url = `${gateway}/content/v2`;
+    const url = `${gateway}/content/v2`; // URL without query params
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
@@ -42,19 +42,21 @@ export class OptimizelyGraphClient extends GraphQLClient {
         // Disable caching for preview requests
         headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
       } else {
-        // Regular tokens go in URL
-        url += `?auth=${token}`;
+        // ✅ SECURITY FIX: Use Authorization header instead of URL query param
+        headers['Authorization'] = `Bearer ${token}`;
       }
     } else if (mergedConfig.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY) {
       // Use Single Key for published content by default
       authMode = AuthMode.Public;
       const key = mergedConfig.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
-      url += `?auth=${key}`;
+      // ✅ SECURITY FIX: Use Authorization header instead of URL query param
+      headers['Authorization'] = `Bearer ${key}`;
     } else if (mergedConfig.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY) {
       // Fall back to App Key
       authMode = AuthMode.Token;
       const key = mergedConfig.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY;
-      url += `?auth=${key}`;
+      // ✅ SECURITY FIX: Use Authorization header instead of URL query param
+      headers['Authorization'] = `Bearer ${key}`;
     }
 
     super(url, {
@@ -74,10 +76,7 @@ export class OptimizelyGraphClient extends GraphQLClient {
     this.currentAuthMode = mode;
 
     const gateway = this.config.gateway || process.env.OPTIMIZELY_GRAPH_GATEWAY || 'https://cg.optimizely.com';
-    let url = `${gateway}/content/v2`;
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
+    const url = `${gateway}/content/v2`; // URL without query params
 
     // Check if token is a JWT (starts with "eyJ")
     const isJWT = token && token.startsWith('eyJ');
@@ -85,35 +84,33 @@ export class OptimizelyGraphClient extends GraphQLClient {
     switch (mode) {
       case AuthMode.HMAC:
         // For HMAC, we'll add the signature per request
-        if (this.config.secret) {
-          url += `?auth=${this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY}`;
+        if (this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY) {
+          const key = this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY;
+          // ✅ SECURITY FIX: Use Authorization header
+          this.setHeader('Authorization', `Bearer ${key}`);
         }
         break;
       case AuthMode.Token:
         if (token) {
-          if (isJWT) {
-            // JWT preview tokens go in Authorization header
-            headers['Authorization'] = `Bearer ${token}`;
-          } else {
-            url += `?auth=${token}`;
-          }
+          // ✅ SECURITY FIX: All tokens go in Authorization header
+          this.setHeader('Authorization', `Bearer ${token}`);
         } else if (this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY) {
-          url += `?auth=${this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY}`;
+          const key = this.config.appKey || process.env.OPTIMIZELY_GRAPH_APP_KEY;
+          // ✅ SECURITY FIX: Use Authorization header
+          this.setHeader('Authorization', `Bearer ${key}`);
         }
         break;
       case AuthMode.Public:
       default:
         if (this.config.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY) {
-          url += `?auth=${this.config.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY}`;
+          const key = this.config.singleKey || process.env.OPTIMIZELY_GRAPH_SINGLE_KEY;
+          // ✅ SECURITY FIX: Use Authorization header
+          this.setHeader('Authorization', `Bearer ${key}`);
         }
         break;
     }
 
     this.setEndpoint(url);
-    // Update headers if JWT token is present
-    if (isJWT) {
-      this.setHeader('Authorization', `Bearer ${token}`);
-    }
   }
 
   /**

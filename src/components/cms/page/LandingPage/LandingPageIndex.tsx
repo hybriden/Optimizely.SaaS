@@ -1,13 +1,14 @@
 'use client';
 import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
 import { LandingPageDataFragmentDoc, type LandingPageDataFragment } from "@/gql/graphql";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 /**
  * Landing Page - Futuristic Dark Neon Theme
  */
 export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, children }) => {
     const title = data.Title || '';
-    const mainBody = data.MainBody?.html || '';
+    const mainBody = sanitizeHtml(data.MainBody?.html);
     const metaDescription = data.MetaDescription || '';
 
     const metadata = (data as any)._metadata;

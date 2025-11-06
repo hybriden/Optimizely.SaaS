@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { createHmac } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 
 export interface PublishConfig {
   secret?: string;
@@ -22,7 +22,22 @@ export default function createPublishApi(config: PublishConfig = {}) {
       const authHeader = request.headers.get('authorization');
       const token = authHeader?.replace('Bearer ', '') || request.nextUrl.searchParams.get('token');
 
-      if (!token || !secret || token !== secret) {
+      // ✅ SECURITY FIX: Use constant-time comparison to prevent timing attacks
+      if (!token || !secret) {
+        if (config.debug) {
+          console.error('[Publish API] Missing token or secret');
+        }
+        return NextResponse.json(
+          { error: 'Unauthorized' },
+          { status: 401 }
+        );
+      }
+
+      const tokenBuffer = Buffer.from(token, 'utf8');
+      const secretBuffer = Buffer.from(secret, 'utf8');
+
+      if (tokenBuffer.length !== secretBuffer.length ||
+          !timingSafeEqual(tokenBuffer, secretBuffer)) {
         if (config.debug) {
           console.error('[Publish API] Invalid token');
         }
@@ -166,6 +181,7 @@ async function handleContentDelete(data: any, config: PublishConfig) {
 
 /**
  * Verify HMAC signature for webhook
+ * Uses constant-time comparison to prevent timing attacks
  */
 export function verifyHmacSignature(
   body: string,
@@ -176,5 +192,13 @@ export function verifyHmacSignature(
     .update(body)
     .digest('hex');
 
-  return signature === expectedSignature;
+  // ✅ SECURITY FIX: Use constant-time comparison
+  if (signature.length !== expectedSignature.length) {
+    return false;
+  }
+
+  const signatureBuffer = Buffer.from(signature, 'utf8');
+  const expectedBuffer = Buffer.from(expectedSignature, 'utf8');
+
+  return timingSafeEqual(signatureBuffer, expectedBuffer);
 }

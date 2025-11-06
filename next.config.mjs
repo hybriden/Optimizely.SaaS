@@ -55,11 +55,12 @@ const nextConfig = {
         serverActions: {
           allowedOrigins: [
             // Optimizely CMP Preview
-            '*.webproofing.cmp.optimizely.com', 
+            '*.webproofing.cmp.optimizely.com',
             // Optimizely Web Experimentation & Personalization Editor
-            'www.optimizelyedit.com/' 
+            'www.optimizelyedit.com/'
           ],
-        }
+        },
+        staticGenerationMinPagesPerWorker: 0,
     }
 };
 

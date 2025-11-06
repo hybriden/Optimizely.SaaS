@@ -7,26 +7,25 @@ export const SiteHeader = ({}) => {
 
     return (
         <>
-            <header className='sticky top-0 z-50 backdrop-blur-xl bg-[var(--bg-card)] border-b border-[var(--border-subtle)] shadow-[0_8px_32px_rgba(0,240,255,0.1)]'>
+            <header className='sticky top-0 z-50 backdrop-blur-lg bg-[var(--bg-primary)]/90 border-b border-[var(--border-subtle)]'>
                 <div className='container py-4'>
                     <div className="flex items-center justify-between">
-                        {/* Logo with glow effect */}
+                        {/* Logo with gradient */}
                         <Link
                             href="/"
-                            className="text-3xl font-bold bg-gradient-to-r from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 relative group"
+                            className="text-2xl font-bold text-gradient hover:opacity-80 transition-opacity duration-200"
                         >
-                            <span className="relative z-10">PROXIMA</span>
-                            <div className="absolute inset-0 blur-xl opacity-0 group-hover:opacity-100 bg-gradient-to-r from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] transition-opacity duration-300 -z-10" />
+                            PROXIMA
                         </Link>
 
                         {/* Desktop Navigation */}
-                        <nav className="hidden md:flex items-center gap-8">
+                        <nav className="hidden md:flex items-center gap-6">
                             <NavLink href="/services">Services</NavLink>
                             <NavLink href="/projects">Projects</NavLink>
                             <NavLink href="/about">About</NavLink>
                             <Link
                                 href="/contact"
-                                className="btn btn-primary btn-sm"
+                                className="btn btn-primary ml-2"
                             >
                                 Contact Us
                             </Link>
@@ -35,7 +34,7 @@ export const SiteHeader = ({}) => {
                         {/* Mobile menu button */}
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="md:hidden p-2 text-[var(--neon-cyan)] border border-[var(--border-glow)] rounded-lg hover:bg-[var(--bg-glass)] transition-all hover:shadow-[var(--glow-cyan-sm)]"
+                            className="md:hidden p-2 text-[var(--text-primary)] border border-[var(--border-medium)] rounded-lg hover:bg-[var(--bg-secondary)] transition-all"
                             aria-label="Toggle menu"
                             aria-expanded={isMobileMenuOpen}
                         >
@@ -55,7 +54,7 @@ export const SiteHeader = ({}) => {
 
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
-                <div className="md:hidden fixed inset-0 z-40 bg-[var(--bg-primary)] bg-opacity-95 backdrop-blur-xl animate-fade-in">
+                <div className="md:hidden fixed inset-0 z-40 bg-[var(--bg-primary)] backdrop-blur-lg animate-fade-in">
                     <div className="flex flex-col items-center justify-center h-full space-y-8 p-8">
                         <MobileNavLink href="/services" onClick={() => setIsMobileMenuOpen(false)}>
                             Services
@@ -84,10 +83,10 @@ export const SiteHeader = ({}) => {
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
     <Link
         href={href}
-        className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--neon-cyan)] transition-all duration-300 relative group uppercase tracking-wider"
+        className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--brand-teal)] transition-colors duration-200 relative group"
     >
         {children}
-        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[var(--neon-cyan)] to-[var(--neon-purple)] group-hover:w-full transition-all duration-300 shadow-[var(--glow-cyan-sm)]" />
+        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[var(--brand-teal)] group-hover:w-full transition-all duration-200" />
     </Link>
 );
 
@@ -96,7 +95,7 @@ const MobileNavLink = ({ href, onClick, children }: { href: string; onClick: () 
     <Link
         href={href}
         onClick={onClick}
-        className="text-4xl font-bold text-[var(--text-primary)] hover:text-[var(--neon-cyan)] transition-all duration-300 hover:scale-110 hover:text-glow"
+        className="text-3xl font-bold text-[var(--text-primary)] hover:text-[var(--brand-teal)] transition-all duration-200"
     >
         {children}
     </Link>

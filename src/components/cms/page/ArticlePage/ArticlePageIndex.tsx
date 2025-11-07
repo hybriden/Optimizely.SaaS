@@ -1,14 +1,17 @@
 'use client';
 import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
 import { ArticlePageDataFragmentDoc, type ArticlePageDataFragment } from "@/gql/graphql";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 /**
  * ArticlePage - Futuristic Dark Neon Theme
+ * ✅ Security: HTML content is sanitized to prevent XSS attacks
  */
 export const ArticlePagePage: CmsComponent<ArticlePageDataFragment> = ({ data, children }) => {
     const heading = data.Heading || data._metadata?.displayName || 'Untitled Article';
     const intro = data.Intro;
     const mainBody = data.MainBody?.html;
+    const sanitizedMainBody = sanitizeHtml(mainBody || '');
     const published = data._metadata?.published;
 
     return (
@@ -57,10 +60,10 @@ export const ArticlePagePage: CmsComponent<ArticlePageDataFragment> = ({ data, c
             <section className="section relative">
                 <div className="container max-w-4xl">
                     <article className="card card-featured animate-slide-up">
-                        {mainBody && (
+                        {sanitizedMainBody && (
                             <div
                                 className="richtext-content"
-                                dangerouslySetInnerHTML={{ __html: mainBody }}
+                                dangerouslySetInnerHTML={{ __html: sanitizedMainBody }}
                             />
                         )}
 

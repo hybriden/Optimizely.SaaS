@@ -1,13 +1,16 @@
 'use client';
 import { type OptimizelyNextPage as CmsComponent } from "@/lib/optimizely-cms";
 import { LandingPageDataFragmentDoc, type LandingPageDataFragment } from "@/gql/graphql";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 /**
  * Landing Page - Futuristic Dark Neon Theme
+ * ✅ Security: HTML content is sanitized to prevent XSS attacks
  */
 export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, children }) => {
     const title = data.Title || '';
     const mainBody = data.MainBody?.html || '';
+    const sanitizedMainBody = sanitizeHtml(mainBody);
     const metaDescription = data.MetaDescription || '';
 
     const metadata = (data as any)._metadata;
@@ -65,13 +68,13 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
                 )}
 
                 {/* Main Body with glassmorphism */}
-                {mainBody && (
+                {sanitizedMainBody && (
                     <section className="section relative">
                         <div className="container max-w-4xl">
                             <div className="card card-featured animate-fade-in">
                                 <div
                                     className="richtext-content"
-                                    dangerouslySetInnerHTML={{ __html: mainBody }}
+                                    dangerouslySetInnerHTML={{ __html: sanitizedMainBody }}
                                 />
                             </div>
                         </div>

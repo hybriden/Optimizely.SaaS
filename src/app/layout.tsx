@@ -25,6 +25,11 @@ export default async function RootLayout({
   const { locale } = await getServerContext();
   return (
     <html lang={locale ?? "en"} className="dark scroll-smooth">
+      <head>
+        {/* ⚡ Performance: Preconnect to external domains */}
+        <link rel="preconnect" href="https://cg.optimizely.com" />
+        <link rel="dns-prefetch" href="https://cg.optimizely.com" />
+      </head>
       <body className={`${inter.className} antialiased`}>
         <a href="#main-content" className="skip-to-content">
           Skip to main content

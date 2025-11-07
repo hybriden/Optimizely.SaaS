@@ -4,11 +4,13 @@ import { type CmsComponent } from "@/lib/optimizely-cms";
 import { SliderBlockDataFragmentDoc, type SliderBlockDataFragment } from "@/gql/graphql";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 /**
  * Slider Block - Futuristic Dark Neon Theme
+ * ✅ Error Handling: Wrapped with ErrorBoundary for graceful error recovery
  */
-export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ data, children }) => {
+const SliderBlockInner : CmsComponent<SliderBlockDataFragment> = ({ data, children }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const sliderContent = data.SliderContent || [];
 
@@ -126,6 +128,16 @@ export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = ({ d
         </section>
     );
 }
+
+SliderBlockInner.displayName = "Slider Block Inner"
+SliderBlockInner.getDataFragment = () => ['SliderBlockData', SliderBlockDataFragmentDoc]
+
+// Wrap with Error Boundary
+export const SliderBlockComponent : CmsComponent<SliderBlockDataFragment> = (props) => (
+    <ErrorBoundary>
+        <SliderBlockInner {...props} />
+    </ErrorBoundary>
+);
 
 SliderBlockComponent.displayName = "Slider Block (Component/SliderBlock)"
 SliderBlockComponent.getDataFragment = () => ['SliderBlockData', SliderBlockDataFragmentDoc]

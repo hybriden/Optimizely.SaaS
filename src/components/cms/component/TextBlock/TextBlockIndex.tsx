@@ -1,24 +1,27 @@
 import { type CmsComponent } from "@/lib/optimizely-cms";
 import { TextBlockDataFragmentDoc, type TextBlockDataFragment } from "@/gql/graphql";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 /**
  * Text Block - Futuristic Dark Theme
+ * ✅ Security: HTML content is sanitized to prevent XSS attacks
  */
 export const TextBlockComponent : CmsComponent<TextBlockDataFragment> = ({ data, children }) => {
     const textHtml = data.Text?.html || '';
+    const sanitizedHtml = sanitizeHtml(textHtml);
 
-    if (!textHtml && !children) {
+    if (!sanitizedHtml && !children) {
         return null;
     }
 
     return (
         <section className="section relative">
             <div className="container max-w-4xl">
-                {textHtml && (
+                {sanitizedHtml && (
                     <div className="card animate-slide-up">
                         <div
                             className="richtext-content"
-                            dangerouslySetInnerHTML={{ __html: textHtml }}
+                            dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
                         />
                     </div>
                 )}

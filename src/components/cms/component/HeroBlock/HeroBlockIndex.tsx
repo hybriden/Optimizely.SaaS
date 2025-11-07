@@ -64,16 +64,19 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
                         )}
                     </div>
 
-                    {/* Image with neon glow */}
+                    {/* Image with neon glow - ⚡ Optimized with Next.js Image */}
                     {imageUrl && (
                         <div className="relative w-full h-[400px] lg:h-[600px] animate-fade-in">
                             {/* Glowing border container */}
                             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--neon-cyan)] via-[var(--neon-purple)] to-[var(--neon-pink)] p-[2px] animate-glow-pulse">
                                 <div className="relative w-full h-full bg-[var(--bg-primary)] rounded-2xl overflow-hidden">
-                                    <img
+                                    <Image
                                         src={imageUrl}
                                         alt={heading || 'Hero image'}
-                                        className="block absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto min-h-full object-cover animate-float"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        className="object-cover animate-float"
+                                        priority
                                     />
                                     {/* Image overlay with gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent opacity-50" />

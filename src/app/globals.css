@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 /* CSS Variables - TresJS Inspired Design with OKLCH Colors */
@@ -75,6 +74,18 @@
     --glow-teal-sm: 0 0 10px rgba(20, 184, 166, 0.3);
     --glow-teal: 0 0 20px rgba(20, 184, 166, 0.4), 0 0 40px rgba(20, 184, 166, 0.2);
     --glow-teal-lg: 0 0 30px rgba(20, 184, 166, 0.5), 0 0 60px rgba(20, 184, 166, 0.3);
+
+    /* Neon Colors for futuristic design */
+    --neon-cyan: oklch(80% 0.15 195);
+    --neon-blue: oklch(70% 0.20 260);
+    --neon-purple: oklch(65% 0.25 300);
+    --neon-pink: oklch(75% 0.22 350);
+    --neon-green: oklch(75% 0.18 150);
+
+    /* Additional glow effects */
+    --glow-cyan-sm: 0 0 10px rgba(6, 182, 212, 0.3);
+    --glow-cyan: 0 0 20px rgba(6, 182, 212, 0.4), 0 0 40px rgba(6, 182, 212, 0.2);
+    --border-glow: rgba(6, 182, 212, 0.2);
 }
 
 /* Dark Mode Variables - TresJS Inspired */
@@ -153,6 +164,18 @@ html.dark {
     --glow-teal-sm: 0 0 15px rgba(61, 197, 197, 0.4);
     --glow-teal: 0 0 25px rgba(61, 197, 197, 0.5), 0 0 50px rgba(61, 197, 197, 0.3);
     --glow-teal-lg: 0 0 40px rgba(61, 197, 197, 0.6), 0 0 80px rgba(61, 197, 197, 0.4);
+
+    /* Neon Colors for dark mode - Brighter for visibility */
+    --neon-cyan: oklch(85% 0.18 195);
+    --neon-blue: oklch(75% 0.22 260);
+    --neon-purple: oklch(70% 0.28 300);
+    --neon-pink: oklch(80% 0.25 350);
+    --neon-green: oklch(80% 0.20 150);
+
+    /* Additional glow effects for dark mode */
+    --glow-cyan-sm: 0 0 15px rgba(34, 211, 238, 0.4);
+    --glow-cyan: 0 0 25px rgba(34, 211, 238, 0.5), 0 0 50px rgba(34, 211, 238, 0.3);
+    --border-glow: rgba(34, 211, 238, 0.3);
 }
 
 /* Dark Mode Gradient Override */
@@ -473,6 +496,7 @@ img {
 }
 
 /* Animation Utilities */
+/* ⚡ GPU-Accelerated Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -485,11 +509,11 @@ img {
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(40px) translateZ(0);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) translateZ(0);
     }
 }
 
@@ -504,27 +528,31 @@ img {
 
 @keyframes float {
     0%, 100% {
-        transform: translateY(0);
+        transform: translateY(0) translateZ(0);
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-20px) translateZ(0);
     }
 }
 
 .animate-fade-in {
     animation: fadeIn 0.8s ease-out;
+    will-change: opacity;
 }
 
 .animate-slide-up {
     animation: slideUp 0.8s ease-out;
+    will-change: transform, opacity;
 }
 
 .animate-glow-pulse {
     animation: glow-pulse 2s ease-in-out infinite;
+    will-change: box-shadow;
 }
 
 .animate-float {
     animation: float 6s ease-in-out infinite;
+    will-change: transform;
 }
 
 /* Rich Text Content - Enhanced Contrast for Dark Mode */

@@ -517,12 +517,15 @@ img {
     }
 }
 
-@keyframes glow-pulse {
+/* ⚡ GPU-Accelerated glow effect using opacity/scale instead of box-shadow */
+@keyframes glow-pulse-efficient {
     0%, 100% {
-        box-shadow: var(--glow-cyan-sm);
+        opacity: 0.85;
+        transform: scale(1) translateZ(0);
     }
     50% {
-        box-shadow: var(--glow-cyan);
+        opacity: 1;
+        transform: scale(1.02) translateZ(0);
     }
 }
 
@@ -545,9 +548,15 @@ img {
     will-change: transform, opacity;
 }
 
+/*
+ * ⚡ GPU-Accelerated Glow Pulse
+ * Uses opacity + scale instead of box-shadow for better performance
+ * Both opacity and transform can be GPU-accelerated
+ * Works with gradients, text, and containers
+ */
 .animate-glow-pulse {
-    animation: glow-pulse 2s ease-in-out infinite;
-    will-change: box-shadow;
+    animation: glow-pulse-efficient 2s ease-in-out infinite;
+    will-change: opacity, transform;
 }
 
 .animate-float {

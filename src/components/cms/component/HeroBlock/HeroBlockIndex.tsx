@@ -1,9 +1,11 @@
 import { type CmsComponent } from "@/lib/optimizely-cms";
 import { HeroBlockDataFragmentDoc, type HeroBlockDataFragment } from "@/gql/graphql";
 import Image from "next/image";
+import { sanitizeUrl } from "@/lib/sanitize";
 
 /**
  * Hero Block - Futuristic Dark Neon Theme
+ * ✅ Security: URLs are sanitized to prevent injection attacks
  */
 export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data, children }) => {
     const heading = data.Heading || '';
@@ -11,9 +13,9 @@ export const HeroBlockComponent : CmsComponent<HeroBlockDataFragment> = ({ data,
     const width = data.Width || 'Full';
     const imageUrl = (data.Image as any)?.url?.default || '';
 
-    // Extract ContentLink
+    // Extract ContentLink and sanitize URL
     const contentLinkData = (data as any).ContentLink;
-    const contentLink = contentLinkData?.url?.default || '';
+    const contentLink = sanitizeUrl(contentLinkData?.url?.default || '');
 
     const widthClasses = {
         'Full': 'container',

@@ -31,21 +31,45 @@ const nextConfig = {
                 // Apply security headers to all routes
                 source: '/:path*',
                 headers: [
+                    // Prevent MIME type sniffing
                     {
                         key: 'X-Content-Type-Options',
                         value: 'nosniff'
                     },
+                    // Prevent clickjacking attacks
                     {
                         key: 'X-Frame-Options',
                         value: 'SAMEORIGIN'
                     },
+                    // XSS Protection (legacy but still useful for older browsers)
                     {
                         key: 'X-XSS-Protection',
                         value: '1; mode=block'
                     },
+                    // Control referrer information
                     {
                         key: 'Referrer-Policy',
                         value: 'strict-origin-when-cross-origin'
+                    },
+                    // Permissions Policy - Disable dangerous features
+                    {
+                        key: 'Permissions-Policy',
+                        value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+                    },
+                    // Cross-Origin-Opener-Policy - Prevent cross-origin attacks
+                    {
+                        key: 'Cross-Origin-Opener-Policy',
+                        value: 'same-origin'
+                    },
+                    // Cross-Origin-Resource-Policy - Control resource loading
+                    {
+                        key: 'Cross-Origin-Resource-Policy',
+                        value: 'same-origin'
+                    },
+                    // Cross-Origin-Embedder-Policy - Require corp for cross-origin resources
+                    {
+                        key: 'Cross-Origin-Embedder-Policy',
+                        value: 'require-corp'
                     }
                 ]
             }

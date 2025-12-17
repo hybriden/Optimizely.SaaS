@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { createHmac } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 
 export interface PublishConfig {
   secret?: string;
@@ -22,7 +22,7 @@ export default function createPublishApi(config: PublishConfig = {}) {
       const authHeader = request.headers.get('authorization');
       const token = authHeader?.replace('Bearer ', '') || request.nextUrl.searchParams.get('token');
 
-      if (!token || !secret || token !== secret) {
+      if (!token || !secret || !safeCompare(token, secret)) {
         if (config.debug) {
           console.error('[Publish API] Invalid token');
         }
@@ -169,6 +169,20 @@ async function handleContentDelete(data: any, config: PublishConfig) {
 }
 
 /**
+ * Timing-safe string comparison to prevent timing attacks
+ */
+function safeCompare(a: string, b: string): boolean {
+  if (a.length !== b.length) {
+    return false;
+  }
+  try {
+    return timingSafeEqual(Buffer.from(a), Buffer.from(b));
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Verify HMAC signature for webhook
  */
 export function verifyHmacSignature(
@@ -180,5 +194,5 @@ export function verifyHmacSignature(
     .update(body)
     .digest('hex');
 
-  return signature === expectedSignature;
+  return safeCompare(signature, expectedSignature);
 }

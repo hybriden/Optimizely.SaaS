@@ -53,5 +53,40 @@ export type { EditPageConfig } from './preview';
 export { default as createPublishApi, verifyHmacSignature } from './publish';
 export type { PublishConfig } from './publish';
 
+// Errors
+export {
+  CmsError,
+  ContentNotFoundError,
+  ComponentNotFoundError,
+  ContentTypeResolutionError,
+  ClientConfigurationError,
+  AuthenticationError,
+  isCmsError,
+  isContentNotFoundError,
+  isComponentNotFoundError,
+} from './errors';
+
+// Constants
+export {
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
+  GENERIC_TYPE_NAMES,
+  isGenericTypename,
+  LOG_PREFIX,
+} from './constants';
+export type { SupportedLocale } from './constants';
+
+// Utilities
+export {
+  getPathVariations,
+  normalizePathFromParams,
+  resolveContentType,
+  extractContentItems,
+  extractFirstContentItem,
+  createContentLink,
+  formatError,
+} from './utils';
+export type { PathVariations } from './utils';
+
 // Re-export types that might be used in component definitions
 export type { TypedDocumentNode } from '@graphql-typed-document-node/core';

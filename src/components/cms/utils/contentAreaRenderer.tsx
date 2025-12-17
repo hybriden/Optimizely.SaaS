@@ -1,6 +1,61 @@
 'use client';
-import { ComponentType } from 'react';
+import { Component, ComponentType, ReactNode } from 'react';
 import { getComponent, getTeaser } from '@/components/cms/client-registry';
+
+/**
+ * Error boundary for individual content items
+ */
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
+}
+
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+  itemKey?: string;
+  itemType?: string;
+}
+
+class ContentItemErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('[ContentArea] Error rendering item:', {
+      itemKey: this.props.itemKey,
+      itemType: this.props.itemType,
+      error: error.message,
+      stack: errorInfo.componentStack,
+    });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+      return (
+        <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+          <p className="text-sm font-semibold text-red-800 dark:text-red-200">
+            Error rendering content block
+          </p>
+          <p className="text-xs text-red-600 dark:text-red-400 mt-1">
+            {this.props.itemType && `Type: ${this.props.itemType}`}
+          </p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 /**
  * Generic content area renderer
@@ -40,19 +95,31 @@ export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentA
         // Check if this is a page type that should render as a teaser
         const TeaserComponent = getTeaser(itemType);
         if (TeaserComponent) {
-          return <TeaserComponent key={key} contentLink={contentLink} data={item} />;
+          return (
+            <ContentItemErrorBoundary key={key} itemKey={key} itemType={itemType}>
+              <TeaserComponent contentLink={contentLink} data={item} />
+            </ContentItemErrorBoundary>
+          );
         }
 
         // Get regular component from registry
         const Component = getComponent(itemType);
         if (Component) {
-          return <Component key={key} contentLink={contentLink} data={item} />;
+          return (
+            <ContentItemErrorBoundary key={key} itemKey={key} itemType={itemType}>
+              <Component contentLink={contentLink} data={item} />
+            </ContentItemErrorBoundary>
+          );
         }
 
         // Fallback for unknown types
         if (fallbackComponent) {
           const FallbackComponent = fallbackComponent;
-          return <FallbackComponent key={key} data={item} />;
+          return (
+            <ContentItemErrorBoundary key={key} itemKey={key} itemType={itemType}>
+              <FallbackComponent data={item} />
+            </ContentItemErrorBoundary>
+          );
         }
 
         // Default fallback

@@ -157,8 +157,16 @@ export function createPage<TContent = ContentData>(
         title: content._metadata?.displayName || 'Page',
       };
     } catch (error) {
-      console.error('Error generating metadata:', error);
-      return {};
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorStack = error instanceof Error ? error.stack : undefined;
+      console.error('[Metadata] Error generating metadata:', {
+        path,
+        error: errorMessage,
+        stack: errorStack,
+      });
+      return {
+        title: 'Page',
+      };
     }
   }
 

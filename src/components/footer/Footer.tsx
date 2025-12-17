@@ -65,8 +65,8 @@ export default function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <div className="mb-6">
-              <span className="text-2xl font-bold text-gradient" aria-label="Proxima">
-                PROXIMA
+              <span className="text-2xl font-bold text-gradient" aria-label="Optimizely">
+                OPTIMIZELY
               </span>
             </div>
             <p className="text-[var(--text-secondary)] text-sm mb-8 max-w-md leading-relaxed">
@@ -163,7 +163,7 @@ export default function Footer() {
         <div className="border-t border-[var(--border-subtle)] py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-[var(--text-secondary)] text-sm">
-              <span aria-label={`Copyright ${currentYear}`}>&copy; {currentYear}</span> <span className="text-[var(--brand-teal)] font-medium">PROXIMA</span>. All rights reserved.
+              <span aria-label={`Copyright ${currentYear}`}>&copy; {currentYear}</span> <span className="text-[var(--brand-teal)] font-medium">OPTIMIZELY</span>. All rights reserved.
             </div>
 
             <nav aria-label="Legal">

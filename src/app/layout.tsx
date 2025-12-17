@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Proxima - Professional Digital Solutions",
+  title: "Optimizely - Professional Digital Solutions",
   description: "Expert consulting and development services powered by Optimizely",
 };
 

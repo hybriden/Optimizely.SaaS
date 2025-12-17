@@ -1,6 +1,6 @@
 # Build Scripts
 
-This directory contains automated build tooling for the Proxima.SaaS project.
+This directory contains automated build tooling for the Optimizely.SaaS project.
 
 ## 📋 Scripts Overview
 

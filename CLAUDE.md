@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Proxima is a Next.js 16 frontend for Optimizely SaaS CMS with **code-first content type management**. Content types are defined in TypeScript using the official Optimizely Content JS SDK (currently in alpha) and synchronized to the CMS via REST API.
+Optimizely.SaaS is a Next.js 16 frontend for Optimizely SaaS CMS with **code-first content type management**. Content types are defined in TypeScript using the official Optimizely Content JS SDK (currently in alpha) and synchronized to the CMS via REST API.
 
 **Tech Stack:**
 - Next.js 16 (App Router, React Server Components)

@@ -53,6 +53,19 @@ export type { EditPageConfig } from './preview';
 export { default as createPublishApi, verifyHmacSignature } from './publish';
 export type { PublishConfig } from './publish';
 
+// Errors
+export {
+  CmsError,
+  ContentNotFoundError,
+  ComponentNotFoundError,
+  ContentTypeResolutionError,
+  ClientConfigurationError,
+  AuthenticationError,
+  isCmsError,
+  isContentNotFoundError,
+  isComponentNotFoundError,
+} from './errors';
+
 // Constants
 export {
   DEFAULT_LOCALE,

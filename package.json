@@ -21,7 +21,10 @@
     "cleanup": "node scripts/cleanup-stale-types.mjs",
     "opti:login": "npx @optimizely/cms-cli@latest login",
     "opti:push": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs --force",
-    "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs"
+    "opti:push:safe": "npx @optimizely/cms-cli@latest config push optimizely.config.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@optimizely/cms-sdk": "^0.1.0-alpha.16",
@@ -42,6 +45,8 @@
     "@graphql-typed-document-node/core": "^3.2.0",
     "@optimizely/cms-cli": "^0.1.0-alpha.10",
     "@tailwindcss/postcss": "^4.1.18",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.1",
     "@types/dompurify": "^3.2.0",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
@@ -52,6 +57,7 @@
     "figures": "^6.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.16"
   }
 }

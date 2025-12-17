@@ -1,6 +1,7 @@
 'use client';
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export interface TeaserCardProps {
   title: string;
@@ -45,7 +46,13 @@ export function TeaserCard({
     <>
         {imageUrl ? (
           <div className={'relative overflow-hidden ' + imageHeightClasses[variant]}>
-            <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <Image
+              src={imageUrl}
+              alt={title}
+              fill
+              sizes={variant === 'featured' ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+            />
           </div>
         ) : (
           <div className={'relative bg-[var(--bg-tertiary)] overflow-hidden flex items-center justify-center border-b border-[var(--border-subtle)] ' + imageHeightClasses[variant]}>

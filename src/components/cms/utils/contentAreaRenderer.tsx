@@ -1,6 +1,31 @@
 'use client';
 import { Component, ComponentType, ReactNode } from 'react';
 import { getComponent, getTeaser } from '@/components/cms/client-registry';
+import { DEFAULT_LOCALE } from '@/lib/optimizely-cms/constants';
+
+/**
+ * Content item from GraphQL - uses loose typing to match generated types
+ */
+interface ContentAreaItem {
+  __typename?: string;
+  _type?: string;
+  _metadata?: {
+    key?: string | null;
+    locale?: string | null;
+    types?: string[] | null;
+    displayName?: string | null;
+    [key: string]: unknown;
+  } | null;
+  [key: string]: unknown;
+}
+
+/**
+ * Content link reference
+ */
+interface ContentLink {
+  key: string;
+  locale: string;
+}
 
 /**
  * Error boundary for individual content items
@@ -58,39 +83,70 @@ class ContentItemErrorBoundary extends Component<ErrorBoundaryProps, ErrorBounda
 }
 
 /**
- * Generic content area renderer
- * Renders an array of content items based on their _type
+ * Resolve the specific content type from item metadata
+ * Types array is ordered: [SpecificType, _Component, _Content]
  */
-interface ContentAreaRendererProps {
-  data?: {
-    items?: any[];
-  };
-  items?: any[];
-  fallbackComponent?: ComponentType<{ data: any }>;
+function resolveItemType(item: ContentAreaItem): string | undefined {
+  const types = item._metadata?.types ?? [];
+  // Find first non-generic type (doesn't start with _)
+  const specificType = types.find((t) => !t.startsWith('_'));
+  return specificType ?? item.__typename ?? item._type;
 }
 
-export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentAreaRendererProps) {
-  // Support both direct items prop and data.items for CMS component compatibility
-  const contentItems = items || data?.items || [];
+/**
+ * Create content link from item metadata
+ */
+function createContentLink(item: ContentAreaItem, index: number): ContentLink {
+  return {
+    key: item._metadata?.key ?? `item-${index}`,
+    locale: item._metadata?.locale ?? DEFAULT_LOCALE,
+  };
+}
 
-  if (!contentItems || contentItems.length === 0) {
+/**
+ * Props for ContentAreaRenderer
+ */
+interface ContentAreaRendererProps {
+  /** Content area data from GraphQL */
+  data?: {
+    items?: (ContentAreaItem | null)[];
+  };
+  /** Direct items array */
+  items?: (ContentAreaItem | null)[];
+  /** Custom fallback component for unknown types */
+  fallbackComponent?: ComponentType<{ data: ContentAreaItem }>;
+}
+
+/**
+ * Generic content area renderer
+ * Renders an array of content items based on their type
+ */
+export function ContentAreaRenderer({
+  items,
+  data,
+  fallbackComponent,
+}: ContentAreaRendererProps) {
+  // Support both direct items prop and data.items for CMS component compatibility
+  // Filter out null items from GraphQL response
+  const contentItems = (items || data?.items || []).filter(
+    (item): item is ContentAreaItem => item !== null
+  );
+
+  if (contentItems.length === 0) {
     return null;
   }
 
   return (
     <>
-      {contentItems.map((item: any, index: number) => {
-        // Try to find the specific component type from the types array
-        // The types array typically contains: ["HeroBlock", "_Component", "_Content"]
-        // We want the most specific type (not _Component or _Content)
-        const types = item._metadata?.types || [];
-        const itemType = types.find((t: string) => !t.startsWith('_')) || item.__typename || item._type;
+      {contentItems.map((item, index) => {
+        const itemType = resolveItemType(item);
+        const key = item._metadata?.key ?? `item-${index}`;
+        const contentLink = createContentLink(item, index);
 
-        const key = item._metadata?.key || `item-${index}`;
-        const contentLink = {
-          key: item._metadata?.key || `item-${index}`,
-          locale: item._metadata?.locale || 'en'
-        };
+        // Skip items without a resolvable type
+        if (!itemType) {
+          return null;
+        }
 
         // Check if this is a page type that should render as a teaser
         const TeaserComponent = getTeaser(itemType);
@@ -122,17 +178,26 @@ export function ContentAreaRenderer({ items, data, fallbackComponent }: ContentA
           );
         }
 
-        // Default fallback
+        // Default fallback for development
         return (
-          <div key={key} className="p-4 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg border border-yellow-400 dark:border-yellow-600">
+          <div
+            key={key}
+            className="p-4 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg border border-yellow-400 dark:border-yellow-600"
+          >
             <p className="text-sm font-semibold">Unknown block type: {itemType}</p>
-            <pre className="text-xs mt-2 overflow-auto">{JSON.stringify({
-              __typename: item.__typename,
-              _type: item._type,
-              types: item._metadata?.types,
-              displayName: item._metadata?.displayName,
-              key: item._metadata?.key,
-            }, null, 2)}</pre>
+            <pre className="text-xs mt-2 overflow-auto">
+              {JSON.stringify(
+                {
+                  __typename: item.__typename,
+                  _type: item._type,
+                  types: item._metadata?.types,
+                  displayName: item._metadata?.displayName,
+                  key: item._metadata?.key,
+                },
+                null,
+                2
+              )}
+            </pre>
           </div>
         );
       })}

@@ -24,11 +24,11 @@ export const LandingPagePage : CmsComponent<LandingPageDataFragment> = ({ data, 
         description: metaDescription,
         author: {
             '@type': 'Organization',
-            name: 'Proxima',
+            name: 'Optimizely',
         },
         publisher: {
             '@type': 'Organization',
-            name: 'Proxima',
+            name: 'Optimizely',
         },
         datePublished: publishDate,
         dateModified: modifiedDate,

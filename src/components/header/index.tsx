@@ -16,7 +16,7 @@ export const SiteHeader = ({}) => {
                             href="/"
                             className="text-2xl font-bold text-gradient hover:opacity-80 transition-opacity duration-200"
                         >
-                            PROXIMA
+                            OPTIMIZELY
                         </Link>
 
                         {/* Desktop Navigation */}

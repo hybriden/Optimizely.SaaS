@@ -5395,6 +5395,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"optimizely-saas@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "optimizely-saas@workspace:."
+  dependencies:
+    "@graphql-codegen/cli": "npm:^6.1.0"
+    "@graphql-codegen/client-preset": "npm:^5.2.1"
+    "@graphql-codegen/fragment-matcher": "npm:^6.0.0"
+    "@graphql-typed-document-node/core": "npm:^3.2.0"
+    "@optimizely/cms-cli": "npm:^0.1.0-alpha.10"
+    "@optimizely/cms-sdk": "npm:^0.1.0-alpha.16"
+    "@tailwindcss/postcss": "npm:^4.1.18"
+    "@types/dompurify": "npm:^3.2.0"
+    "@types/node": "npm:^25.0.3"
+    "@types/react": "npm:^19.2.7"
+    "@types/react-dom": "npm:^19.2.3"
+    "@yarnpkg/sdks": "npm:^3.2.3"
+    chalk: "npm:^5.6.2"
+    dotenv: "npm:^17.2.3"
+    dotenv-expand: "npm:^12.0.3"
+    eslint: "npm:^9.39.2"
+    figures: "npm:^6.1.0"
+    graphql: "npm:^16.12.0"
+    graphql-request: "npm:^7.4.0"
+    isomorphic-dompurify: "npm:^2.34.0"
+    next: "npm:^16.0.10"
+    postcss: "npm:^8.5.6"
+    react: "npm:^19.2.3"
+    react-dom: "npm:^19.2.3"
+    server-only: "npm:^0.0.1"
+    tailwindcss: "npm:^4.1.18"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "optionator@npm:^0.9.3":
   version: 0.9.4
   resolution: "optionator@npm:0.9.4"
@@ -5650,40 +5684,6 @@ __metadata:
   checksum: 10c0/742e5c0cc646af1f0746963b8776299701ad561ce2c70b49365d62c8db8ea3681b0a1bf0d4e2fe07910bf72f02d39e51e8e73dc8d7503c3501206ac908be107f
   languageName: node
   linkType: hard
-
-"proxima-saas@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "proxima-saas@workspace:."
-  dependencies:
-    "@graphql-codegen/cli": "npm:^6.1.0"
-    "@graphql-codegen/client-preset": "npm:^5.2.1"
-    "@graphql-codegen/fragment-matcher": "npm:^6.0.0"
-    "@graphql-typed-document-node/core": "npm:^3.2.0"
-    "@optimizely/cms-cli": "npm:^0.1.0-alpha.10"
-    "@optimizely/cms-sdk": "npm:^0.1.0-alpha.16"
-    "@tailwindcss/postcss": "npm:^4.1.18"
-    "@types/dompurify": "npm:^3.2.0"
-    "@types/node": "npm:^25.0.3"
-    "@types/react": "npm:^19.2.7"
-    "@types/react-dom": "npm:^19.2.3"
-    "@yarnpkg/sdks": "npm:^3.2.3"
-    chalk: "npm:^5.6.2"
-    dotenv: "npm:^17.2.3"
-    dotenv-expand: "npm:^12.0.3"
-    eslint: "npm:^9.39.2"
-    figures: "npm:^6.1.0"
-    graphql: "npm:^16.12.0"
-    graphql-request: "npm:^7.4.0"
-    isomorphic-dompurify: "npm:^2.34.0"
-    next: "npm:^16.0.10"
-    postcss: "npm:^8.5.6"
-    react: "npm:^19.2.3"
-    react-dom: "npm:^19.2.3"
-    server-only: "npm:^0.0.1"
-    tailwindcss: "npm:^4.1.18"
-    typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
 
 "pump@npm:^3.0.0":
   version: 3.0.3

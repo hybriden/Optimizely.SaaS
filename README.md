@@ -1,4 +1,4 @@
-# Proxima - Optimizely SaaS CMS Frontend <!-- omit in toc -->
+# Optimizely.SaaS - Optimizely SaaS CMS Frontend <!-- omit in toc -->
 
 A modern [Next.js](https://nextjs.org()) frontend for [Optimizely SaaS CMS](https://www.optimizely.com/cms) with code-first content type management using the official Optimizely Content JS SDK.
 
@@ -26,7 +26,7 @@ A modern [Next.js](https://nextjs.org()) frontend for [Optimizely SaaS CMS](http
 
 ## Overview
 
-Proxima is a modern Next.js frontend for Optimizely SaaS CMS with **code-first content type management**. Content types are defined in TypeScript using the official **Optimizely Content JS SDK** and synchronized to the CMS via REST API.
+Optimizely.SaaS is a modern Next.js frontend for Optimizely SaaS CMS with **code-first content type management**. Content types are defined in TypeScript using the official **Optimizely Content JS SDK** and synchronized to the CMS via REST API.
 
 ## Tech Stack
 
